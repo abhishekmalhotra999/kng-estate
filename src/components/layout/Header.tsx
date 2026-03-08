@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, User } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, ChevronDown } from "lucide-react";
 import logo from "@/assets/kng-logo.webp";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 const navItems = [
   { label: "Home", path: "/" },
@@ -21,21 +22,64 @@ const navItems = [
       { label: "Our Approach", path: "/approach" },
     ],
   },
-  { label: "Blogs", path: "/blogs" },
   { label: "Contact Us", path: "/contact" },
 ];
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // GSAP Animation for Mobile Menu
+  useGSAP(() => {
+    if (mobileOpen) {
+      gsap.to(mobileMenuRef.current, {
+        height: "auto",
+        opacity: 1,
+        duration: 0.5,
+        ease: "power3.out",
+        display: "block"
+      });
+    } else {
+      gsap.to(mobileMenuRef.current, {
+        height: 0,
+        opacity: 0,
+        duration: 0.3,
+        ease: "power3.in",
+        display: "none"
+      });
+    }
+  }, [mobileOpen]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 glass border-b border-border/30">
-      <div className="container mx-auto flex items-center justify-between px-6 py-3">
+    <header 
+      ref={headerRef}
+      className={`fixed top-0 left-0 right-0 z-50 flex justify-center transition-all duration-300 pointer-events-none py-4`}
+    >
+      <div 
+        className={`pointer-events-auto relative mx-4 flex items-center justify-between px-6 py-3 rounded-full transition-all duration-500 ${
+          isScrolled 
+            ? "glass border border-white/20 shadow-xl w-full max-w-5xl bg-white/90 backdrop-blur-md text-black" 
+            : "bg-transparent w-full max-w-7xl border border-transparent text-white"
+        }`}
+      >
         <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="KNG Estate" className="h-12 w-auto" />
+           {/* Logo - Invert color based on scroll if strictly needed, or use a neutral logo */}
+           {/* Assuming logo is an image, we might need a dark version or filter */}
+          <img src={logo} alt="KNG Estate" className={`h-8 w-auto transition-all ${isScrolled ? "" : "brightness-0 invert"}`} />
         </Link>
+
 
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center gap-1">
@@ -43,34 +87,36 @@ const Header = () => {
             item.children ? (
               <div
                 key={item.label}
-                className="relative"
-                onMouseEnter={() => setOpenDropdown(item.label)}
+                className="relative group"
+                onMouseEnter={() => setOpenDropdown(item.label)} // Keep state for consistency if needed, but CSS handles hover
                 onMouseLeave={() => setOpenDropdown(null)}
               >
-                <button className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-foreground/80 hover:text-foreground transition-colors rounded-full hover:bg-secondary">
+                <button 
+                  className={`flex items-center gap-1 px-4 py-2 text-sm font-medium transition-colors rounded-full group-hover:bg-white/10 ${
+                    isScrolled 
+                      ? "text-black/80 hover:text-black hover:bg-black/5" 
+                      : "text-white/90 hover:text-white"
+                  }`}
+                >
                   {item.label}
-                  <ChevronDown size={14} />
+                  <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
                 </button>
-                <AnimatePresence>
-                  {openDropdown === item.label && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 8 }}
-                      className="absolute top-full left-0 mt-1 bg-card rounded-2xl shadow-premium border border-border/50 p-2 min-w-[200px]"
+                
+                {/* Dropdown Menu */}
+                <div 
+                  className={`absolute top-full left-0 mt-2 bg-white rounded-2xl shadow-xl border border-black/5 p-2 min-w-[220px] 
+                  opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 ease-out`}
+                >
+                  {item.children.map((child) => (
+                    <Link
+                      key={child.path}
+                      to={child.path}
+                      className="block px-4 py-2.5 text-sm text-gray-600 hover:text-black hover:bg-gray-50 rounded-xl transition-colors font-medium"
                     >
-                      {item.children.map((child) => (
-                        <Link
-                          key={child.path}
-                          to={child.path}
-                          className="block px-4 py-2.5 text-sm text-foreground/80 hover:text-foreground hover:bg-secondary rounded-xl transition-colors"
-                        >
-                          {child.label}
-                        </Link>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                      {child.label}
+                    </Link>
+                  ))}
+                </div>
               </div>
             ) : (
               <Link
@@ -78,8 +124,12 @@ const Header = () => {
                 to={item.path!}
                 className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
                   location.pathname === item.path
-                    ? "bg-primary text-primary-foreground"
-                    : "text-foreground/80 hover:text-foreground hover:bg-secondary"
+                    ? isScrolled 
+                      ? "bg-black text-white" 
+                      : "bg-white text-black"
+                    : isScrolled
+                      ? "text-black/80 hover:text-black hover:bg-black/5"
+                      : "text-white/90 hover:text-white hover:bg-white/10"
                 }`}
               >
                 {item.label}
@@ -88,85 +138,64 @@ const Header = () => {
           )}
         </nav>
 
-        <div className="hidden lg:flex items-center gap-3">
-          <Link
-            to="/login"
-            className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium bg-accent text-accent-foreground rounded-full hover:opacity-90 transition-opacity shadow-lg shadow-accent/10"
-          >
-            <User size={16} />
-            Sign In
-          </Link>
-        </div>
-
         {/* Mobile Toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="lg:hidden p-2 rounded-xl hover:bg-secondary transition-colors"
+          className={`lg:hidden p-2 rounded-full transition-colors ${
+             isScrolled ? "hover:bg-black/5 text-black" : "hover:bg-white/10 text-white"
+          }`}
         >
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
       {/* Mobile Menu */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="lg:hidden overflow-hidden bg-card border-t border-border/30"
-          >
-            <div className="px-6 py-4 space-y-1">
-              {navItems.map((item) =>
-                item.children ? (
-                  <div key={item.label}>
-                    <button
-                      onClick={() => setOpenDropdown(openDropdown === item.label ? null : item.label)}
-                      className="flex items-center justify-between w-full px-4 py-3 text-sm font-medium text-foreground/80 rounded-xl hover:bg-secondary"
+      <div
+        ref={mobileMenuRef}
+        className="hidden absolute top-[calc(100%-10px)] left-4 right-4 pointer-events-auto lg:hidden overflow-hidden bg-white/95 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl z-[60]"
+        style={{ height: 0, opacity: 0 }}
+      >
+        <div className="px-6 py-6 space-y-2">
+          {navItems.map((item) =>
+            item.children ? (
+              <div key={item.label} className="border-b border-gray-100 pb-2 last:border-0 last:pb-0">
+                <button
+                  onClick={() => setOpenDropdown(openDropdown === item.label ? null : item.label)}
+                  className="flex items-center justify-between w-full px-4 py-3 text-sm font-bold text-black rounded-xl hover:bg-gray-50"
+                >
+                  {item.label}
+                  <ChevronDown size={14} className={`transition-transform duration-300 ${openDropdown === item.label ? "rotate-180" : ""}`} />
+                </button>
+                <div 
+                   className={`overflow-hidden transition-all duration-300 ease-in-out pl-4 space-y-1 ${
+                     openDropdown === item.label ? "max-h-48 opacity-100 py-2" : "max-h-0 opacity-0"
+                   }`}
+                >
+                  {item.children.map((child) => (
+                    <Link
+                      key={child.path}
+                      to={child.path}
+                      onClick={() => setMobileOpen(false)}
+                      className="block px-4 py-2.5 text-sm text-gray-500 hover:text-black rounded-xl hover:bg-gray-50 transition-colors"
                     >
-                      {item.label}
-                      <ChevronDown size={14} className={`transition-transform ${openDropdown === item.label ? "rotate-180" : ""}`} />
-                    </button>
-                    <AnimatePresence>
-                      {openDropdown === item.label && (
-                        <motion.div initial={{ height: 0 }} animate={{ height: "auto" }} exit={{ height: 0 }} className="overflow-hidden pl-4">
-                          {item.children.map((child) => (
-                            <Link
-                              key={child.path}
-                              to={child.path}
-                              onClick={() => setMobileOpen(false)}
-                              className="block px-4 py-2.5 text-sm text-foreground/60 hover:text-foreground rounded-xl"
-                            >
-                              {child.label}
-                            </Link>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                ) : (
-                  <Link
-                    key={item.path}
-                    to={item.path!}
-                    onClick={() => setMobileOpen(false)}
-                    className="block px-4 py-3 text-sm font-medium text-foreground/80 hover:text-foreground rounded-xl hover:bg-secondary"
-                  >
-                    {item.label}
-                  </Link>
-                )
-              )}
+                      {child.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ) : (
               <Link
-                to="/login"
+                key={item.path}
+                to={item.path!}
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center justify-center gap-2 mt-4 px-5 py-3 text-sm font-medium bg-primary text-primary-foreground rounded-full"
+                className="block px-4 py-3 text-sm font-bold text-black hover:text-black/70 rounded-xl hover:bg-gray-50 border-b border-gray-100 last:border-0"
               >
-                <User size={16} />
-                Sign In
+                {item.label}
               </Link>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            )
+          )}
+        </div>
+      </div>
     </header>
   );
 };

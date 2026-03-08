@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useRef } from "react";
 import { MessageCircle, X, Phone } from "lucide-react";
+import gsap from "@/lib/gsap-config";
+import { useGSAP } from "@gsap/react";
 
 const WhatsAppIcon = ({ size = 22 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -10,53 +11,64 @@ const WhatsAppIcon = ({ size = 22 }: { size?: number }) => (
 
 const ChatBubble = () => {
   const [open, setOpen] = useState(false);
+  const container = useRef<HTMLDivElement>(null);
+  const popupRef = useRef<HTMLDivElement>(null);
+  const waRef = useRef<HTMLAnchorElement>(null);
+  const btnRef = useRef<HTMLButtonElement>(null);
+
+  useGSAP(() => {
+    if (open) {
+      gsap.fromTo(popupRef.current, 
+        { scale: 0.9, opacity: 0, y: 10, display: "none" }, 
+        { scale: 1, opacity: 1, y: 0, display: "block", duration: 0.4, ease: "back.out(1.7)" }
+      );
+    } else {
+      gsap.to(popupRef.current, { 
+        scale: 0.9, opacity: 0, y: 10, display: "none", duration: 0.3, ease: "power2.in" 
+      });
+    }
+  }, { scope: container, dependencies: [open] });
 
   return (
-    <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.8, opacity: 0, y: 20 }}
-            className="bg-card rounded-4xl shadow-premium border border-border/50 p-6 w-80"
+    <div ref={container} className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3 pointer-events-none">
+      <div
+        ref={popupRef}
+        className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 w-80 mb-2 pointer-events-auto hidden"
+      >
+        <h3 className="font-heading font-medium text-lg mb-2 text-black">Hello Homebuyer! 👋</h3>
+        <p className="text-sm text-gray-500 mb-4 font-light leading-relaxed">
+          Ready to find your dream property? Let's chat or book a call with one of our friendly agents.
+        </p>
+        <div className="flex flex-col gap-2">
+           <a
+            href="/contact"
+            className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-black text-white rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-black/80 transition-opacity"
           >
-            <h3 className="font-heading font-bold text-lg mb-2">Hello Homebuyer! 👋</h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              Ready to find your dream property? Let's chat or book a call with one of our friendly agents.
-            </p>
-            <a
-              href="/contact"
-              className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-accent text-accent-foreground rounded-full font-medium text-sm hover:opacity-90 transition-opacity"
-            >
-              <Phone size={16} />
-              Book a Call
-            </a>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <Phone size={14} />
+            Book a Call
+          </a>
+        </div>
+      </div>
 
       {/* WhatsApp Button */}
-      <motion.a
+      <a
+        ref={waRef}
         href="https://wa.me/919056465106"
         target="_blank"
         rel="noopener noreferrer"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="h-14 w-14 rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/30 flex items-center justify-center"
+        className="h-14 w-14 rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/30 flex items-center justify-center hover:scale-110 active:scale-95 transition-transform duration-300 pointer-events-auto"
       >
         <WhatsAppIcon size={26} />
-      </motion.a>
+      </a>
 
       {/* Chat Bubble Button */}
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+      <button
+        ref={btnRef}
         onClick={() => setOpen(!open)}
-        className="h-14 w-14 rounded-full bg-accent text-accent-foreground shadow-lg shadow-accent/30 flex items-center justify-center"
+        className="h-14 w-14 rounded-full bg-black text-white shadow-lg shadow-black/30 flex items-center justify-center hover:scale-110 active:scale-95 transition-transform duration-300 pointer-events-auto"
       >
         {open ? <X size={22} /> : <MessageCircle size={22} />}
-      </motion.button>
+      </button>
     </div>
   );
 };

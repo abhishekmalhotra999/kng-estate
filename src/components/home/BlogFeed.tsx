@@ -1,6 +1,8 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
 import { ArrowRight, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
+import gsap from "@/lib/gsap-config";
+import { useGSAP } from "@gsap/react";
 
 const posts = [
   {
@@ -24,59 +26,85 @@ const posts = [
 ];
 
 const BlogFeed = () => {
+  const container = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const postsRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: container.current,
+        start: "top 75%",
+      }
+    });
+
+    tl.fromTo(titleRef.current,
+      { y: 30, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
+    )
+    
+    tl.fromTo(".blog-card",
+      { y: 50, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.8, stagger: 0.2, ease: "power2.out" },
+      "-=0.6"
+    );
+
+  }, { scope: container });
+
   return (
-    <section className="py-24 px-6">
+    <section ref={container} className="py-24 px-6 bg-white">
       <div className="container mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-12"
+        <div 
+          ref={titleRef}
+          className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-12 opacity-0 translate-y-8"
         >
           <div>
-            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-2">What's Going On?</h2>
-            <p className="text-muted-foreground">Latest insights from the real estate world.</p>
+            <h2 className="text-3xl md:text-4xl font-heading font-medium mb-2">What's Going On?</h2>
+            <p className="text-muted-foreground font-light">Latest insights from the real estate world.</p>
           </div>
           <Link
             to="/blogs"
-            className="mt-4 sm:mt-0 inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-accent transition-colors"
+            className="mt-4 sm:mt-0 inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-accent transition-colors group"
           >
-            View All <ArrowRight size={16} />
+            View All <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
           </Link>
-        </motion.div>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div ref={postsRef} className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {posts.map((post, i) => (
-            <motion.article
+            <article
               key={post.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="bg-card rounded-4xl overflow-hidden shadow-premium border border-border/50 group hover:shadow-premium-hover transition-all duration-300"
+              className="blog-card bg-card group border-b border-border hover:border-black transition-colors duration-500 pb-8 flex flex-col h-full"
             >
-              <div className="h-48 bg-gradient-to-br from-accent/10 to-secondary flex items-center justify-center">
-                <span className="px-4 py-1.5 rounded-full bg-card text-xs font-medium text-foreground shadow-sm">
-                  {post.category}
-                </span>
+              <div className="relative mb-6 overflow-hidden">
+                <div className="h-64 bg-gray-100 w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                 <div className="absolute top-4 left-4">
+                  <span className="px-3 py-1 bg-white/90 backdrop-blur-sm border border-black/5 text-[10px] font-bold uppercase tracking-widest text-foreground shadow-sm">
+                    {post.category}
+                  </span>
+                </div>
               </div>
-              <div className="p-6">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
-                  <Calendar size={14} />
+
+              <div className="flex-1 flex flex-col">
+                <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3 uppercase tracking-wider font-medium">
+                  <Calendar size={12} />
                   {post.date}
                 </div>
-                <h3 className="text-lg font-heading font-bold mb-2 group-hover:text-accent transition-colors">
+                <h3 className="text-xl font-heading font-medium mb-3 group-hover:text-black/70 transition-colors leading-snug">
                   {post.title}
                 </h3>
-                <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{post.excerpt}</p>
-                <Link
-                  to="/blogs"
-                  className="inline-flex items-center gap-1 text-sm font-medium text-foreground hover:text-accent transition-colors"
-                >
-                  Continue Reading <ArrowRight size={14} />
-                </Link>
+                <p className="text-sm text-gray-500 mb-6 leading-relaxed font-light">{post.excerpt}</p>
+                
+                <div className="mt-auto pt-4">
+                  <Link
+                    to="/blogs"
+                    className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-foreground group-hover:text-black/70 transition-colors group-hover:translate-x-1 duration-300"
+                  >
+                    Read Article <ArrowRight size={12} />
+                  </Link>
+                </div>
               </div>
-            </motion.article>
+            </article>
           ))}
         </div>
       </div>

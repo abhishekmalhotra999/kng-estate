@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,8 +6,9 @@
 
 @layer base {
   :root {
-    --background: 40 33% 97%;
-    --foreground: 0 0% 10%;
+    /* Ultra Luxury Palette */
+    --background: 0 0% 100%; /* Pure White */
+    --foreground: 0 0% 10%; /* Deepest Charcoal */
 
     --card: 0 0% 100%;
     --card-foreground: 0 0% 10%;
@@ -15,33 +16,34 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 10%;
 
-    --primary: 38 70% 40%;
+    --primary: 38 50% 40%; /* Rich Gold/Bronze as primary */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 40 33% 94%;
-    --secondary-foreground: 0 0% 10%;
+    --secondary: 38 30% 96%; /* Very light gold tint */
+    --secondary-foreground: 38 50% 30%;
 
-    --muted: 40 10% 94%;
-    --muted-foreground: 40 3% 40%;
+    --muted: 38 20% 96%;
+    --muted-foreground: 38 10% 40%;
 
-    --accent: 38 80% 48%;
+    --accent: 38 45% 50%; /* Muted Gold */
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 40 20% 88%;
-    --input: 40 20% 88%;
-    --ring: 38 70% 40%;
+    --border: 38 30% 85%;
+    --input: 38 30% 90%;
+    --ring: 38 45% 50%; /* Gold focus ring */
 
-    --radius: 1.5rem;
+    --radius: 0px; /* Sharp corners are often more "minimal/luxury" than rounded */
 
-    --gold: 38 80% 48%;
-    --gold-light: 40 60% 92%;
-    --gold-dark: 38 70% 30%;
+    /* Custom Tokens */
+    --gold: 38 45% 50%; 
+    --gold-light: 38 45% 92%;
+    --gold-dark: 38 45% 30%;
     --charcoal: 0 0% 10%;
     --warm-grey: 40 5% 63%;
-    --alabaster: 40 33% 97%;
+    --alabaster: 0 0% 98%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;

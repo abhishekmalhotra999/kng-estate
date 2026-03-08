@@ -1,9 +1,11 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/home/Hero";
+import ExperienceSection from "@/components/home/ExperienceSection";
 import ValueSection from "@/components/home/ValueSection";
+import WhyUs from "@/components/home/WhyUs";
 import AboutTeaser from "@/components/home/AboutTeaser";
-import BlogFeed from "@/components/home/BlogFeed";
+import ContactSection from "@/components/home/ContactSection";
 
 const Home = () => {
   return (
@@ -11,9 +13,11 @@ const Home = () => {
       <Header />
       <main>
         <Hero />
+        <ExperienceSection />
         <ValueSection />
+        <WhyUs />
         <AboutTeaser />
-        <BlogFeed />
+        <ContactSection />
       </main>
       <Footer />
     </div>

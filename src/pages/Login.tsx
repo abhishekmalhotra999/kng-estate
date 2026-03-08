@@ -1,13 +1,22 @@
+import { useState, useRef } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { motion } from "framer-motion";
 import { User, Lock } from "lucide-react";
-import { useState } from "react";
 import { toast } from "sonner";
+import gsap from "@/lib/gsap-config";
+import { useGSAP } from "@gsap/react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const container = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    gsap.fromTo(".login-box",
+      { y: 30, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
+    );
+  }, { scope: container });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,56 +24,54 @@ const Login = () => {
   };
 
   const inputClass =
-    "w-full px-6 py-4 rounded-2xl bg-background border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-foreground/20 transition-all duration-300";
+    "w-full px-6 py-4 bg-gray-50 border border-gray-200 text-black placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black focus:border-black transition-all duration-300 font-light";
 
   return (
-    <div className="min-h-screen">
+    <div ref={container} className="min-h-screen bg-gray-50/50">
       <Header />
-      <main className="pt-28 pb-24 px-6 flex items-center justify-center min-h-[80vh]">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-card rounded-5xl shadow-premium border border-border/50 p-8 md:p-12 w-full max-w-md"
+      <main className="pt-32 pb-24 px-6 flex items-center justify-center min-h-[80vh]">
+        <div
+          className="login-box bg-white shadow-xl border border-gray-100 p-8 md:p-12 w-full max-w-md opacity-0"
         >
-          <div className="text-center mb-8">
-            <div className="h-16 w-16 rounded-full bg-secondary flex items-center justify-center mx-auto mb-4">
-              <User size={28} />
+          <div className="text-center mb-10">
+            <div className="h-16 w-16 rounded-full bg-gray-50 flex items-center justify-center mx-auto mb-6 text-black border border-gray-200">
+              <User size={28} strokeWidth={1.5} />
             </div>
-            <h1 className="text-2xl font-heading font-bold">Welcome Back</h1>
-            <p className="text-sm text-muted-foreground mt-1">Sign in to your KNG Estate account</p>
+            <h1 className="text-3xl font-heading font-medium mb-2">Welcome Back</h1>
+            <p className="text-sm text-muted-foreground font-light">Sign in to your KNG Estate account</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div className="relative">
-              <User size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-muted-foreground" />
+              <User size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
                 type="email"
                 placeholder="Email Address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className={`${inputClass} pl-14`}
+                className={`${inputClass} pl-12`}
                 required
               />
             </div>
             <div className="relative">
-              <Lock size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-muted-foreground" />
+              <Lock size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
                 type="password"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={`${inputClass} pl-14`}
+                className={`${inputClass} pl-12`}
                 required
               />
             </div>
             <button
               type="submit"
-              className="w-full py-4 bg-primary text-primary-foreground rounded-full font-medium text-lg hover:opacity-90 transition-all active:scale-[0.98] shadow-lg shadow-primary/10"
+              className="w-full py-4 bg-black text-white text-xs font-bold uppercase tracking-widest hover:bg-black/80 transition-all active:scale-[0.99] shadow-lg shadow-black/5 mt-4"
             >
               Sign In
             </button>
           </form>
-        </motion.div>
+        </div>
       </main>
       <Footer />
     </div>

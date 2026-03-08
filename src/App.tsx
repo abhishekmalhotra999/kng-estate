@@ -9,12 +9,12 @@ import Commercial from "./pages/Commercial";
 import Agricultural from "./pages/Agricultural";
 import OurTeam from "./pages/OurTeam";
 import OurApproach from "./pages/OurApproach";
-import Blogs from "./pages/Blogs";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import CookieBanner from "./components/shared/CookieBanner";
 import ChatBubble from "./components/shared/ChatBubble";
+import SmoothScroll from "./components/shared/SmoothScroll";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +24,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <SmoothScroll />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/residential" element={<Residential />} />
@@ -31,7 +32,6 @@ const App = () => (
           <Route path="/agricultural" element={<Agricultural />} />
           <Route path="/team" element={<OurTeam />} />
           <Route path="/approach" element={<OurApproach />} />
-          <Route path="/blogs" element={<Blogs />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<NotFound />} />

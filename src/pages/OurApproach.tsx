@@ -1,8 +1,9 @@
+import { useState, useRef } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
+import gsap from "@/lib/gsap-config";
+import { useGSAP } from "@gsap/react";
 
 const faqs = [
   {
@@ -27,58 +28,72 @@ const faqs = [
   },
 ];
 
-const FAQItem = ({ q, a, index }: { q: string; a: string; index: number }) => {
+const FAQItem = ({ q, a }: { q: string; a: string }) => {
   const [open, setOpen] = useState(false);
+  
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.05 }}
-      className="bg-card rounded-4xl border border-border/50 overflow-hidden shadow-premium"
-    >
+    <div className="faq-item bg-white border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 opacity-0 translate-y-4">
       <button
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between p-6 text-left"
+        className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors"
       >
-        <span className="font-heading font-bold text-lg pr-4">{q}</span>
-        <ChevronDown size={20} className={`shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
+        <span className="font-heading font-medium text-lg pr-4">{q}</span>
+        <ChevronDown size={20} className={`shrink-0 transition-transform duration-300 text-gray-400 ${open ? "rotate-180" : ""}`} />
       </button>
-      <div className={`overflow-hidden transition-all duration-300 ${open ? "max-h-96" : "max-h-0"}`}>
-        <p className="px-6 pb-6 text-muted-foreground leading-relaxed">{a}</p>
+      <div 
+        className={`overflow-hidden transition-all duration-500 ease-in-out ${open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
+      >
+        <div className="px-6 pb-6 pt-2">
+            <p className="text-gray-500 leading-relaxed font-light">{a}</p>
+        </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
-const OurApproach = () => (
-  <div className="min-h-screen">
-    <Header />
-    <main className="pt-28 pb-24 px-6">
-      <div className="container mx-auto max-w-3xl">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
-        >
-          <span className="inline-block px-5 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-6">
-            Our Philosophy
-          </span>
-          <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4">Our Approach</h1>
-          <p className="text-muted-foreground text-lg">
-            Transparency, communication, and client empowerment drive every decision we make.
-          </p>
-        </motion.div>
+const OurApproach = () => {
+  const container = useRef<HTMLDivElement>(null);
 
-        <div className="space-y-4">
-          {faqs.map((faq, i) => (
-            <FAQItem key={faq.q} {...faq} index={i} />
-          ))}
+  useGSAP(() => {
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+    tl.fromTo(".anim-text",
+      { y: 30, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, delay: 0.2 }
+    );
+    
+    tl.to(".faq-item",
+      { y: 0, opacity: 1, duration: 0.6, stagger: 0.1 },
+      "-=0.4"
+    );
+
+  }, { scope: container });
+
+  return (
+    <div ref={container} className="min-h-screen bg-gray-50/50">
+      <Header />
+      <main className="pt-32 pb-24 px-6">
+        <div className="container mx-auto max-w-3xl">
+          <div className="text-center mb-16">
+            <span className="anim-text inline-block px-4 py-1.5 bg-white border border-gray-200 text-black text-xs font-bold tracking-widest uppercase mb-6 shadow-sm">
+              Our Philosophy
+            </span>
+            <h1 className="anim-text text-4xl md:text-5xl font-heading font-medium mb-4">Our Approach</h1>
+            <p className="anim-text text-muted-foreground text-lg max-w-xl mx-auto font-light">
+              Transparency, communication, and client empowerment drive every decision we make.
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            {faqs.map((faq) => (
+              <FAQItem key={faq.q} {...faq} />
+            ))}
+          </div>
         </div>
-      </div>
-    </main>
-    <Footer />
-  </div>
-);
+      </main>
+      <Footer />
+    </div>
+  );
+};
 
 export default OurApproach;

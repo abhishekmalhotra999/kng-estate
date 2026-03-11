@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { MessageCircle, MapPin, Phone, Mail } from "lucide-react";
+import { MessageCircle, MapPin, Phone, Mail, ArrowUpRight } from "lucide-react";
 import ContactForm from "@/components/shared/ContactForm";
 import gsap from "@/lib/gsap-config";
 import { useGSAP } from "@gsap/react";
@@ -7,132 +7,227 @@ import { useGSAP } from "@gsap/react";
 const ContactSection = () => {
   const container = useRef<HTMLElement>(null);
 
-  useGSAP(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: container.current,
-        start: "top 75%",
-      }
-    });
+  useGSAP(
+    () => {
+      // Horizontal gold line draws in
+      gsap.fromTo(
+        ".contact-line",
+        { scaleX: 0 },
+        {
+          scaleX: 1,
+          duration: 1.4,
+          ease: "power3.inOut",
+          transformOrigin: "left center",
+          scrollTrigger: {
+            trigger: container.current,
+            start: "top 80%",
+          },
+        }
+      );
 
-    tl.fromTo(".contact-intro",
-      { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
-    )
-    .fromTo(".contact-detail",
-      { x: -20, opacity: 0 },
-      { x: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power2.out" },
-      "-=0.4"
-    )
-    .fromTo(".contact-form-wrapper",
-      { x: 30, opacity: 0 },
-      { x: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
-      "-=0.6"
-    );
+      // Stagger left-column items
+      gsap.fromTo(
+        ".contact-fade",
+        { y: 40, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.9,
+          stagger: 0.12,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: container.current,
+            start: "top 70%",
+          },
+        }
+      );
 
-  }, { scope: container });
+      // Form slides in
+      gsap.fromTo(
+        ".contact-form-reveal",
+        { y: 60, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".contact-form-reveal",
+            start: "top 85%",
+          },
+        }
+      );
+    },
+    { scope: container }
+  );
 
   const handleWhatsApp = () => {
     window.open("https://wa.me/919056465106", "_blank");
   };
 
   return (
-    <section ref={container} className="bg-[#0a0a0a] text-white overflow-hidden relative">
+    <section
+      ref={container}
+      id="contact-section"
+      className="relative bg-[#FCFBF8] text-gray-900 overflow-hidden"
+    >
+      {/* ─── Ambient glow ─── */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#c9a96e]/[0.04] blur-[160px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#c9a96e]/[0.03] blur-[120px] rounded-full pointer-events-none" />
 
-      {/* Radial gold glow top center */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+      {/* ─── Top edge line ─── */}
+      <div className="contact-line h-[1px] bg-gradient-to-r from-[#c9a96e]/60 via-[#c9a96e]/20 to-transparent" />
 
-      {/* Section header bar */}
-      <div className="border-b border-white/5">
-        <div className="container mx-auto px-6 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <span className="text-[11px] font-bold tracking-[0.3em] uppercase text-primary">Get In Touch</span>
-          <button
-            onClick={handleWhatsApp}
-            className="group inline-flex items-center gap-3 px-6 py-3 bg-[#25D366]/10 border border-[#25D366]/30 text-[#25D366] text-xs font-bold tracking-widest uppercase hover:bg-[#25D366] hover:text-white transition-all duration-300"
-          >
-            <MessageCircle size={16} />
-            Instant Reply — WhatsApp
-          </button>
+      {/* ─── Main content ─── */}
+      <div className="container mx-auto px-6 md:px-12 lg:px-20 xl:px-28 py-24 md:py-32 relative z-10">
+        {/* Section header */}
+        <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-20">
+          <div>
+            <span className="contact-fade inline-flex items-center gap-2 text-[10px] font-semibold tracking-[0.35em] uppercase text-[#c9a96e] mb-5">
+              <span className="block w-8 h-[1px] bg-[#c9a96e]/50" />
+              Contact
+            </span>
+            <h2 className="contact-fade text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-medium leading-[1] text-gray-900">
+              Start Your
+              <br />
+              <span className="italic font-light text-[#c9a96e]">
+                Journey
+              </span>{" "}
+              With Us
+            </h2>
+          </div>
+
+          <p className="contact-fade font-body text-gray-600 text-sm md:text-[15px] max-w-sm leading-[1.8] tracking-wide">
+            From first inquiry to final handshake — we are with you. Experience
+            the KNG difference.
+          </p>
         </div>
-      </div>
 
-      <div className="container mx-auto px-6 py-20 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
+        {/* ─── Two-column layout ─── */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 xl:gap-24">
+          {/* ─── Left: Contact Info Cards ─── */}
+          <div className="lg:col-span-5 space-y-8">
+            {/* Quick connect cards */}
+            <div className="contact-fade grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Phone card */}
+              <a
+                href="tel:+919056465106"
+                className="group relative p-6 border border-black/[0.05] bg-black/[0.02] hover:bg-black/[0.03] hover:border-[#c9a96e]/20 transition-all duration-500"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-9 h-9 flex items-center justify-center border border-[#c9a96e]/30 text-[#c9a96e]">
+                    <Phone size={15} strokeWidth={1.5} />
+                  </div>
+                  <ArrowUpRight
+                    size={14}
+                    className="ml-auto text-gray-500 group-hover:text-[#c9a96e] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all duration-300"
+                  />
+                </div>
+                <span className="block text-[9px] uppercase tracking-[0.25em] text-gray-500 mb-1.5">
+                  Call Us
+                </span>
+                <p className="font-heading text-base text-gray-900 leading-tight">
+                  +91 90564 65106
+                </p>
+                <p className="text-xs text-gray-600 mt-1">+1 236-258-5106</p>
+              </a>
 
-          {/* Left Column */}
-          <div className="lg:col-span-5 space-y-14">
-            <div className="contact-intro">
-              <h2 className="text-5xl md:text-6xl lg:text-7xl font-heading font-medium leading-[0.95] mb-8">
-                Let's Build <br />
-                <em className="italic font-serif font-light text-primary">Something</em><br />
-                Together.
-              </h2>
-              <p className="text-lg text-white/50 font-light leading-relaxed max-w-sm">
-                From first inquiry to final handshake, we are with you. Reach out and experience the KNG difference.
-              </p>
+              {/* Email card */}
+              <a
+                href="mailto:kngestate@gmail.com"
+                className="group relative p-6 border border-black/[0.05] bg-black/[0.02] hover:bg-black/[0.03] hover:border-[#c9a96e]/20 transition-all duration-500"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-9 h-9 flex items-center justify-center border border-[#c9a96e]/30 text-[#c9a96e]">
+                    <Mail size={15} strokeWidth={1.5} />
+                  </div>
+                  <ArrowUpRight
+                    size={14}
+                    className="ml-auto text-gray-500 group-hover:text-[#c9a96e] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all duration-300"
+                  />
+                </div>
+                <span className="block text-[9px] uppercase tracking-[0.25em] text-gray-500 mb-1.5">
+                  Email
+                </span>
+                <p className="font-heading text-base text-gray-900 leading-tight">
+                  kngestate@gmail.com
+                </p>
+              </a>
             </div>
 
-            {/* Contact details as an editorial list */}
-            <div className="space-y-0 divide-y divide-white/8">
-              <div className="contact-detail group py-7 flex gap-6 items-center cursor-pointer hover:pl-2 transition-all duration-300">
-                <div className="w-10 h-10 shrink-0 flex items-center justify-center text-primary">
-                  <Phone size={20} strokeWidth={1.5} />
-                </div>
-                <div>
-                  <span className="block text-[10px] uppercase tracking-widest text-white/30 mb-1">Phone</span>
-                  <p className="text-lg text-white font-heading leading-tight">+91 90564 65106</p>
-                  <p className="text-sm text-white/40 mt-0.5">+1 236-258-5106</p>
-                </div>
+            {/* WhatsApp CTA */}
+            <button
+              onClick={handleWhatsApp}
+              className="contact-fade group w-full flex items-center gap-4 p-5 border border-[#25D366]/15 bg-[#25D366]/[0.04] hover:bg-[#25D366]/10 hover:border-[#25D366]/30 transition-all duration-500"
+            >
+              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#25D366]/15 text-[#25D366]">
+                <MessageCircle size={18} />
               </div>
-
-              <div className="contact-detail group py-7 flex gap-6 items-center cursor-pointer hover:pl-2 transition-all duration-300">
-                <div className="w-10 h-10 shrink-0 flex items-center justify-center text-primary">
-                  <Mail size={20} strokeWidth={1.5} />
-                </div>
-                <div>
-                  <span className="block text-[10px] uppercase tracking-widest text-white/30 mb-1">Email</span>
-                  <p className="text-lg text-white font-heading">kngestate@gmail.com</p>
-                </div>
+              <div className="text-left">
+                <span className="block text-xs font-semibold text-[#25D366] tracking-wide uppercase">
+                  WhatsApp
+                </span>
+                <span className="block text-[11px] text-gray-600 mt-0.5">
+                  Get an instant reply
+                </span>
               </div>
+              <ArrowUpRight
+                size={16}
+                className="ml-auto text-[#25D366]/40 group-hover:text-[#25D366] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all duration-300"
+              />
+            </button>
 
-              <div className="contact-detail py-7 flex gap-6 items-start">
-                <div className="w-10 h-10 shrink-0 flex items-center justify-center text-primary mt-1">
-                  <MapPin size={20} strokeWidth={1.5} />
+            {/* Office address */}
+            <div className="contact-fade p-6 border border-black/[0.05] bg-black/[0.02]">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-9 h-9 flex items-center justify-center border border-[#c9a96e]/30 text-[#c9a96e]">
+                  <MapPin size={15} strokeWidth={1.5} />
                 </div>
-                <div className="w-full">
-                  <span className="block text-[10px] uppercase tracking-widest text-white/30 mb-2">Office</span>
-                  <p className="text-base text-white/70 font-light leading-relaxed mb-6">
-                    B-9, Ansals Sampark-1, SCO-194-195<br />
-                    City Centre, Sector-5, Panchkula — 134109
-                  </p>
-                  <div className="w-full h-44 overflow-hidden relative border border-white/10 grayscale hover:grayscale-0 transition-all duration-700">
-                    <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15640.835474751336!2d76.83783935210963!3d30.697841577717466!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390f936555555555%3A0x1234567890abcdef!2sSector%205%2C%20Panchkula%2C%20Haryana!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
-                      width="100%" height="100%" style={{ border: 0 }}
-                      allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
-                    />
-                  </div>
-                </div>
+                <span className="text-[9px] uppercase tracking-[0.25em] text-gray-500">
+                  Head Office
+                </span>
+              </div>
+              <p className="text-sm text-gray-900/60 font-light leading-relaxed mb-5">
+                B-9, Ansals Sampark-1, SCO-194-195
+                <br />
+                City Centre, Sector-5, Panchkula — 134109
+              </p>
+              <div className="w-full h-40 overflow-hidden relative border border-black/[0.05] grayscale hover:grayscale-0 transition-all duration-700">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15640.835474751336!2d76.83783935210963!3d30.697841577717466!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390f936555555555%3A0x1234567890abcdef!2sSector%205%2C%20Panchkula%2C%20Haryana!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
               </div>
             </div>
           </div>
 
-          {/* Right Column: Form */}
-          <div className="lg:col-span-7 contact-form-wrapper">
-            <div className="relative border border-white/10 p-8 md:p-12">
-              {/* Glowing top-right corner */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-3xl rounded-full pointer-events-none" />
-              <div className="absolute top-0 right-0 w-20 h-[1px] bg-gradient-to-l from-primary/60 to-transparent" />
-              <div className="absolute top-0 right-0 h-20 w-[1px] bg-gradient-to-b from-primary/60 to-transparent" />
-              <div className="absolute bottom-0 left-0 w-20 h-[1px] bg-gradient-to-r from-primary/60 to-transparent" />
-              <div className="absolute bottom-0 left-0 h-20 w-[1px] bg-gradient-to-t from-primary/60 to-transparent" />
+          {/* ─── Right: Contact Form ─── */}
+          <div className="lg:col-span-7 contact-form-reveal">
+            <div className="relative p-8 md:p-12 lg:p-14 bg-gradient-to-br from-black/[0.02] to-transparent border border-black/[0.05]">
+              {/* Corner accents */}
+              <div className="absolute top-0 left-0 w-16 h-[1px] bg-gradient-to-r from-[#c9a96e]/50 to-transparent" />
+              <div className="absolute top-0 left-0 h-16 w-[1px] bg-gradient-to-b from-[#c9a96e]/50 to-transparent" />
+              <div className="absolute bottom-0 right-0 w-16 h-[1px] bg-gradient-to-l from-[#c9a96e]/50 to-transparent" />
+              <div className="absolute bottom-0 right-0 h-16 w-[1px] bg-gradient-to-t from-[#c9a96e]/50 to-transparent" />
 
-              <h3 className="text-2xl font-heading font-light text-white mb-2">Send a Private Inquiry</h3>
-              <p className="text-white/40 text-sm mb-10 font-light">We respond to every message within 24 hours.</p>
+              {/* Form header */}
+              <div className="mb-10">
+                <h3 className="text-2xl md:text-3xl font-heading font-light text-gray-900 mb-2">
+                  Private Inquiry
+                </h3>
+                <p className="text-gray-600 text-sm font-light">
+                  Every message receives a response within 24 hours.
+                </p>
+              </div>
+
               <ContactForm />
             </div>
           </div>
-
         </div>
       </div>
     </section>

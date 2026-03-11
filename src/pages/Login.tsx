@@ -24,7 +24,7 @@ const Login = () => {
   };
 
   const inputClass =
-    "w-full px-6 py-4 bg-gray-50 border border-gray-200 text-black placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black focus:border-black transition-all duration-300 font-light";
+    "w-full px-6 py-4 bg-gray-50 border border-gray-200 text-black placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-black focus:border-black transition-all duration-300 font-light";
 
   return (
     <div ref={container} className="min-h-screen bg-gray-50/50">
@@ -43,7 +43,7 @@ const Login = () => {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="relative">
-              <User size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" />
+              <User size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-500" />
               <input
                 type="email"
                 placeholder="Email Address"
@@ -54,7 +54,7 @@ const Login = () => {
               />
             </div>
             <div className="relative">
-              <Lock size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" />
+              <Lock size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-500" />
               <input
                 type="password"
                 placeholder="Password"
@@ -66,7 +66,7 @@ const Login = () => {
             </div>
             <button
               type="submit"
-              className="w-full py-4 bg-black text-white text-xs font-bold uppercase tracking-widest hover:bg-black/80 transition-all active:scale-[0.99] shadow-lg shadow-black/5 mt-4"
+              className="w-full py-4 bg-white text-gray-900 text-xs font-bold uppercase tracking-widest hover:bg-white/80 transition-all active:scale-[0.99] shadow-lg shadow-black/5 mt-4"
             >
               Sign In
             </button>

@@ -12,7 +12,7 @@ const team = [
   {
     name: "Prerna Sharma",
     role: "Lead Real Estate Agent",
-    bio: "With years of experience in the Surrey market, Prerna brings deep knowledge and a warm, client-first approach to every transaction.",
+    bio: "With years of experience in the Tricity market, Prerna brings deep knowledge and a warm, client-first approach to every transaction.",
     image: prerna,
   },
   {
@@ -32,41 +32,117 @@ const team = [
 const OurTeam = () => {
   const container = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+  useGSAP(
+    () => {
+      // Eyebrow
+      gsap.fromTo(
+        ".team-eyebrow",
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6, delay: 0.3 }
+      );
 
-    tl.fromTo(".team-header-item",
-      { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, delay: 0.2 }
-    );
-    
-    // Team cards themselves handle their scroll trigger appearance, 
-    // but if we wanted to sequence them after the header we could do it here.
-    // Since TeamCard uses scrollTrigger, let's just let them be independent.
+      // Title word reveal
+      const words = gsap.utils.toArray(".team-title-word") as HTMLElement[];
+      gsap.fromTo(
+        words,
+        { y: 60, opacity: 0, rotateX: 20 },
+        {
+          y: 0,
+          opacity: 1,
+          rotateX: 0,
+          duration: 0.9,
+          stagger: 0.08,
+          ease: "power3.out",
+          delay: 0.4,
+        }
+      );
 
-  }, { scope: container });
+      // Line draw
+      gsap.fromTo(
+        ".team-line",
+        { scaleX: 0 },
+        {
+          scaleX: 1,
+          duration: 1.2,
+          ease: "power3.inOut",
+          transformOrigin: "left",
+          delay: 0.7,
+        }
+      );
+
+      // Description
+      gsap.fromTo(
+        ".team-desc",
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, delay: 0.9 }
+      );
+    },
+    { scope: container }
+  );
 
   return (
-    <div ref={container} className="min-h-screen bg-white">
+    <div ref={container} className="min-h-screen bg-[#FCFBF8] text-gray-900">
       <Header />
-      <main className="pt-32 pb-24 px-6">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <span className="team-header-item inline-block px-4 py-1.5 bg-gray-100 text-black text-xs font-bold tracking-widest uppercase mb-6 border border-gray-200">
-              The People Behind KNG
-            </span>
-            <h1 className="team-header-item text-4xl md:text-5xl font-heading font-medium mb-4">Meet Our Team</h1>
-            <p className="team-header-item text-muted-foreground max-w-2xl mx-auto text-lg font-light">
-              A dedicated group of professionals who truly care about finding your perfect property.
-            </p>
-          </div>
+      <main>
+        {/* ─── Hero Section ─── */}
+        <section className="relative pt-36 md:pt-44 pb-20 px-6 md:px-12 lg:px-20 xl:px-28 overflow-hidden">
+          {/* Ambient glow */}
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#c9a96e]/[0.03] blur-[150px] rounded-full pointer-events-none" />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {team.map((member, i) => (
-              <TeamCard key={member.name} {...member} delay={i * 0.15} />
-            ))}
+          <div className="container mx-auto">
+            <div className="max-w-3xl">
+              <span className="team-eyebrow inline-flex items-center gap-3 text-[10px] font-semibold tracking-[0.35em] uppercase text-[#c9a96e] mb-6">
+                <span className="block w-8 h-[1px] bg-[#c9a96e]/50" />
+                The People Behind KNG
+              </span>
+
+              <h1
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-medium leading-[1.05] mb-8"
+                style={{ perspective: "800px" }}
+              >
+                {["Meet", "the", "Team"].map((word, i) => (
+                  <span
+                    key={i}
+                    className="team-title-word inline-block mr-[0.25em]"
+                  >
+                    {word}
+                  </span>
+                ))}
+                <br />
+                {["Behind", "Your"].map((word, i) => (
+                  <span
+                    key={i}
+                    className="team-title-word inline-block mr-[0.25em] text-gray-600"
+                  >
+                    {word}
+                  </span>
+                ))}
+                <span className="team-title-word inline-block italic font-light text-[#c9a96e]">
+                  Success
+                </span>
+              </h1>
+
+              <div className="team-line w-16 h-[2px] bg-[#c9a96e] mb-8" />
+
+              <p className="team-desc text-lg text-gray-600 font-light leading-relaxed max-w-xl">
+                A dedicated group of professionals who truly care about finding
+                your perfect property. We bring passion, expertise, and genuine
+                heart to every relationship.
+              </p>
+            </div>
           </div>
-        </div>
+        </section>
+
+        {/* ─── Team Grid ─── */}
+        <section className="bg-white px-6 md:px-12 lg:px-20 xl:px-28 py-32">
+          <div className="container mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+              {team.map((member, i) => (
+                <TeamCard key={member.name} {...member} index={i} />
+              ))}
+            </div>
+          </div>
+        </section>
       </main>
       <Footer />
     </div>

@@ -42,7 +42,7 @@ const ChatBubble = () => {
         <div className="flex flex-col gap-2">
            <a
             href="/contact"
-            className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-black text-white rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-black/80 transition-opacity"
+            className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-white text-gray-900 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-white/80 transition-opacity"
           >
             <Phone size={14} />
             Book a Call
@@ -56,7 +56,7 @@ const ChatBubble = () => {
         href="https://wa.me/919056465106"
         target="_blank"
         rel="noopener noreferrer"
-        className="h-14 w-14 rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/30 flex items-center justify-center hover:scale-110 active:scale-95 transition-transform duration-300 pointer-events-auto"
+        className="h-14 w-14 rounded-full bg-[#25D366] text-gray-900 shadow-lg shadow-[#25D366]/30 flex items-center justify-center hover:scale-110 active:scale-95 transition-transform duration-300 pointer-events-auto"
       >
         <WhatsAppIcon size={26} />
       </a>
@@ -65,7 +65,7 @@ const ChatBubble = () => {
       <button
         ref={btnRef}
         onClick={() => setOpen(!open)}
-        className="h-14 w-14 rounded-full bg-black text-white shadow-lg shadow-black/30 flex items-center justify-center hover:scale-110 active:scale-95 transition-transform duration-300 pointer-events-auto"
+        className="h-14 w-14 rounded-full bg-white text-gray-900 shadow-lg shadow-black/30 flex items-center justify-center hover:scale-110 active:scale-95 transition-transform duration-300 pointer-events-auto"
       >
         {open ? <X size={22} /> : <MessageCircle size={22} />}
       </button>

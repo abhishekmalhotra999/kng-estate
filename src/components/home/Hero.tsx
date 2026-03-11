@@ -1,179 +1,312 @@
-import { useRef } from "react";
-import { ArrowRight } from "lucide-react";
+import { useRef, useState, useCallback, useEffect } from "react";
+import { ArrowRight, MapPin, ChevronDown } from "lucide-react";
 import gsap from "@/lib/gsap-config";
 import { useGSAP } from "@gsap/react";
 
-const heroImages = [
-  "https://images.unsplash.com/photo-1600596542815-2a4fe8f3106c?q=80&w=2070&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2053&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=2071&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2070&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?q=80&w=1984&auto=format&fit=crop"
+import heroHome from "@/assets/hero-home.jpg";
+import heroMansion from "@/assets/hero-mansion.png";
+import heroDusk from "@/assets/hero-dusk.png";
+import heroInterior from "@/assets/hero-interior.png";
+import residential from "@/assets/residential.jpg";
+
+const heroImages = [heroHome, heroMansion, heroDusk, heroInterior, residential];
+
+const stats = [
+  { value: "200+", label: "Properties Sold" },
+  { value: "$2B+", label: "Portfolio Value" },
+  { value: "15+", label: "Years of Trust" },
 ];
 
 const Hero = () => {
   const containerRef = useRef<HTMLElement>(null);
-  const slidesRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
-  useGSAP(() => {
-    // Initial loading animation
-    const tl = gsap.timeline();
-    
-    tl.fromTo(
-      ".hero-line",
-      { height: 0 },
-      { height: "4rem", duration: 1, ease: "power2.inOut" }
-    )
-    .fromTo(
-      ".hero-text-item",
-      { y: 50, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out" },
-      "-=0.5"
-    )
-    .fromTo(
-      ".scroll-indicator",
-      { opacity: 0 },
-      { opacity: 1, duration: 1, delay: 0.5 },
-      "-=0.5"
-    );
+  const nextSlide = useCallback(() => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setActiveSlide((prev) => (prev + 1) % heroImages.length);
+    setTimeout(() => setIsTransitioning(false), 1200);
+  }, [isTransitioning]);
 
-    // Parallax Effect
-    gsap.to(slidesRef.current, {
-      yPercent: 30,
-      ease: "none",
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-      },
-    });
+  // Auto-advance slides
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 5500);
+    return () => clearInterval(interval);
+  }, [nextSlide]);
 
-    gsap.to(contentRef.current, {
-      yPercent: 50,
-      opacity: 0,
-      ease: "none",
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom center",
-        scrub: true,
-      },
-    });
+  useGSAP(
+    () => {
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-    // Slideshow Logic
-    const slides = gsap.utils.toArray(".hero-slide") as HTMLElement[];
-    if (slides.length > 0) {
-      let current = 0;
-      const zIndexMin = 0;
-      const zIndexMax = 10;
-      
-      // CSS inline styles handle initial visibility — no GSAP set needed for opacity
-      // Just set z-indices
-      gsap.set(slides, { zIndex: zIndexMin });
-      gsap.set(slides[0], { zIndex: zIndexMax });
-      
-      // Start initial Ken Burns
-      gsap.fromTo(slides[0], 
-          { scale: 1 }, 
-          { scale: 1.1, duration: 6, ease: "none" }
-      );
+      // Curtain reveal: gold accent line grows
+      tl.fromTo(
+        ".hero-accent-line",
+        { scaleX: 0 },
+        { scaleX: 1, duration: 1.2, transformOrigin: "left center" }
+      )
+        // eyebrow fades up
+        .fromTo(
+          ".hero-eyebrow",
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8 },
+          "-=0.6"
+        )
+        // Main headline letters stagger
+        .fromTo(
+          ".hero-headline-word",
+          { y: 80, opacity: 0, rotateX: 40 },
+          {
+            y: 0,
+            opacity: 1,
+            rotateX: 0,
+            duration: 1,
+            stagger: 0.15,
+          },
+          "-=0.5"
+        )
+        // Sub text
+        .fromTo(
+          ".hero-subtext",
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8 },
+          "-=0.4"
+        )
+        // CTA
+        .fromTo(
+          ".hero-cta",
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.6 },
+          "-=0.3"
+        )
+        // Image reveal
+        .fromTo(
+          ".hero-image-wrapper",
+          { clipPath: "inset(100% 0% 0% 0%)", opacity: 0 },
+          {
+            clipPath: "inset(0% 0% 0% 0%)",
+            opacity: 1,
+            duration: 1.4,
+            ease: "power4.inOut",
+          },
+          "-=1.2"
+        )
+        // Stats
+        .fromTo(
+          ".hero-stat",
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.6, stagger: 0.12 },
+          "-=0.6"
+        )
+        // Scroll indicator
+        .fromTo(
+          ".hero-scroll-cue",
+          { opacity: 0 },
+          { opacity: 1, duration: 0.8 },
+          "-=0.2"
+        );
 
-      const nextSlide = () => {
-          const prev = slides[current];
-          current = (current + 1) % slides.length;
-          const next = slides[current];
+      // Continuous floating animation for the scroll indicator
+      gsap.to(".hero-scroll-cue .scroll-chevron", {
+        y: 6,
+        duration: 1.2,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
 
-          // Prepare next slide
-          gsap.set(next, { zIndex: zIndexMax, opacity: 0, scale: 1 });
-          gsap.set(prev, { zIndex: zIndexMin + 1 }); 
+      // Parallax on scroll
+      gsap.to(".hero-image-wrapper", {
+        yPercent: 15,
+        ease: "none",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
 
-          const transitionTl = gsap.timeline({
-              onComplete: () => {
-                  gsap.set(prev, { zIndex: zIndexMin, opacity: 0 });
-                  gsap.delayedCall(4, nextSlide);
-              }
-          });
-
-          transitionTl
-            .to(next, { opacity: 1, duration: 2, ease: "power2.inOut" })
-            .to(next, { scale: 1.1, duration: 6, ease: "none" }, 0);
-      };
-
-      gsap.delayedCall(4, nextSlide);
-    }
-
-  }, { scope: containerRef });
+      gsap.to(".hero-content-left", {
+        yPercent: 30,
+        opacity: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "80% top",
+          scrub: true,
+        },
+      });
+    },
+    { scope: containerRef }
+  );
 
   return (
-    <section ref={containerRef} className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-black">
-      {/* Background Slideshow */}
-      <div className="absolute inset-0 z-0 overflow-hidden bg-black">
-        <div ref={slidesRef} className="absolute inset-0 w-full h-full">
-            {heroImages.map((img, index) => (
-                <div 
-                    key={index}
-                    className="hero-slide absolute inset-0 w-full h-full will-change-transform"
-                    style={{ opacity: index === 0 ? 1 : 0 }}
-                >
-                    <img
-                        src={img}
-                        alt={`Luxury Residence ${index + 1}`}
-                        className="w-full h-full object-cover"
-                        loading={index === 0 ? "eager" : "lazy"}
-                        // @ts-ignore
-                        fetchPriority={index === 0 ? "high" : "low"}
-                    />
-                    {/* solid overlay keeps text legible without img opacity tricks */}
-                    <div className="absolute inset-0 bg-black/45" />
-                </div>
-            ))}
-        </div>
-      </div>
+    <section
+      ref={containerRef}
+      id="hero-section"
+      className="relative min-h-screen w-full overflow-hidden bg-[#FCFBF8]"
+    >
+      {/* ─── Subtle grid texture ─── */}
+      <div
+        className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(0,0,0,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.04) 1px, transparent 1px)",
+          backgroundSize: "80px 80px",
+        }}
+      />
 
-      {/* Content Container */}
-      <div ref={contentRef} className="relative z-10 container mx-auto px-6 md:px-12 flex flex-col items-center text-center will-change-transform">
-        
-        {/* Animated Line */}
-        <div className="hero-line w-[1px] bg-white/50 mb-8 hidden md:block" />
+      {/* ─── Content Grid ─── */}
+      <div className="relative z-10 min-h-screen flex flex-col lg:flex-row">
+        {/* ─── LEFT: Text Content ─── */}
+        <div className="hero-content-left flex-1 flex flex-col justify-center px-8 md:px-16 lg:px-20 xl:px-28 pt-32 pb-16 lg:pt-0 lg:pb-0 will-change-transform">
+          {/* Gold accent line */}
+          <div className="hero-accent-line w-16 h-[2px] bg-gradient-to-r from-[#c9a96e] to-[#e8c87e] mb-8" />
 
-        {/* Eyebrow Text */}
-        <span className="hero-text-item block text-white/90 uppercase tracking-[0.3em] text-xs md:text-sm font-body mb-6">
-          Exclusive Real Estate
-        </span>
+          {/* Eyebrow */}
+          <span className="hero-eyebrow inline-flex items-center gap-2 text-[#c9a96e] uppercase tracking-[0.35em] text-[10px] md:text-xs font-body font-medium mb-6">
+            <MapPin className="w-3 h-3" />
+            Surrey &middot; Greater Vancouver
+          </span>
 
-        {/* Main Headline */}
-        <h1 className="hero-text-item font-heading text-5xl md:text-7xl lg:text-8xl text-white font-medium leading-[1.1] mb-8">
-          Defining the <br className="hidden md:block" />
-          <span className="italic font-light text-primary-foreground">Art of Living</span>
-        </h1>
-
-        {/* Description/Subhead */}
-        <p className="hero-text-item font-body text-white/80 text-sm md:text-base max-w-lg leading-relaxed mb-12 tracking-wide">
-          Curating exceptional properties for those who accept nothing less than perfection. Discover a home that reflects your achievements.
-        </p>
-
-        {/* CTA Button */}
-        <div className="hero-text-item">
-          <a
-            href="/residential"
-            className="group relative px-8 py-3 overflow-hidden border border-white/30 hover:border-primary text-white transition-all duration-300 rounded-none bg-transparent hover:bg-primary/20 flex items-center justify-center gap-4"
+          {/* Headline */}
+          <h1
+            className="font-heading text-gray-900 leading-[1.05] mb-8"
+            style={{ perspective: "800px" }}
           >
-            <span className="relative z-10 font-body text-xs md:text-sm tracking-widest uppercase">
-              Explore Collection
+            <span className="hero-headline-word block text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] font-medium">
+              Redefining
             </span>
-             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform relative z-10" />
-          </a>
+            <span className="hero-headline-word block text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] font-medium">
+              Luxury
+            </span>
+            <span className="hero-headline-word block text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] italic font-light text-[#c9a96e]">
+              Real Estate
+            </span>
+          </h1>
+
+          {/* Subtext */}
+          <p className="hero-subtext font-body text-gray-600 text-sm md:text-[15px] max-w-md leading-[1.8] tracking-wide mb-10">
+            We curate extraordinary residences for discerning individuals —
+            where architectural vision meets an unparalleled standard of living.
+          </p>
+
+          {/* CTA */}
+          <div className="hero-cta flex flex-col sm:flex-row items-start gap-5">
+            <a
+              href="/residential"
+              className="group relative inline-flex items-center gap-4 px-8 py-4 bg-gradient-to-r from-[#c9a96e] to-[#b8924f] text-[#0a0a0a] font-body text-xs md:text-sm tracking-widest uppercase font-semibold transition-all duration-500 hover:shadow-[0_0_40px_rgba(201,169,110,0.3)] hover:scale-[1.02]"
+            >
+              View Properties
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300" />
+            </a>
+            <a
+              href="/contact"
+              className="group inline-flex items-center gap-3 px-8 py-4 border border-black/30 text-gray-900/80 font-body text-xs md:text-sm tracking-widest uppercase transition-all duration-500 hover:border-[#c9a96e]/50 hover:text-[#c9a96e]"
+            >
+              Get in Touch
+            </a>
+          </div>
+
+          {/* Stats row */}
+          <div className="hidden md:flex items-center gap-12 mt-16 pt-8 border-t border-black/[0.05]">
+            {stats.map((stat, i) => (
+              <div key={i} className="hero-stat">
+                <span className="block font-heading text-2xl lg:text-3xl text-gray-900 font-medium">
+                  {stat.value}
+                </span>
+                <span className="block font-body text-[10px] lg:text-[11px] uppercase tracking-[0.2em] text-gray-600 mt-1">
+                  {stat.label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ─── RIGHT: Image Showcase ─── */}
+        <div className="hero-image-wrapper relative flex-1 min-h-[50vh] lg:min-h-screen will-change-transform">
+          {/* Images */}
+          {heroImages.map((img, index) => (
+            <div
+              key={index}
+              className="absolute inset-0 w-full h-full transition-opacity duration-[1200ms] ease-in-out"
+              style={{ opacity: activeSlide === index ? 1 : 0 }}
+            >
+              <img
+                src={img}
+                alt={`Luxury Residence ${index + 1}`}
+                className="absolute inset-0 w-full h-full object-cover"
+                loading={index === 0 ? "eager" : "lazy"}
+              />
+              {/* Subtle vignette overlay */}
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-[#0a0a0a]/70 lg:block hidden" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/20 to-transparent" />
+            </div>
+          ))}
+
+          {/* Slide counter */}
+          <div className="absolute bottom-8 right-8 z-20 flex items-center gap-4">
+            <span className="font-body text-xs tracking-[0.2em] text-gray-600">
+              {String(activeSlide + 1).padStart(2, "0")}
+            </span>
+            <div className="w-12 h-[1px] bg-white/10 relative overflow-hidden">
+              <div
+                className="absolute inset-y-0 left-0 bg-[#c9a96e] transition-all duration-[5500ms] ease-linear"
+                style={{
+                  width: isTransitioning ? "0%" : "100%",
+                }}
+              />
+            </div>
+            <span className="font-body text-xs tracking-[0.2em] text-gray-500">
+              {String(heroImages.length).padStart(2, "0")}
+            </span>
+          </div>
+
+          {/* Slide dots */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 lg:left-8 lg:translate-x-0 z-20 flex items-center gap-2">
+            {heroImages.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => {
+                  if (!isTransitioning && i !== activeSlide) {
+                    setIsTransitioning(true);
+                    setActiveSlide(i);
+                    setTimeout(() => setIsTransitioning(false), 1200);
+                  }
+                }}
+                className={`transition-all duration-500 rounded-full ${i === activeSlide
+                  ? "w-8 h-1.5 bg-[#c9a96e]"
+                  : "w-1.5 h-1.5 bg-[#c9a96e]/40 hover:bg-[#c9a96e]/80"
+                  }`}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="scroll-indicator absolute bottom-0 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 pb-8">
-        <span className="text-[10px] uppercase tracking-widest text-white/50 font-body">Scroll</span>
-        <div className="w-[1px] h-12 bg-gradient-to-b from-white/50 to-transparent" />
+      {/* ─── Scroll Indicator ─── */}
+      <div className="hero-scroll-cue absolute bottom-6 left-1/2 -translate-x-1/2 lg:left-14 lg:translate-x-0 z-20 flex flex-col items-center gap-2">
+        <span className="font-body text-[9px] uppercase tracking-[0.3em] text-gray-600">
+          Scroll
+        </span>
+        <ChevronDown className="scroll-chevron w-4 h-4 text-gray-500" />
       </div>
 
+      {/* ─── Side label (desktop) ─── */}
+      <div className="hidden lg:flex absolute left-6 top-1/2 -translate-y-1/2 z-20">
+        <span
+          className="font-body text-[9px] uppercase tracking-[0.4em] text-gray-900/15"
+          style={{
+            writingMode: "vertical-rl",
+            textOrientation: "mixed",
+          }}
+        >
+          KNG Estate &mdash; Est. 2009
+        </span>
+      </div>
     </section>
   );
 };

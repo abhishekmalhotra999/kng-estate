@@ -6,102 +6,217 @@ const ExperienceSection = () => {
   const container = useRef<HTMLElement>(null);
   const countersRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: container.current,
-        start: "top 75%",
-      }
-    });
+  useGSAP(
+    () => {
+      // ─── Text Color Reveal: Each word transitions from dim to white as user scrolls ───
+      const words = gsap.utils.toArray(".reveal-word") as HTMLElement[];
+      words.forEach((word) => {
+        gsap.fromTo(
+          word,
+          { color: "rgba(17,24,39,0.08)" },
+          {
+            color: "rgba(17,24,39,1)",
+            ease: "none",
+            scrollTrigger: {
+              trigger: word,
+              start: "top 85%",
+              end: "top 55%",
+              scrub: true,
+            },
+          }
+        );
+      });
 
-    tl.fromTo(".exp-line", 
-      { scaleY: 0 }, 
-      { scaleY: 1, duration: 1.5, ease: "power3.inOut", transformOrigin: "top" }
-    )
-    .fromTo(".exp-title",
-      { y: 50, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
-      "-=1"
-    )
-    .fromTo(".exp-desc",
-      { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
-      "-=0.5"
-    );
+      // ─── Gold words get gold color instead of white ───
+      const goldWords = gsap.utils.toArray(".reveal-word-gold") as HTMLElement[];
+      goldWords.forEach((word) => {
+        gsap.fromTo(
+          word,
+          { color: "rgba(201,169,110,0.08)" },
+          {
+            color: "rgba(201,169,110,1)",
+            ease: "none",
+            scrollTrigger: {
+              trigger: word,
+              start: "top 85%",
+              end: "top 55%",
+              scrub: true,
+            },
+          }
+        );
+      });
 
-    // Counter Animation
-    const stats = gsap.utils.toArray(".stat-number") as HTMLElement[];
-    stats.forEach((stat) => {
+      // ─── Badge fade ───
+      gsap.fromTo(
+        ".exp-badge",
+        { y: 20, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          scrollTrigger: { trigger: container.current, start: "top 75%" },
+        }
+      );
+
+      // ─── Counter Animation with scrub ───
+      const stats = gsap.utils.toArray(".stat-number") as HTMLElement[];
+      stats.forEach((stat) => {
         const target = parseInt(stat.getAttribute("data-target") || "0", 10);
-        gsap.to(stat, {
+        gsap.fromTo(
+          stat,
+          { innerText: 0 },
+          {
             innerText: target,
             duration: 2,
             snap: { innerText: 1 },
             scrollTrigger: {
-                trigger: countersRef.current,
-                start: "top 85%",
-                toggleActions: "play none none reverse",
+              trigger: countersRef.current,
+              start: "top 85%",
+              end: "top 50%",
+              scrub: 1,
             },
             ease: "power1.out",
-        });
-    });
+          }
+        );
+      });
 
-  }, { scope: container });
+      // ─── Stat labels stagger ───
+      gsap.fromTo(
+        ".stat-label",
+        { y: 20, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          stagger: 0.15,
+          duration: 0.6,
+          scrollTrigger: {
+            trigger: countersRef.current,
+            start: "top 80%",
+          },
+        }
+      );
+
+      // ─── City pills slide in ───
+      gsap.fromTo(
+        ".city-pill",
+        { x: -30, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          stagger: 0.1,
+          duration: 0.6,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".city-pills-container",
+            start: "top 85%",
+          },
+        }
+      );
+    },
+    { scope: container }
+  );
+
+  // Split text into individual word spans
+  const renderRevealText = (text: string, isGold = false) => {
+    return text.split(" ").map((word, i) => (
+      <span
+        key={i}
+        className={`${isGold ? "reveal-word-gold" : "reveal-word"} inline-block mr-[0.3em]`}
+      >
+        {word}
+      </span>
+    ));
+  };
 
   return (
-    <section ref={container} className="py-32 bg-white text-black overflow-hidden relative">
-      {/* Decorative vertical line */}
-      <div className="exp-line absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-32 bg-primary/30 hidden md:block" />
+    <section
+      ref={container}
+      className="relative bg-[#FCFBF8] text-gray-900 overflow-hidden"
+    >
+      {/* Subtle ambient glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#c9a96e]/[0.02] blur-[200px] rounded-full pointer-events-none" />
 
-      <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          
-          {/* Left Column: Headline */}
-          <div className="relative z-10">
-            <span className="inline-block px-3 py-1 border border-primary/20 rounded-full text-xs font-bold tracking-widest uppercase mb-6 text-primary">
-                Established 2004
-            </span>
-            <h2 className="exp-title text-5xl md:text-7xl lg:text-8xl font-heading font-medium leading-[0.9] tracking-tighter mb-8">
-              20+ Years <br />
-              <span className="text-primary/40 italic font-serif">of Excellence</span>
-            </h2>
-            
-            {/* Stats Grid */}
-            <div ref={countersRef} className="grid grid-cols-2 gap-8 mt-12 border-t border-gray-100 pt-8">
-                <div>
-                     <span className="stat-number text-4xl font-light font-heading block" data-target="500">0</span>
-                     <span className="text-sm text-gray-400 uppercase tracking-widest mt-2 block">Happy Families</span>
-                </div>
-                <div>
-                     <span className="stat-number text-4xl font-light font-heading block" data-target="450">0</span>
-                     <span className="text-sm text-gray-400 uppercase tracking-widest mt-2 block">Premium Deals</span>
-                </div>
-            </div>
+      <div className="container mx-auto px-6 md:px-12 lg:px-20 xl:px-28 py-32 md:py-44">
+        {/* Badge */}
+        <div className="exp-badge mb-16">
+          <span className="inline-flex items-center gap-3 px-5 py-2 border border-[#c9a96e]/20 text-[10px] font-semibold tracking-[0.35em] uppercase text-[#c9a96e]">
+            <span className="w-2 h-2 rounded-full bg-[#c9a96e]/40" />
+            Established 2004
+          </span>
+        </div>
+
+        {/* ─── Scroll-revealed manifesto text ─── */}
+        <div className="max-w-5xl mb-24">
+          <h2
+            className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] font-medium leading-[1.1] mb-10"
+            style={{ lineHeight: 1.15 }}
+          >
+            {renderRevealText("For over two decades we have been")}
+            <br className="hidden md:block" />
+            {renderRevealText("the trusted name in", true)}
+            <br className="hidden md:block" />
+            {renderRevealText("luxury real estate across the Tricity.")}
+          </h2>
+
+          <p className="text-lg md:text-xl text-gray-600 font-light leading-relaxed max-w-2xl">
+            {renderRevealText(
+              "Connecting visionaries with their dream properties in Chandigarh, Mohali, and Panchkula — with absolute discretion and unmatched expertise."
+            )}
+          </p>
+        </div>
+
+        {/* ─── Stats + Cities ─── */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-end">
+          {/* Counter Stats */}
+          <div
+            ref={countersRef}
+            className="grid grid-cols-3 gap-8 border-t border-black/[0.05] pt-10"
+          >
+            {[
+              { target: 500, label: "Happy Families" },
+              { target: 450, label: "Premium Deals" },
+              { target: 20, label: "Years of Trust", suffix: "+" },
+            ].map((stat, i) => (
+              <div key={i}>
+                <span className="flex items-baseline gap-1">
+                  <span
+                    className="stat-number font-heading text-3xl md:text-4xl lg:text-5xl font-light text-gray-900"
+                    data-target={stat.target}
+                  >
+                    0
+                  </span>
+                  {stat.suffix && (
+                    <span className="text-[#c9a96e] text-xl md:text-2xl font-heading">
+                      {stat.suffix}
+                    </span>
+                  )}
+                </span>
+                <span className="stat-label block text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-gray-500 mt-2">
+                  {stat.label}
+                </span>
+              </div>
+            ))}
           </div>
 
-          {/* Right Column: Description & Locations */}
-          <div className="relative">
-             <div className="absolute -left-12 -top-12 w-64 h-64 bg-secondary rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse pointer-events-none" />
-             
-             <p className="exp-desc text-lg md:text-2xl text-gray-800 font-light leading-relaxed mb-12 max-w-xl relative transform transition-all hover:translate-x-2 duration-300 cursor-default">
-              Establishing the standard for luxury real estate in the Tricity. 
-              We are the premier brokers connecting visionaries with their dream properties across 
-              <span className="text-primary font-medium italic"> Chandigarh</span>, 
-              <span className="text-primary font-medium italic"> Mohali</span>, and 
-              <span className="text-primary font-medium italic"> Panchkula</span>.
-            </p>
-            
-            <div className="exp-cities flex flex-wrap gap-4 pt-4">
-              {[
-                { label: "Chandigarh", sub: "The City Beautiful" },
-                { label: "Mohali", sub: "Commercial Hub" },
-                { label: "Panchkula", sub: "Serene Living" }
-              ].map((city) => (
-                <div key={city.label} className="group cursor-pointer px-6 py-3 border border-gray-200 rounded-full hover:bg-black hover:text-white transition-all duration-300">
-                  <span className="text-sm uppercase tracking-widest font-medium">{city.label}</span>
-                </div>
-              ))}
-            </div>
+          {/* City pills */}
+          <div className="city-pills-container flex flex-wrap gap-3 lg:justify-end">
+            {[
+              { label: "Chandigarh", sub: "The City Beautiful" },
+              { label: "Mohali", sub: "Commercial Hub" },
+              { label: "Panchkula", sub: "Serene Living" },
+            ].map((city) => (
+              <div
+                key={city.label}
+                className="city-pill group cursor-pointer px-6 py-3 border border-black/[0.08] hover:border-[#c9a96e]/40 hover:bg-[#c9a96e]/5 transition-all duration-500"
+              >
+                <span className="block text-xs uppercase tracking-[0.15em] font-medium text-gray-900/70 group-hover:text-gray-900 transition-colors">
+                  {city.label}
+                </span>
+                <span className="block text-[9px] uppercase tracking-widest text-gray-500 mt-0.5">
+                  {city.sub}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </div>

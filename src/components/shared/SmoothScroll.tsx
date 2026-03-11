@@ -1,8 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Lenis from "lenis";
 import gsap, { ScrollTrigger } from "../../lib/gsap-config";
+import { useLocation } from "react-router-dom";
 
 const SmoothScroll = () => {
+  const { pathname } = useLocation();
+  const [lenisInstance, setLenisInstance] = useState<Lenis | null>(null);
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -12,6 +16,8 @@ const SmoothScroll = () => {
       smoothWheel: true,
       touchMultiplier: 2,
     });
+
+    setLenisInstance(lenis);
 
     lenis.on("scroll", ScrollTrigger.update);
 
@@ -28,6 +34,14 @@ const SmoothScroll = () => {
       });
     };
   }, []);
+
+  useEffect(() => {
+    if (lenisInstance) {
+      lenisInstance.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, lenisInstance]);
 
   return null;
 };

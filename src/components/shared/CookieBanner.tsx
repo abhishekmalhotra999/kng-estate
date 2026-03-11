@@ -55,7 +55,7 @@ const CookieBanner = () => {
           <div className="flex gap-3">
             <button
               onClick={() => handleClose(true)}
-              className="px-6 py-2 text-xs font-bold uppercase tracking-widest bg-black text-white hover:bg-black/80 transition-opacity"
+              className="px-6 py-2 text-xs font-bold uppercase tracking-widest bg-white text-gray-900 hover:bg-white/80 transition-opacity"
             >
               Accept
             </button>

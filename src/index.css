@@ -53,6 +53,11 @@
     --sidebar-accent-foreground: 0 0% 10%;
     --sidebar-border: 40 15% 88%;
     --sidebar-ring: 38 70% 40%;
+
+    /* Brand hex tokens for component-level consistency */
+    --kng-gold: #c9a96e;
+    --kng-gold-deep: #b8924f;
+    --kng-ink: #0a0a0a;
   }
 
   .dark {
@@ -108,5 +113,22 @@
 
   .glass {
     @apply backdrop-blur-xl bg-card/80 border-border/40;
+  }
+
+  .kng-gold-text {
+    color: var(--kng-gold);
+  }
+
+  .kng-gold-bg {
+    background-color: var(--kng-gold);
+  }
+
+  .kng-gold-border {
+    border-color: color-mix(in srgb, var(--kng-gold) 38%, transparent);
+  }
+
+  .premium-noise {
+    background-image: radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.03) 1px, transparent 0);
+    background-size: 22px 22px;
   }
 }

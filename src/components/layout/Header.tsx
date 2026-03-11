@@ -78,6 +78,9 @@ const Header = () => {
             src={logo}
             alt="KNG Estate"
             className="h-8 w-auto"
+            width={120}
+            height={32}
+            decoding="async"
           />
         </Link>
 
@@ -143,7 +146,7 @@ const Header = () => {
         {/* Mobile Toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className={`lg:hidden p-2 rounded-full transition-colors ${isScrolled ? "hover:bg-black/5 text-black" : "hover:bg-black/10 text-gray-900"
+          className={`lg:hidden h-11 w-11 flex items-center justify-center rounded-full transition-colors ${isScrolled ? "hover:bg-black/5 text-black" : "hover:bg-black/10 text-gray-900"
             }`}
         >
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}

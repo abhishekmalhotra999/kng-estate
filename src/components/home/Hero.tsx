@@ -2,6 +2,7 @@ import { useRef, useState, useCallback, useEffect } from "react";
 import { ArrowRight, MapPin, ChevronDown } from "lucide-react";
 import gsap from "@/lib/gsap-config";
 import { useGSAP } from "@gsap/react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 import heroHome from "@/assets/hero-home.jpg";
 import heroMansion from "@/assets/hero-mansion.png";
@@ -21,6 +22,18 @@ const Hero = () => {
   const containerRef = useRef<HTMLElement>(null);
   const [activeSlide, setActiveSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const isMobile = useIsMobile();
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const onChange = () => setPrefersReducedMotion(mediaQuery.matches);
+
+    onChange();
+    mediaQuery.addEventListener("change", onChange);
+
+    return () => mediaQuery.removeEventListener("change", onChange);
+  }, []);
 
   const nextSlide = useCallback(() => {
     if (isTransitioning) return;
@@ -31,12 +44,16 @@ const Hero = () => {
 
   // Auto-advance slides
   useEffect(() => {
-    const interval = setInterval(nextSlide, 5500);
+    if (prefersReducedMotion) return;
+
+    const interval = setInterval(nextSlide, isMobile ? 7000 : 5500);
     return () => clearInterval(interval);
-  }, [nextSlide]);
+  }, [nextSlide, isMobile, prefersReducedMotion]);
 
   useGSAP(
     () => {
+      if (prefersReducedMotion) return;
+
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
       // Curtain reveal: gold accent line grows
@@ -107,39 +124,43 @@ const Hero = () => {
         );
 
       // Continuous floating animation for the scroll indicator
-      gsap.to(".hero-scroll-cue .scroll-chevron", {
-        y: 6,
-        duration: 1.2,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
+      if (!isMobile) {
+        gsap.to(".hero-scroll-cue .scroll-chevron", {
+          y: 6,
+          duration: 1.2,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      }
 
       // Parallax on scroll
-      gsap.to(".hero-image-wrapper", {
-        yPercent: 15,
-        ease: "none",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
+      if (!isMobile) {
+        gsap.to(".hero-image-wrapper", {
+          yPercent: 15,
+          ease: "none",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
 
-      gsap.to(".hero-content-left", {
-        yPercent: 30,
-        opacity: 0,
-        ease: "none",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "80% top",
-          scrub: true,
-        },
-      });
+        gsap.to(".hero-content-left", {
+          yPercent: 30,
+          opacity: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top top",
+            end: "80% top",
+            scrub: true,
+          },
+        });
+      }
     },
-    { scope: containerRef }
+    { scope: containerRef, dependencies: [isMobile, prefersReducedMotion] }
   );
 
   return (
@@ -163,10 +184,10 @@ const Hero = () => {
         {/* ─── LEFT: Text Content ─── */}
         <div className="hero-content-left flex-1 flex flex-col justify-center px-8 md:px-16 lg:px-20 xl:px-28 pt-32 pb-16 lg:pt-0 lg:pb-0 will-change-transform">
           {/* Gold accent line */}
-          <div className="hero-accent-line w-16 h-[2px] bg-gradient-to-r from-[#c9a96e] to-[#e8c87e] mb-8" />
+          <div className="hero-accent-line w-16 h-[2px] mb-8" style={{ backgroundImage: "linear-gradient(to right, var(--kng-gold), #e8c87e)" }} />
 
           {/* Eyebrow */}
-          <span className="hero-eyebrow inline-flex items-center gap-2 text-[#c9a96e] uppercase tracking-[0.35em] text-[10px] md:text-xs font-body font-medium mb-6">
+          <span className="hero-eyebrow inline-flex items-center gap-2 kng-gold-text uppercase tracking-[0.35em] text-[10px] md:text-xs font-body font-medium mb-6">
             <MapPin className="w-3 h-3" />
             Surrey &middot; Greater Vancouver
           </span>
@@ -182,7 +203,7 @@ const Hero = () => {
             <span className="hero-headline-word block text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] font-medium">
               Luxury
             </span>
-            <span className="hero-headline-word block text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] italic font-light text-[#c9a96e]">
+            <span className="hero-headline-word block text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] italic font-light kng-gold-text">
               Real Estate
             </span>
           </h1>
@@ -197,14 +218,16 @@ const Hero = () => {
           <div className="hero-cta flex flex-col sm:flex-row items-start gap-5">
             <a
               href="/residential"
-              className="group relative inline-flex items-center gap-4 px-8 py-4 bg-gradient-to-r from-[#c9a96e] to-[#b8924f] text-[#0a0a0a] font-body text-xs md:text-sm tracking-widest uppercase font-semibold transition-all duration-500 hover:shadow-[0_0_40px_rgba(201,169,110,0.3)] hover:scale-[1.02]"
+              className="group relative inline-flex items-center gap-4 px-8 py-4 text-[var(--kng-ink)] font-body text-xs md:text-sm tracking-widest uppercase font-semibold transition-all duration-500 hover:shadow-[0_0_40px_rgba(201,169,110,0.3)] hover:scale-[1.02] min-h-[48px]"
+              style={{ backgroundImage: "linear-gradient(to right, var(--kng-gold), var(--kng-gold-deep))" }}
             >
               View Properties
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300" />
             </a>
             <a
               href="/contact"
-              className="group inline-flex items-center gap-3 px-8 py-4 border border-black/30 text-gray-900/80 font-body text-xs md:text-sm tracking-widest uppercase transition-all duration-500 hover:border-[#c9a96e]/50 hover:text-[#c9a96e]"
+              className="group inline-flex items-center gap-3 px-8 py-4 border border-black/30 text-gray-900/80 font-body text-xs md:text-sm tracking-widest uppercase transition-all duration-500 hover:text-[var(--kng-gold)] min-h-[48px]"
+              style={{ borderColor: "color-mix(in srgb, var(--kng-gold) 50%, rgba(0,0,0,0.3))" }}
             >
               Get in Touch
             </a>
@@ -239,6 +262,9 @@ const Hero = () => {
                 alt={`Luxury Residence ${index + 1}`}
                 className="absolute inset-0 w-full h-full object-cover"
                 loading={index === 0 ? "eager" : "lazy"}
+                fetchPriority={index === 0 ? "high" : "auto"}
+                decoding="async"
+                sizes="(max-width: 1024px) 100vw, 50vw"
               />
               {/* Subtle vignette overlay */}
               <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-[#0a0a0a]/70 lg:block hidden" />
@@ -253,9 +279,10 @@ const Hero = () => {
             </span>
             <div className="w-12 h-[1px] bg-white/10 relative overflow-hidden">
               <div
-                className="absolute inset-y-0 left-0 bg-[#c9a96e] transition-all duration-[5500ms] ease-linear"
+                className="absolute inset-y-0 left-0 bg-[var(--kng-gold)] transition-all ease-linear"
                 style={{
                   width: isTransitioning ? "0%" : "100%",
+                  transitionDuration: isMobile ? "7000ms" : "5500ms",
                 }}
               />
             </div>
@@ -277,8 +304,8 @@ const Hero = () => {
                   }
                 }}
                 className={`transition-all duration-500 rounded-full ${i === activeSlide
-                  ? "w-8 h-1.5 bg-[#c9a96e]"
-                  : "w-1.5 h-1.5 bg-[#c9a96e]/40 hover:bg-[#c9a96e]/80"
+                  ? "w-8 h-2 md:h-1.5 bg-[var(--kng-gold)]"
+                  : "w-3 h-3 md:w-2 md:h-2 bg-[#c9a96e]/45 hover:bg-[#c9a96e]/80"
                   }`}
                 aria-label={`Go to slide ${i + 1}`}
               />

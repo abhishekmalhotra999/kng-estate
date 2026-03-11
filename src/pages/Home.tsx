@@ -19,6 +19,15 @@ const Home = () => {
         <AboutTeaser />
         <ContactSection />
       </main>
+
+      <a
+        href="/contact"
+        className="fixed md:hidden bottom-4 left-4 right-4 z-30 min-h-[52px] inline-flex items-center justify-center rounded-full text-[11px] tracking-[0.2em] uppercase font-semibold text-[var(--kng-ink)] shadow-lg"
+        style={{ backgroundImage: "linear-gradient(to right, var(--kng-gold), var(--kng-gold-deep))" }}
+      >
+        Book a Consultation
+      </a>
+
       <Footer />
     </div>
   );

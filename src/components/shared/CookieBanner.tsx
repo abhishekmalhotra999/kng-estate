@@ -42,7 +42,7 @@ const CookieBanner = () => {
   return (
     <div
       ref={bannerRef}
-      className="fixed bottom-6 left-6 right-6 md:left-auto md:right-6 md:max-w-md z-50 bg-white rounded-3xl shadow-2xl border border-gray-100 p-6 opacity-0 translate-y-24"
+      className="fixed bottom-20 left-4 right-4 md:bottom-6 md:left-auto md:right-6 md:max-w-md z-50 bg-white rounded-3xl shadow-2xl border border-gray-100 p-6 opacity-0 translate-y-24"
     >
       <div className="flex items-start gap-4">
         <div className="h-10 w-10 rounded-full bg-gray-50 flex items-center justify-center shrink-0 text-black">

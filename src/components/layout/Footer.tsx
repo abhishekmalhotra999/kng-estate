@@ -30,15 +30,15 @@ const Footer = () => {
                 Market insights, exclusive listings, and expert advice — delivered to your inbox.
               </p>
             </div>
-            <form className="flex w-full lg:w-auto gap-0" onSubmit={(e) => e.preventDefault()}>
+            <form className="flex flex-col sm:flex-row w-full lg:w-auto gap-3 sm:gap-0" onSubmit={(e) => e.preventDefault()}>
               <input
                 type="email"
                 placeholder="Your email address"
-                className="flex-1 lg:w-80 px-6 py-4 bg-black/[0.03] border border-black/[0.08] border-r-0 text-gray-900 text-sm font-light placeholder:text-gray-500 focus:outline-none focus:border-[#c9a96e]/30 transition-colors"
+                className="flex-1 lg:w-80 px-6 py-4 bg-black/[0.03] border border-black/[0.08] sm:border-r-0 text-gray-900 text-sm font-light placeholder:text-gray-500 focus:outline-none focus:border-[#c9a96e]/30 transition-colors min-h-[48px]"
               />
               <button
                 type="submit"
-                className="px-8 py-4 bg-[#c9a96e] text-[#141108] text-xs font-bold tracking-[0.15em] uppercase hover:bg-white transition-colors duration-500 flex items-center gap-2 shrink-0"
+                className="px-8 py-4 bg-[#c9a96e] text-[#141108] text-xs font-bold tracking-[0.15em] uppercase hover:bg-white transition-colors duration-500 flex items-center justify-center gap-2 shrink-0 min-h-[48px]"
               >
                 <Send size={14} />
                 <span className="hidden sm:inline">Subscribe</span>
@@ -56,7 +56,10 @@ const Footer = () => {
             <img
               src={logo}
               alt="KNG Estate"
-              className="h-12 w-auto mb-5 brightness-0 opacity-90"
+              className="h-12 w-auto mb-5"
+              width={180}
+              height={48}
+              decoding="async"
             />
             <p className="text-sm text-gray-600 leading-relaxed font-light max-w-xs mb-6">
               Your friends in the real estate world. We care, that's why we

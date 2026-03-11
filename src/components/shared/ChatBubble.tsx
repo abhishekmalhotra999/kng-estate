@@ -30,7 +30,7 @@ const ChatBubble = () => {
   }, { scope: container, dependencies: [open] });
 
   return (
-    <div ref={container} className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3 pointer-events-none">
+    <div ref={container} className="fixed bottom-20 md:bottom-6 right-4 md:right-6 z-40 flex flex-col items-end gap-3 pointer-events-none">
       <div
         ref={popupRef}
         className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 w-80 mb-2 pointer-events-auto hidden"

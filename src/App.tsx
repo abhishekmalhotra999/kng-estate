@@ -1,3 +1,4 @@
+import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -12,9 +13,10 @@ import OurApproach from "./pages/OurApproach";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
-import CookieBanner from "./components/shared/CookieBanner";
-import ChatBubble from "./components/shared/ChatBubble";
 import SmoothScroll from "./components/shared/SmoothScroll";
+
+const CookieBanner = lazy(() => import("./components/shared/CookieBanner"));
+const ChatBubble = lazy(() => import("./components/shared/ChatBubble"));
 
 const queryClient = new QueryClient();
 
@@ -36,8 +38,10 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <CookieBanner />
-        <ChatBubble />
+        <Suspense fallback={null}>
+          <CookieBanner />
+          <ChatBubble />
+        </Suspense>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

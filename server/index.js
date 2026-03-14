@@ -20,6 +20,14 @@ app.get("/api/health", (_req, res) => {
   });
 });
 
+app.get("/health", (_req, res) => {
+  res.json({
+    ok: true,
+    message: "Node API is working",
+    timestamp: new Date().toISOString(),
+  });
+});
+
 // Serve Vite build output for single-deployment setup.
 app.use(express.static(distPath));
 
@@ -31,6 +39,6 @@ app.use((req, res, next) => {
   return res.sendFile(path.join(distPath, "index.html"));
 });
 
-app.listen(PORT, () => {
-  console.log(`Node API listening on http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Node API listening on http://0.0.0.0:${PORT}`);
 });

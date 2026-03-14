@@ -45,15 +45,58 @@ const Hero = () => {
 
   // Auto-advance slides
   useEffect(() => {
-    if (prefersReducedMotion || isMobile) return;
+    if (prefersReducedMotion) return;
 
-    const interval = setInterval(nextSlide, 5500);
+    const interval = setInterval(nextSlide, isMobile ? 7000 : 5500);
     return () => clearInterval(interval);
   }, [nextSlide, isMobile, prefersReducedMotion]);
 
   useGSAP(
     () => {
       if (prefersReducedMotion) return;
+
+      if (isMobile) {
+        const mobileTl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+        mobileTl
+          .fromTo(
+            ".mhero-media",
+            { opacity: 0, scale: 1.04 },
+            { opacity: 1, scale: 1, duration: 0.75 }
+          )
+          .fromTo(
+            ".mhero-badge",
+            { y: 18, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.5 },
+            "-=0.35"
+          )
+          .fromTo(
+            ".mhero-title-word",
+            { y: 28, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.6, stagger: 0.08 },
+            "-=0.25"
+          )
+          .fromTo(
+            ".mhero-copy",
+            { y: 16, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.5 },
+            "-=0.2"
+          )
+          .fromTo(
+            ".mhero-stats .mhero-stat",
+            { y: 12, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.42, stagger: 0.07 },
+            "-=0.15"
+          )
+          .fromTo(
+            ".mhero-cta",
+            { y: 16, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.5, stagger: 0.08 },
+            "-=0.1"
+          );
+
+        return;
+      }
 
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
@@ -73,13 +116,13 @@ const Hero = () => {
         // Main headline letters stagger
         .fromTo(
           ".hero-headline-word",
-          { y: isMobile ? 36 : 80, opacity: 0, rotateX: isMobile ? 0 : 40 },
+          { y: 80, opacity: 0, rotateX: 40 },
           {
             y: 0,
             opacity: 1,
             rotateX: 0,
-            duration: isMobile ? 0.65 : 1,
-            stagger: isMobile ? 0.08 : 0.15,
+            duration: 1,
+            stagger: 0.15,
           },
           "-=0.5"
         )
@@ -100,19 +143,13 @@ const Hero = () => {
         // Image reveal
         .fromTo(
           ".hero-image-wrapper",
-          isMobile ? { y: 18, opacity: 0 } : { clipPath: "inset(100% 0% 0% 0%)", opacity: 0 },
-          isMobile
-            ? {
-                y: 0,
-                opacity: 1,
-                duration: 0.7,
-              }
-            : {
-                clipPath: "inset(0% 0% 0% 0%)",
-                opacity: 1,
-                duration: 1.4,
-                ease: "power4.inOut",
-              },
+          { clipPath: "inset(100% 0% 0% 0%)", opacity: 0 },
+          {
+            clipPath: "inset(0% 0% 0% 0%)",
+            opacity: 1,
+            duration: 1.4,
+            ease: "power4.inOut",
+          },
           "-=1.2"
         )
         // Stats
@@ -167,8 +204,128 @@ const Hero = () => {
         });
       }
     },
-    { scope: containerRef, dependencies: [isMobile, prefersReducedMotion] }
+    { scope: containerRef, dependencies: [isMobile, prefersReducedMotion, activeSlide] }
   );
+
+  if (isMobile) {
+    return (
+      <section
+        ref={containerRef}
+        id="hero-section"
+        className="relative min-h-[100svh] w-full overflow-hidden bg-[#0f0f0f] lg:hidden"
+      >
+        <div className="mhero-media absolute inset-0">
+          {heroImages.map((img, index) => (
+            <div
+              key={index}
+              className="absolute inset-0 w-full h-full transition-opacity duration-[900ms] ease-out"
+              style={{ opacity: activeSlide === index ? 1 : 0 }}
+            >
+              <img
+                src={img}
+                alt={`Luxury Residence ${index + 1}`}
+                className="absolute inset-0 h-full w-full object-cover"
+                loading={index === 0 ? "eager" : "lazy"}
+                fetchPriority={index === 0 ? "high" : "auto"}
+                decoding="async"
+                sizes="100vw"
+              />
+            </div>
+          ))}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/46 to-black/84" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/38 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(201,169,110,0.24),transparent_35%)]" />
+        </div>
+
+        <div
+          className="relative z-10 min-h-[100svh] flex flex-col justify-between px-5 pb-6"
+          style={{ paddingTop: "var(--kng-header-safe-offset, 6.5rem)" }}
+        >
+          <div className="rounded-sm bg-black/22 backdrop-blur-[2px] px-3 py-3 border border-white/10">
+            <span className="mhero-badge inline-flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase font-semibold text-[#f3d9a7]">
+              <MapPin className="w-3.5 h-3.5" />
+              Tricity Luxury Desk
+            </span>
+
+            <h1
+              className="mt-5 font-heading text-[#f8f3e9] leading-[1.02]"
+              style={{ textShadow: "0 2px 16px rgba(0,0,0,0.48)" }}
+            >
+              <span className="mhero-title-word block text-[2.35rem] font-medium">Signature</span>
+              <span className="mhero-title-word block text-[2.35rem] font-medium">Homes.</span>
+              <span className="mhero-title-word block text-[2.35rem] italic font-light text-[#e4c281]">Private Access.</span>
+            </h1>
+
+            <p
+              className="mhero-copy mt-5 text-[13px] leading-[1.75] text-[#f3eadb] max-w-[94%]"
+              style={{ textShadow: "0 1px 10px rgba(0,0,0,0.42)" }}
+            >
+              Curated residences for discerning buyers across Chandigarh, Mohali, and Panchkula.
+              Strategic advisory from first shortlist to final signature.
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            <div className="mhero-stats grid grid-cols-3 gap-2.5">
+              {stats.map((stat) => (
+                <div
+                  key={stat.label}
+                  className="mhero-stat border border-white/20 bg-black/25 backdrop-blur-sm rounded-sm px-3 py-3"
+                >
+                  <span className="block text-[#f8ecd8] font-heading text-lg leading-none">{stat.value}</span>
+                  <span className="block text-[9px] uppercase tracking-[0.18em] text-[#d7c6a4] mt-1.5">
+                    {stat.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex gap-2.5">
+              <Link
+                to="/residential"
+                className="mhero-cta flex-1 min-h-[52px] inline-flex items-center justify-center gap-2.5 rounded-sm bg-gradient-to-r from-[#d4b178] to-[#b8924f] text-[#1d1407] text-[11px] tracking-[0.18em] uppercase font-bold"
+              >
+                Explore Listings
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                to="/contact"
+                className="mhero-cta flex-1 min-h-[52px] inline-flex items-center justify-center rounded-sm border border-[#e2cfaa]/70 bg-black/35 backdrop-blur-sm text-[#f8f1e2] text-[11px] tracking-[0.18em] uppercase font-semibold"
+              >
+                Talk to Advisor
+              </Link>
+            </div>
+
+            <div className="flex items-center justify-between pt-1">
+              <div className="flex items-center gap-1.5">
+                {heroImages.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => {
+                      if (!isTransitioning && i !== activeSlide) {
+                        setIsTransitioning(true);
+                        setActiveSlide(i);
+                        setTimeout(() => setIsTransitioning(false), 900);
+                      }
+                    }}
+                    className="h-10 w-10 flex items-center justify-center rounded-full"
+                    aria-label={`Go to slide ${i + 1}`}
+                  >
+                    <span
+                      className={`rounded-full transition-all duration-400 ${i === activeSlide ? "w-6 h-1.5 bg-[#d6b277]" : "w-2 h-2 bg-[#f1e6d0]/55"}`}
+                    />
+                  </button>
+                ))}
+              </div>
+              <span className="text-[10px] uppercase tracking-[0.24em] text-[#e9dcc2]">
+                {String(activeSlide + 1).padStart(2, "0")} / {String(heroImages.length).padStart(2, "0")}
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section

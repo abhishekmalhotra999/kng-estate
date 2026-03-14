@@ -41,6 +41,26 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const setHeaderSafeOffset = () => {
+      const headerEl = headerRef.current;
+      if (!headerEl) return;
+
+      const { height } = headerEl.getBoundingClientRect();
+      const safeOffset = Math.ceil(height + 16);
+      document.documentElement.style.setProperty("--kng-header-safe-offset", `${safeOffset}px`);
+    };
+
+    const rafId = window.requestAnimationFrame(setHeaderSafeOffset);
+    window.addEventListener("resize", setHeaderSafeOffset);
+
+    return () => {
+      window.cancelAnimationFrame(rafId);
+      window.removeEventListener("resize", setHeaderSafeOffset);
+      document.documentElement.style.removeProperty("--kng-header-safe-offset");
+    };
+  }, [isScrolled, mobileOpen]);
+
   // GSAP Animation for Mobile Menu
   useGSAP(() => {
     if (mobileOpen) {
@@ -77,9 +97,9 @@ const Header = () => {
           <img
             src={logo}
             alt="KNG Estate"
-            className="h-8 w-auto"
-            width={120}
-            height={32}
+            className={`w-auto transition-all duration-300 ${isScrolled ? "h-10 md:h-11" : "h-12 md:h-14"}`}
+            width={168}
+            height={56}
             decoding="async"
           />
         </Link>

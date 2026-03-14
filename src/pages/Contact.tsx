@@ -1,12 +1,20 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ContactForm from "@/components/shared/ContactForm";
-import { MapPin, Phone, Mail, Clock, ArrowUpRight, MessageCircle } from "lucide-react";
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Clock,
+  ArrowUpRight,
+  MessageCircle,
+  ShieldCheck,
+} from "lucide-react";
 import gsap from "@/lib/gsap-config";
 import { useGSAP } from "@gsap/react";
 
-const contactCards = [
+const contactEssentials = [
   {
     icon: Phone,
     label: "Call Us",
@@ -30,11 +38,42 @@ const contactCards = [
   },
 ];
 
+const consultationJourney = [
+  {
+    step: "01",
+    title: "Discovery Call",
+    detail: "We understand your priorities, preferences, and investment profile.",
+  },
+  {
+    step: "02",
+    title: "Curated Shortlist",
+    detail: "You receive handpicked opportunities aligned with your requirements.",
+  },
+  {
+    step: "03",
+    title: "Private Viewings & Closing",
+    detail: "We coordinate viewings, negotiation, and final transaction support.",
+  },
+];
+
 const Contact = () => {
   const container = useRef<HTMLDivElement>(null);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const onChange = () => setPrefersReducedMotion(mediaQuery.matches);
+
+    onChange();
+    mediaQuery.addEventListener("change", onChange);
+
+    return () => mediaQuery.removeEventListener("change", onChange);
+  }, []);
 
   useGSAP(
     () => {
+      if (prefersReducedMotion) return;
+
       // Hero content
       gsap.fromTo(
         ".ct-eyebrow",
@@ -69,25 +108,18 @@ const Contact = () => {
         { y: 0, opacity: 1, duration: 0.8, delay: 0.9 }
       );
 
-      // Contact cards — scroll scrub
-      const cards = gsap.utils.toArray(".ct-card") as HTMLElement[];
-      cards.forEach((card) => {
-        gsap.fromTo(
-          card,
-          { y: 40, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 90%",
-              end: "top 70%",
-              scrub: 1,
-            },
-          }
-        );
-      });
+      gsap.fromTo(
+        ".ct-essential-card",
+        { y: 24, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          stagger: 0.12,
+          duration: 0.7,
+          ease: "power3.out",
+          delay: 1,
+        }
+      );
 
       // Form container
       gsap.fromTo(
@@ -120,8 +152,24 @@ const Contact = () => {
           },
         }
       );
+
+      gsap.fromTo(
+        ".ct-lower .ct-soft-reveal",
+        { y: 24, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          stagger: 0.08,
+          duration: 0.7,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".ct-lower",
+            start: "top 82%",
+          },
+        }
+      );
     },
-    { scope: container }
+    { scope: container, dependencies: [prefersReducedMotion] }
   );
 
   return (
@@ -129,163 +177,188 @@ const Contact = () => {
       <Header />
       <main>
         {/* ─── Hero ─── */}
-        <section className="relative pt-36 md:pt-44 pb-16 md:pb-24 px-6 md:px-12 lg:px-20 xl:px-28 overflow-hidden">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#c9a96e]/[0.03] blur-[150px] rounded-full pointer-events-none" />
+        <section
+          className="relative pb-16 md:pb-20 px-6 md:px-12 lg:px-20 xl:px-28 overflow-hidden"
+          style={{ paddingTop: "var(--kng-header-safe-offset, 9rem)" }}
+        >
+          <div className="absolute -top-16 -right-16 w-[540px] h-[540px] bg-[#c9a96e]/[0.045] blur-[160px] rounded-full pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-[380px] h-[380px] bg-black/[0.025] blur-[130px] rounded-full pointer-events-none" />
 
           <div className="container mx-auto">
-            <div className="max-w-3xl">
-              <span className="ct-eyebrow inline-flex items-center gap-3 text-[10px] font-semibold tracking-[0.35em] uppercase text-[#c9a96e] mb-6">
-                <span className="block w-8 h-[1px] bg-[#c9a96e]/50" />
-                Contact
-              </span>
-
-              <h1
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-medium leading-[1.05] mb-8"
-                style={{ perspective: "800px" }}
-              >
-                {["Let's"].map((w, i) => (
-                  <span key={i} className="ct-title-word inline-block mr-[0.25em]">
-                    {w}
-                  </span>
-                ))}
-                <span className="ct-title-word inline-block mr-[0.25em] italic font-light text-[#c9a96e]">
-                  Start
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-16 items-start max-w-7xl">
+              <div className="lg:col-span-7 max-w-3xl pt-2">
+                <span className="ct-eyebrow inline-flex items-center gap-3 text-[10px] font-semibold tracking-[0.35em] uppercase text-[#c9a96e] mb-6">
+                  <span className="block w-8 h-[1px] bg-[#c9a96e]/50" />
+                  Contact Concierge
                 </span>
-                <br />
-                {["a", "Conversation"].map((w, i) => (
-                  <span key={i} className="ct-title-word inline-block mr-[0.25em] text-gray-600">
-                    {w}
-                  </span>
-                ))}
-              </h1>
 
-              <div className="ct-line w-16 h-[2px] bg-[#c9a96e] mb-8" />
-
-              <p className="ct-desc text-lg text-gray-600 font-light leading-relaxed max-w-xl">
-                Ready to start your real estate journey? We'd love to hear from
-                you. Reach out through any channel below — every message gets a
-                personal response within 24 hours.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* ─── Contact Cards Row ─── */}
-        <section className="px-6 md:px-12 lg:px-20 xl:px-28 pb-12">
-          <div className="container mx-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl">
-              {contactCards.map((card) => (
-                <a
-                  key={card.label}
-                  href={card.href || undefined}
-                  className="ct-card group relative p-6 md:p-8 border border-black/[0.05] bg-black/[0.02] hover:border-[#c9a96e]/20 hover:bg-black/[0.03] transition-all duration-700 block"
+                <h1
+                  className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] font-heading font-medium leading-[1.03] mb-8"
+                  style={{ perspective: "800px" }}
                 >
-                  <div className="flex items-center justify-between mb-5">
-                    <div className="w-10 h-10 flex items-center justify-center border border-[#c9a96e]/20 text-[#c9a96e]/80 group-hover:text-[#c9a96e] group-hover:border-[#c9a96e]/40 transition-all duration-500">
-                      <card.icon size={18} strokeWidth={1.2} />
-                    </div>
-                    {card.href && (
-                      <ArrowUpRight
-                        size={14}
-                        className="text-gray-500 group-hover:text-[#c9a96e] transition-colors duration-500"
-                      />
-                    )}
-                  </div>
-
-                  <span className="text-[9px] uppercase tracking-[0.25em] text-gray-600 mb-2 block">
-                    {card.label}
-                  </span>
-                  <span className="font-heading text-base md:text-lg font-medium text-gray-900 block mb-1">
-                    {card.value}
-                  </span>
-                  {card.secondary && (
-                    <span className="text-xs text-gray-600 font-light block">
-                      {card.secondary}
+                  {["Let's"].map((w, i) => (
+                    <span key={i} className="ct-title-word inline-block mr-[0.25em]">
+                      {w}
                     </span>
-                  )}
+                  ))}
+                  <span className="ct-title-word inline-block mr-[0.25em] italic font-light text-[#c9a96e]">
+                    Start
+                  </span>
+                  <br />
+                  {["a", "Conversation"].map((w, i) => (
+                    <span key={i} className="ct-title-word inline-block mr-[0.25em] text-gray-600">
+                      {w}
+                    </span>
+                  ))}
+                </h1>
 
-                  <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#c9a96e]/40 scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
-                </a>
-              ))}
+                <div className="ct-line w-16 h-[2px] bg-[#c9a96e] mb-8" />
+
+                <p className="ct-desc text-lg text-gray-600 font-light leading-relaxed max-w-xl">
+                  Speak directly with our advisory team for residential,
+                  commercial, or agricultural opportunities. Every inquiry is
+                  treated with discretion and receives a personal response within 24 hours.
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mt-8 max-w-4xl">
+                  {contactEssentials.map((card) => (
+                    <div
+                      key={card.label}
+                      className="ct-essential-card relative p-5 border border-black/[0.06] bg-white/80"
+                    >
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="w-9 h-9 flex items-center justify-center border border-[#c9a96e]/24 text-[#c9a96e]">
+                          <card.icon size={16} strokeWidth={1.3} />
+                        </div>
+                        {card.href && <ArrowUpRight size={13} className="text-gray-500" />}
+                      </div>
+
+                      <span className="text-[9px] uppercase tracking-[0.25em] text-gray-600 mb-2 block">
+                        {card.label}
+                      </span>
+                      <span className="font-heading text-[15px] font-medium text-gray-900 block mb-1 leading-tight">
+                        {card.value}
+                      </span>
+                      {card.secondary && (
+                        <span className="text-xs text-gray-600 font-light block">
+                          {card.secondary}
+                        </span>
+                      )}
+
+                      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#c9a96e]/35" />
+                    </div>
+                  ))}
+                </div>
+
+                <div className="ct-soft-reveal mt-8 inline-flex items-center gap-3 border border-black/[0.08] bg-white/80 px-4 py-3 text-sm text-gray-700">
+                  <ShieldCheck size={16} className="text-[#c9a96e]" />
+                  All conversations are private and handled by senior advisors.
+                </div>
+              </div>
+
+              <div className="lg:col-span-5 w-full">
+                <div className="ct-form-container relative p-8 md:p-10 border border-black/[0.08] bg-white/90 backdrop-blur-sm shadow-[0_28px_70px_rgba(0,0,0,0.08)]">
+                  <div className="absolute top-0 left-0 w-16 h-[1px] bg-[#c9a96e]/60" />
+                  <div className="absolute top-0 left-0 h-16 w-[1px] bg-[#c9a96e]/60" />
+
+                  <div className="mb-8">
+                    <span className="inline-flex px-3 py-1 border border-[#c9a96e]/30 text-[10px] tracking-[0.25em] uppercase text-[#8f7442] mb-4">
+                      Priority Desk
+                    </span>
+                    <h2 className="text-2xl md:text-3xl font-heading font-medium mb-2">
+                      Private Inquiry
+                    </h2>
+                    <p className="text-sm text-gray-600 font-light">
+                      Share your requirements and our team will reach out with a tailored response.
+                    </p>
+                  </div>
+                  <ContactForm showLabels />
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* ─── WhatsApp Banner ─── */}
-        <section className="px-6 md:px-12 lg:px-20 xl:px-28 pb-16">
-          <div className="container mx-auto max-w-4xl">
-            <a
-              href="https://wa.me/919056465106"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ct-card group flex items-center gap-5 p-6 md:p-8 bg-[#25D366]/10 border border-[#25D366]/20 hover:bg-[#25D366]/15 hover:border-[#25D366]/40 transition-all duration-500"
-            >
-              <div className="w-12 h-12 flex items-center justify-center bg-[#25D366] text-gray-900 rounded-full shrink-0">
-                <MessageCircle size={22} />
-              </div>
-              <div className="flex-1">
-                <span className="text-[10px] uppercase tracking-[0.3em] text-[#25D366]/60 block mb-1">
-                  Instant Connect
-                </span>
-                <span className="font-heading text-lg font-medium text-gray-900">
-                  Message us on WhatsApp
-                </span>
-              </div>
-              <ArrowUpRight
-                size={16}
-                className="text-gray-500 group-hover:text-[#25D366] transition-colors shrink-0"
-              />
-            </a>
-          </div>
-        </section>
-
-        {/* ─── Form + Map ─── */}
-        <section className="bg-white px-6 md:px-12 lg:px-20 xl:px-28 py-32">
-          <div className="container mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl">
-              {/* Form */}
-              <div className="ct-form-container relative p-8 md:p-12 border border-black/[0.05] bg-black/[0.02]">
-                <div className="absolute top-0 left-0 w-12 h-[1px] bg-[#c9a96e]/40" />
-                <div className="absolute top-0 left-0 h-12 w-[1px] bg-[#c9a96e]/40" />
-
-                <h2 className="text-2xl md:text-3xl font-heading font-medium mb-2">
-                  Private Inquiry
-                </h2>
-                <p className="text-sm text-gray-600 font-light mb-8">
-                  Every message receives a response within 24 hours.
-                </p>
-                <ContactForm />
-              </div>
-
-              {/* Address + Map */}
-              <div className="space-y-6">
-                <div className="ct-map p-8 md:p-10 border border-black/[0.05] bg-black/[0.02]">
-                  <div className="flex items-center gap-4 mb-5">
-                    <div className="w-10 h-10 flex items-center justify-center border border-[#c9a96e]/20 text-[#c9a96e]/80">
-                      <MapPin size={18} strokeWidth={1.2} />
-                    </div>
-                    <div>
-                      <span className="text-[9px] uppercase tracking-[0.25em] text-gray-600 block">
-                        Head Office
-                      </span>
-                      <span className="font-heading font-medium text-gray-900 block">
-                        Panchkula
-                      </span>
-                    </div>
+        {/* ─── Journey + Location ─── */}
+        <section className="ct-lower bg-white px-6 md:px-12 lg:px-20 xl:px-28 py-20 md:py-24">
+          <div className="container mx-auto max-w-7xl">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-10">
+              <div className="ct-map ct-soft-reveal lg:col-span-7 p-8 md:p-10 border border-black/[0.06] bg-black/[0.015]">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-10 h-10 flex items-center justify-center border border-[#c9a96e]/20 text-[#c9a96e]/80">
+                    <MapPin size={18} strokeWidth={1.2} />
                   </div>
-                  <p className="text-sm text-gray-600 font-light leading-relaxed mb-6">
-                    B-9, Ansals Sampark-1, SCO-194-195
-                    <br />
-                    City Centre, Sector-5, Panchkula — 134109
-                  </p>
-                  <div className="aspect-[16/9] bg-black/[0.03] border border-black/[0.05] overflow-hidden">
-                    <iframe
-                      title="KNG Estate Office"
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3432.2!2d76.86!3d30.69!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390f93!2sPanchkula!5e0!3m2!1sen!2sin!4v1680000000000!5m2!1sen!2sin"
-                      className="w-full h-full opacity-70 hover:opacity-100 transition-opacity duration-500"
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                    />
+                  <div>
+                    <span className="text-[9px] uppercase tracking-[0.25em] text-gray-600 block">
+                      Head Office
+                    </span>
+                    <span className="font-heading font-medium text-gray-900 block">
+                      Panchkula
+                    </span>
+                  </div>
+                </div>
+
+                <p className="text-sm text-gray-600 font-light leading-relaxed mb-6 max-w-md">
+                  B-9, Ansals Sampark-1, SCO-194-195
+                  <br />
+                  City Centre, Sector-5, Panchkula — 134109
+                </p>
+
+                <div className="aspect-[16/9] bg-black/[0.03] border border-black/[0.05] overflow-hidden min-h-[240px]">
+                  <iframe
+                    title="KNG Estate Office"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3432.2!2d76.86!3d30.69!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390f93!2sPanchkula!5e0!3m2!1sen!2sin!4v1680000000000!5m2!1sen!2sin"
+                    className="w-full h-full opacity-70 hover:opacity-100 transition-opacity duration-500"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                </div>
+              </div>
+
+              <div className="ct-journey lg:col-span-5 space-y-5">
+                <a
+                  href="https://wa.me/919056465106"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ct-soft-reveal group flex items-center gap-5 p-6 md:p-7 bg-[#25D366]/10 border border-[#25D366]/20 hover:bg-[#25D366]/15 hover:border-[#25D366]/45 transition-all duration-500"
+                >
+                  <div className="w-11 h-11 flex items-center justify-center bg-[#25D366] text-gray-900 rounded-full shrink-0">
+                    <MessageCircle size={20} />
+                  </div>
+                  <div className="flex-1">
+                    <span className="text-[10px] uppercase tracking-[0.28em] text-[#25D366]/65 block mb-1">
+                      Instant Connect
+                    </span>
+                    <span className="font-heading text-lg font-medium text-gray-900">
+                      Message us on WhatsApp
+                    </span>
+                  </div>
+                  <ArrowUpRight
+                    size={16}
+                    className="text-gray-500 group-hover:text-[#25D366] transition-colors shrink-0"
+                  />
+                </a>
+
+                <div className="ct-soft-reveal border border-black/[0.06] bg-white p-6 md:p-7">
+                  <span className="text-[10px] uppercase tracking-[0.3em] text-[#8f7442] block mb-4">
+                    Consultation Journey
+                  </span>
+                  <div className="space-y-4">
+                    {consultationJourney.map((item) => (
+                      <div key={item.step} className="grid grid-cols-[42px_1fr] gap-4 items-start">
+                        <span className="font-heading text-lg text-[#c9a96e] leading-none mt-0.5">
+                          {item.step}
+                        </span>
+                        <div>
+                          <h3 className="font-heading text-base text-gray-900 mb-1">
+                            {item.title}
+                          </h3>
+                          <p className="text-sm text-gray-600 font-light leading-relaxed">
+                            {item.detail}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

@@ -1,10 +1,14 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Send } from "lucide-react";
 import { toast } from "sonner";
 import gsap from "@/lib/gsap-config";
 import { useGSAP } from "@gsap/react";
 
-const ContactForm = () => {
+type ContactFormProps = {
+  showLabels?: boolean;
+};
+
+const ContactForm = ({ showLabels = false }: ContactFormProps) => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -16,9 +20,22 @@ const ContactForm = () => {
   });
 
   const formRef = useRef<HTMLFormElement>(null);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const onChange = () => setPrefersReducedMotion(mediaQuery.matches);
+
+    onChange();
+    mediaQuery.addEventListener("change", onChange);
+
+    return () => mediaQuery.removeEventListener("change", onChange);
+  }, []);
 
   useGSAP(
     () => {
+      if (prefersReducedMotion) return;
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: formRef.current,
@@ -33,7 +50,7 @@ const ContactForm = () => {
         { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
       );
     },
-    { scope: formRef }
+    { scope: formRef, dependencies: [prefersReducedMotion] }
   );
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -52,48 +69,67 @@ const ContactForm = () => {
   };
 
   const inputClass =
-    "input-field w-full px-5 py-4 bg-black/[0.015] border border-black/[0.08] text-gray-900 placeholder:text-gray-600 focus:outline-none focus:border-[#c9a96e]/40 transition-all duration-300 font-light text-sm";
+    "input-field w-full px-5 py-3.5 bg-white/85 border border-black/[0.1] text-gray-900 placeholder:text-gray-500 focus:outline-none focus:border-[#c9a96e]/50 focus:bg-white transition-all duration-300 font-light text-sm";
+  const labelClass = "mb-2 block text-[11px] uppercase tracking-[0.16em] text-gray-600";
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="w-full opacity-0">
+    <form ref={formRef} onSubmit={handleSubmit} className="w-full">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <input
-          type="text"
-          placeholder="First Name"
-          required
-          value={formData.firstName}
-          onChange={(e) =>
-            setFormData({ ...formData, firstName: e.target.value })
-          }
-          className={inputClass}
-        />
-        <input
-          type="text"
-          placeholder="Last Name"
-          required
-          value={formData.lastName}
-          onChange={(e) =>
-            setFormData({ ...formData, lastName: e.target.value })
-          }
-          className={inputClass}
-        />
-        <input
-          type="tel"
-          placeholder="Phone Number"
-          value={formData.phone}
-          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-          className={inputClass}
-        />
-        <input
-          type="email"
-          placeholder="Email Address"
-          required
-          value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          className={inputClass}
-        />
+        <div>
+          {showLabels && <label htmlFor="contact-first-name" className={labelClass}>First Name</label>}
+          <input
+            id="contact-first-name"
+            type="text"
+            placeholder="First Name"
+            required
+            value={formData.firstName}
+            onChange={(e) =>
+              setFormData({ ...formData, firstName: e.target.value })
+            }
+            className={inputClass}
+          />
+        </div>
+        <div>
+          {showLabels && <label htmlFor="contact-last-name" className={labelClass}>Last Name</label>}
+          <input
+            id="contact-last-name"
+            type="text"
+            placeholder="Last Name"
+            required
+            value={formData.lastName}
+            onChange={(e) =>
+              setFormData({ ...formData, lastName: e.target.value })
+            }
+            className={inputClass}
+          />
+        </div>
+        <div>
+          {showLabels && <label htmlFor="contact-phone" className={labelClass}>Phone Number</label>}
+          <input
+            id="contact-phone"
+            type="tel"
+            placeholder="Phone Number"
+            value={formData.phone}
+            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+            className={inputClass}
+          />
+        </div>
+        <div>
+          {showLabels && <label htmlFor="contact-email" className={labelClass}>Email Address</label>}
+          <input
+            id="contact-email"
+            type="email"
+            placeholder="Email Address"
+            required
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            className={inputClass}
+          />
+        </div>
         <div className="relative">
+          {showLabels && <label htmlFor="contact-interest" className={labelClass}>Real Estate Interest</label>}
           <select
+            id="contact-interest"
             value={formData.interest}
             onChange={(e) =>
               setFormData({ ...formData, interest: e.target.value })
@@ -116,24 +152,32 @@ const ContactForm = () => {
           </select>
         </div>
 
-        <input
-          type="text"
-          placeholder="City"
-          value={formData.city}
-          onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-          className={inputClass}
+        <div>
+          {showLabels && <label htmlFor="contact-city" className={labelClass}>City</label>}
+          <input
+            id="contact-city"
+            type="text"
+            placeholder="City"
+            value={formData.city}
+            onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+            className={inputClass}
+          />
+        </div>
+      </div>
+      <div className="mt-4">
+        {showLabels && <label htmlFor="contact-message" className={labelClass}>Your Message</label>}
+        <textarea
+          id="contact-message"
+          placeholder="How can we help you?"
+          rows={4}
+          value={formData.message}
+          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+          className={`${inputClass} resize-none`}
         />
       </div>
-      <textarea
-        placeholder="How can we help you?"
-        rows={4}
-        value={formData.message}
-        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-        className={`${inputClass} mt-4 resize-none`}
-      />
       <button
         type="submit"
-        className="mt-6 w-full group relative flex items-center justify-center gap-3 px-8 py-4 bg-[#c9a96e] text-[#141108] text-xs font-bold uppercase tracking-[0.15em] hover:bg-white transition-all duration-500 active:scale-[0.99] overflow-hidden"
+        className="mt-6 w-full group relative flex items-center justify-center gap-3 px-8 py-4 bg-[#c9a96e] text-[#141108] text-xs font-bold uppercase tracking-[0.18em] border border-[#b8924f] hover:bg-[#d2b57d] transition-all duration-500 active:scale-[0.99] shadow-[0_10px_24px_rgba(201,169,110,0.22)]"
       >
         <span className="relative z-10">Send Message</span>
         <Send

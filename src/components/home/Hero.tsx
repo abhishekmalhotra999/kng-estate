@@ -182,7 +182,10 @@ const Hero = () => {
       {/* ─── Content Grid ─── */}
       <div className="relative z-10 min-h-screen flex flex-col lg:flex-row">
         {/* ─── LEFT: Text Content ─── */}
-        <div className="hero-content-left flex-1 flex flex-col justify-center px-8 md:px-16 lg:px-20 xl:px-28 pt-32 pb-16 lg:pt-0 lg:pb-0 will-change-transform">
+        <div
+          className="hero-content-left flex-1 flex flex-col justify-start px-8 md:px-16 lg:px-20 xl:px-28 pb-16 lg:pb-0 will-change-transform"
+          style={{ paddingTop: "var(--kng-header-safe-offset, clamp(9.5rem, 14vh, 12.5rem))" }}
+        >
           {/* Gold accent line */}
           <div className="hero-accent-line w-16 h-[2px] mb-8" style={{ backgroundImage: "linear-gradient(to right, var(--kng-gold), #e8c87e)" }} />
 

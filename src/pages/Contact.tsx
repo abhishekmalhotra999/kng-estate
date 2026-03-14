@@ -221,33 +221,49 @@ const Contact = () => {
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mt-8 max-w-4xl">
-                  {contactEssentials.map((card) => (
-                    <div
-                      key={card.label}
-                      className="ct-essential-card relative p-5 border border-[#d9cfbd] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.04)]"
-                    >
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="w-9 h-9 flex items-center justify-center border border-[#c9a96e]/24 text-[#c9a96e]">
-                          <card.icon size={16} strokeWidth={1.3} />
+                  {contactEssentials.map((card) => {
+                    const content = (
+                      <>
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="w-9 h-9 flex items-center justify-center border border-[#c9a96e]/24 text-[#c9a96e]">
+                            <card.icon size={16} strokeWidth={1.3} />
+                          </div>
+                          {card.href && <ArrowUpRight size={13} className="text-gray-500" />}
                         </div>
-                        {card.href && <ArrowUpRight size={13} className="text-gray-500" />}
-                      </div>
 
-                      <span className="text-[9px] uppercase tracking-[0.25em] text-gray-700 mb-2 block">
-                        {card.label}
-                      </span>
-                      <span className="font-heading text-base font-medium text-gray-900 block mb-1 leading-tight">
-                        {card.value}
-                      </span>
-                      {card.secondary && (
-                        <span className="text-xs text-gray-700 font-light block">
-                          {card.secondary}
+                        <span className="text-[9px] uppercase tracking-[0.25em] text-gray-700 mb-2 block">
+                          {card.label}
                         </span>
-                      )}
+                        <span className="font-heading text-base font-medium text-gray-900 block mb-1 leading-tight">
+                          {card.value}
+                        </span>
+                        {card.secondary && (
+                          <span className="text-xs text-gray-700 font-light block">
+                            {card.secondary}
+                          </span>
+                        )}
 
-                      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#c9a96e]/35" />
-                    </div>
-                  ))}
+                        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#c9a96e]/35" />
+                      </>
+                    );
+
+                    return card.href ? (
+                      <a
+                        key={card.label}
+                        href={card.href}
+                        className="ct-essential-card relative p-5 border border-[#d9cfbd] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.04)] hover:border-[#c9a96e]/35 transition-colors"
+                      >
+                        {content}
+                      </a>
+                    ) : (
+                      <div
+                        key={card.label}
+                        className="ct-essential-card relative p-5 border border-[#d9cfbd] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.04)]"
+                      >
+                        {content}
+                      </div>
+                    );
+                  })}
                 </div>
 
                 <div className="ct-soft-reveal mt-8 inline-flex items-center gap-3 border border-[#d9cfbd] bg-white px-4 py-3 text-sm text-gray-800 shadow-[0_8px_22px_rgba(0,0,0,0.04)]">

@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { MessageCircle, X, Phone } from "lucide-react";
+import { Link } from "react-router-dom";
 import gsap from "@/lib/gsap-config";
 import { useGSAP } from "@gsap/react";
 
@@ -30,23 +31,23 @@ const ChatBubble = () => {
   }, { scope: container, dependencies: [open] });
 
   return (
-    <div ref={container} className="fixed bottom-20 md:bottom-6 right-4 md:right-6 z-40 flex flex-col items-end gap-3 pointer-events-none">
+    <div ref={container} className="fixed bottom-[calc(env(safe-area-inset-bottom)+6rem)] md:bottom-6 right-4 md:right-6 z-40 flex flex-col items-end gap-3 pointer-events-none">
       <div
         ref={popupRef}
-        className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 w-80 mb-2 pointer-events-auto hidden"
+        className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 w-[min(20rem,calc(100vw-2rem))] mb-2 pointer-events-auto hidden"
       >
         <h3 className="font-heading font-medium text-lg mb-2 text-black">Hello Homebuyer! 👋</h3>
         <p className="text-sm text-gray-500 mb-4 font-light leading-relaxed">
           Ready to find your dream property? Let's chat or book a call with one of our friendly agents.
         </p>
         <div className="flex flex-col gap-2">
-           <a
-            href="/contact"
+           <Link
+            to="/contact"
             className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-white text-gray-900 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-white/80 transition-opacity"
           >
             <Phone size={14} />
             Book a Call
-          </a>
+          </Link>
         </div>
       </div>
 

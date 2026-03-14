@@ -1,5 +1,6 @@
 import { useRef, useState, useCallback, useEffect } from "react";
 import { ArrowRight, MapPin, ChevronDown } from "lucide-react";
+import { Link } from "react-router-dom";
 import gsap from "@/lib/gsap-config";
 import { useGSAP } from "@gsap/react";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -44,9 +45,9 @@ const Hero = () => {
 
   // Auto-advance slides
   useEffect(() => {
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion || isMobile) return;
 
-    const interval = setInterval(nextSlide, isMobile ? 7000 : 5500);
+    const interval = setInterval(nextSlide, 5500);
     return () => clearInterval(interval);
   }, [nextSlide, isMobile, prefersReducedMotion]);
 
@@ -72,13 +73,13 @@ const Hero = () => {
         // Main headline letters stagger
         .fromTo(
           ".hero-headline-word",
-          { y: 80, opacity: 0, rotateX: 40 },
+          { y: isMobile ? 36 : 80, opacity: 0, rotateX: isMobile ? 0 : 40 },
           {
             y: 0,
             opacity: 1,
             rotateX: 0,
-            duration: 1,
-            stagger: 0.15,
+            duration: isMobile ? 0.65 : 1,
+            stagger: isMobile ? 0.08 : 0.15,
           },
           "-=0.5"
         )
@@ -99,13 +100,19 @@ const Hero = () => {
         // Image reveal
         .fromTo(
           ".hero-image-wrapper",
-          { clipPath: "inset(100% 0% 0% 0%)", opacity: 0 },
-          {
-            clipPath: "inset(0% 0% 0% 0%)",
-            opacity: 1,
-            duration: 1.4,
-            ease: "power4.inOut",
-          },
+          isMobile ? { y: 18, opacity: 0 } : { clipPath: "inset(100% 0% 0% 0%)", opacity: 0 },
+          isMobile
+            ? {
+                y: 0,
+                opacity: 1,
+                duration: 0.7,
+              }
+            : {
+                clipPath: "inset(0% 0% 0% 0%)",
+                opacity: 1,
+                duration: 1.4,
+                ease: "power4.inOut",
+              },
           "-=1.2"
         )
         // Stats
@@ -219,21 +226,21 @@ const Hero = () => {
 
           {/* CTA */}
           <div className="hero-cta flex flex-col sm:flex-row items-start gap-5">
-            <a
-              href="/residential"
+            <Link
+              to="/residential"
               className="group relative inline-flex items-center gap-4 px-8 py-4 text-[var(--kng-ink)] font-body text-xs md:text-sm tracking-widest uppercase font-semibold transition-all duration-500 hover:shadow-[0_0_40px_rgba(201,169,110,0.3)] hover:scale-[1.02] min-h-[48px]"
               style={{ backgroundImage: "linear-gradient(to right, var(--kng-gold), var(--kng-gold-deep))" }}
             >
               View Properties
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300" />
-            </a>
-            <a
-              href="/contact"
+            </Link>
+            <Link
+              to="/contact"
               className="group inline-flex items-center gap-3 px-8 py-4 border border-black/30 text-gray-900/80 font-body text-xs md:text-sm tracking-widest uppercase transition-all duration-500 hover:text-[var(--kng-gold)] min-h-[48px]"
               style={{ borderColor: "color-mix(in srgb, var(--kng-gold) 50%, rgba(0,0,0,0.3))" }}
             >
               Get in Touch
-            </a>
+            </Link>
           </div>
 
           {/* Stats row */}
@@ -306,12 +313,16 @@ const Hero = () => {
                     setTimeout(() => setIsTransitioning(false), 1200);
                   }
                 }}
-                className={`transition-all duration-500 rounded-full ${i === activeSlide
-                  ? "w-8 h-2 md:h-1.5 bg-[var(--kng-gold)]"
-                  : "w-3 h-3 md:w-2 md:h-2 bg-[#c9a96e]/45 hover:bg-[#c9a96e]/80"
-                  }`}
+                className="h-11 w-11 md:h-7 md:w-7 flex items-center justify-center rounded-full"
                 aria-label={`Go to slide ${i + 1}`}
-              />
+              >
+                <span
+                  className={`transition-all duration-500 rounded-full ${i === activeSlide
+                    ? "w-8 h-2 md:h-1.5 bg-[var(--kng-gold)]"
+                    : "w-3 h-3 md:w-2 md:h-2 bg-[#c9a96e]/45 hover:bg-[#c9a96e]/80"
+                    }`}
+                />
+              </button>
             ))}
           </div>
         </div>

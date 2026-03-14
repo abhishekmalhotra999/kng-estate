@@ -1,8 +1,9 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import gsap from "@/lib/gsap-config";
 import { useGSAP } from "@gsap/react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface ServiceHeroProps {
   title: string;
@@ -27,28 +28,44 @@ const ServiceHero = ({
 }: ServiceHeroProps) => {
   const container = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
+  const isMobile = useIsMobile();
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const onChange = () => setPrefersReducedMotion(mediaQuery.matches);
+
+    onChange();
+    mediaQuery.addEventListener("change", onChange);
+
+    return () => mediaQuery.removeEventListener("change", onChange);
+  }, []);
 
   useGSAP(
     () => {
+      if (prefersReducedMotion) return;
+
       // Image parallax
-      gsap.to(imageRef.current, {
-        yPercent: 15,
-        ease: "none",
-        scrollTrigger: {
-          trigger: container.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
+      if (!isMobile) {
+        gsap.to(imageRef.current, {
+          yPercent: 15,
+          ease: "none",
+          scrollTrigger: {
+            trigger: container.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      }
 
       // Image scale-in
       gsap.fromTo(
         imageRef.current,
-        { scale: 1.2 },
+        { scale: isMobile ? 1.06 : 1.2 },
         {
           scale: 1.05,
-          duration: 1.8,
+          duration: isMobile ? 0.7 : 1.8,
           ease: "power3.out",
         }
       );
@@ -64,13 +81,13 @@ const ServiceHero = ({
       const words = gsap.utils.toArray(".sh-title-word") as HTMLElement[];
       gsap.fromTo(
         words,
-        { y: 80, opacity: 0, rotateX: 20 },
+        { y: isMobile ? 36 : 80, opacity: 0, rotateX: isMobile ? 0 : 20 },
         {
           y: 0,
           opacity: 1,
           rotateX: 0,
-          duration: 1,
-          stagger: 0.08,
+          duration: isMobile ? 0.65 : 1,
+          stagger: isMobile ? 0.05 : 0.08,
           ease: "power3.out",
           delay: 0.4,
         }
@@ -87,7 +104,7 @@ const ServiceHero = ({
       gsap.fromTo(
         ".sh-cta",
         { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, delay: 1 }
+        { y: 0, opacity: 1, duration: isMobile ? 0.45 : 0.6, stagger: 0.1, delay: 1 }
       );
 
       // Gold line draw
@@ -103,7 +120,7 @@ const ServiceHero = ({
         }
       );
     },
-    { scope: container }
+    { scope: container, dependencies: [isMobile, prefersReducedMotion] }
   );
 
   // Split title into words for animation

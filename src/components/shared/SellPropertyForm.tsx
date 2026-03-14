@@ -392,7 +392,7 @@ const SellPropertyForm = () => {
                   type="button"
                   onClick={() => removeImage(index)}
                   aria-label={`Remove ${preview.file.name}`}
-                  className="absolute top-1 right-1 h-7 w-7 rounded-full bg-black/70 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute top-1 right-1 h-10 w-10 md:h-7 md:w-7 rounded-full bg-black/70 text-white flex items-center justify-center opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
                 >
                   <X size={13} />
                 </button>

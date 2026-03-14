@@ -11,6 +11,7 @@ const navItems = [
     label: "Our Services",
     children: [
       { label: "Residential", path: "/residential" },
+      { label: "Rentals", path: "/rentals" },
       { label: "Commercial", path: "/commercial" },
       { label: "Agricultural", path: "/agricultural" },
     ],
@@ -191,7 +192,7 @@ const Header = () => {
                   <ChevronDown size={14} className={`transition-transform duration-300 ${openDropdown === item.label ? "rotate-180" : ""}`} />
                 </button>
                 <div
-                  className={`overflow-hidden transition-all duration-300 ease-in-out pl-4 space-y-1 ${openDropdown === item.label ? "max-h-48 opacity-100 py-2" : "max-h-0 opacity-0"
+                  className={`overflow-hidden transition-all duration-300 ease-in-out pl-4 space-y-1 ${openDropdown === item.label ? "max-h-64 opacity-100 py-2" : "max-h-0 opacity-0"
                     }`}
                 >
                   {item.children.map((child) => (

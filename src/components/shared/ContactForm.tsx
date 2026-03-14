@@ -143,6 +143,9 @@ const ContactForm = ({ showLabels = false }: ContactFormProps) => {
             <option value="residential" className="bg-white text-gray-900">
               Residential
             </option>
+            <option value="rentals" className="bg-white text-gray-900">
+              Rentals
+            </option>
             <option value="commercial" className="bg-white text-gray-900">
               Commercial
             </option>

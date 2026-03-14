@@ -146,10 +146,10 @@ const Residential = () => {
         {/* ─── Manifesto section ─── */}
         <section
           ref={contentRef}
-          className="bg-white py-28 md:py-40 px-6 md:px-12 lg:px-20 xl:px-28"
+          className="bg-[#f8f5ee] py-24 md:py-36 px-6 md:px-12 lg:px-20 xl:px-28"
         >
           <div className="container mx-auto">
-            <div className="max-w-4xl mb-28">
+            <div className="max-w-4xl mb-20 md:mb-24">
               <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.15]">
                 {renderWords("Your home is more than an address.")}
                 <br className="hidden md:block" />
@@ -167,14 +167,14 @@ const Residential = () => {
               {services.map((item) => (
                 <div
                   key={item.title}
-                  className="res-service-card group relative p-8 md:p-10 border border-gray-100 hover:border-[#c9a96e]/30 bg-white hover:bg-gray-50/50 transition-all duration-700"
+                  className="res-service-card group relative p-8 md:p-10 border border-[#d9cfbd] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_34px_rgba(0,0,0,0.08)] hover:border-[#c9a96e]/50 transition-all duration-500"
                 >
                   {/* Corner accent */}
                   <div className="absolute top-0 right-0 w-10 h-[1px] bg-gradient-to-l from-[#c9a96e]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="absolute top-0 right-0 h-10 w-[1px] bg-gradient-to-b from-[#c9a96e]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                   {/* Number */}
-                  <span className="block font-heading text-5xl font-light text-[#c9a96e]/60 group-hover:text-[#c9a96e]/60 transition-colors duration-700 mb-5 select-none leading-none">
+                  <span className="block font-heading text-5xl font-light text-[#b8924f] group-hover:text-[#a88445] transition-colors duration-500 mb-5 select-none leading-none">
                     {item.number}
                   </span>
 
@@ -183,15 +183,15 @@ const Residential = () => {
                     <item.icon size={20} strokeWidth={1.2} />
                   </div>
 
-                  <h3 className="text-lg font-heading font-medium mb-3 text-gray-900 group-hover:text-[#c9a96e] transition-colors duration-500">
+                  <h3 className="text-[1.35rem] font-heading font-medium mb-3 text-gray-900 leading-tight group-hover:text-[#a88445] transition-colors duration-500">
                     {item.title}
                   </h3>
-                  <p className="text-sm text-gray-500 leading-relaxed font-light group-hover:text-gray-500 transition-colors duration-500">
+                  <p className="text-[15px] text-gray-700 leading-[1.75] font-normal transition-colors duration-500">
                     {item.description}
                   </p>
 
                   {/* Bottom line */}
-                  <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#c9a96e]/40 scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
+                  <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#c9a96e]/60 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
                 </div>
               ))}
             </div>

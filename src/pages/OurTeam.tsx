@@ -4,28 +4,28 @@ import Footer from "@/components/layout/Footer";
 import TeamCard from "@/components/shared/TeamCard";
 import gsap from "@/lib/gsap-config";
 import { useGSAP } from "@gsap/react";
-import prerna from "@/assets/team-prerna.jpg";
-import member2 from "@/assets/team-member2.jpg";
-import member3 from "@/assets/team-member3.jpg";
+import nanakPlaceholder from "@/assets/team-nanak-placeholder.svg";
+import lalitPlaceholder from "@/assets/team-lalit-placeholder.svg";
+import kabirPlaceholder from "@/assets/team-kabir-placeholder.svg";
 
 const team = [
   {
-    name: "Prerna Sharma",
-    role: "Lead Real Estate Agent",
-    bio: "With years of experience in the Tricity market, Prerna brings deep knowledge and a warm, client-first approach to every transaction.",
-    image: prerna,
+    name: "Nanak K. Arora",
+    role: "Director, Business Development",
+    bio: "Nanak drives strategic growth initiatives and market expansion with a disciplined, client-focused approach.",
+    image: nanakPlaceholder,
   },
   {
-    name: "David Mitchell",
-    role: "Senior Broker",
-    bio: "David's keen eye for market trends and negotiation skills have helped hundreds of clients achieve their real estate goals.",
-    image: member2,
+    name: "Lalit K. Arora",
+    role: "Owner & Founder",
+    bio: "Lalit leads the vision of KNG Estate, guiding clients through high-value decisions with trust, integrity, and precision.",
+    image: lalitPlaceholder,
   },
   {
-    name: "Sarah Chen",
-    role: "Client Relations Manager",
-    bio: "Sarah ensures every client journey is smooth, informed, and stress-free from first meeting to closing day.",
-    image: member3,
+    name: "Kabir K. Arora",
+    role: "Director, Client Relations",
+    bio: "Kabir oversees client experience and execution excellence, ensuring each deal progresses smoothly from inquiry to closure.",
+    image: kabirPlaceholder,
   },
 ];
 
@@ -81,11 +81,11 @@ const OurTeam = () => {
   );
 
   return (
-    <div ref={container} className="min-h-screen bg-[#FCFBF8] text-gray-900">
+    <div ref={container} className="min-h-screen bg-[#f8f5ee] text-gray-900">
       <Header />
       <main>
         {/* ─── Hero Section ─── */}
-        <section className="relative pt-36 md:pt-44 pb-20 px-6 md:px-12 lg:px-20 xl:px-28 overflow-hidden">
+        <section className="relative pt-36 md:pt-44 pb-16 md:pb-18 px-6 md:px-12 lg:px-20 xl:px-28 overflow-hidden">
           {/* Ambient glow */}
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#c9a96e]/[0.03] blur-[150px] rounded-full pointer-events-none" />
 
@@ -112,7 +112,7 @@ const OurTeam = () => {
                 {["Behind", "Your"].map((word, i) => (
                   <span
                     key={i}
-                    className="team-title-word inline-block mr-[0.25em] text-gray-600"
+                    className="team-title-word inline-block mr-[0.25em] text-gray-700"
                   >
                     {word}
                   </span>
@@ -124,7 +124,7 @@ const OurTeam = () => {
 
               <div className="team-line w-16 h-[2px] bg-[#c9a96e] mb-8" />
 
-              <p className="team-desc text-lg text-gray-600 font-light leading-relaxed max-w-xl">
+              <p className="team-desc text-lg text-gray-700 font-normal leading-relaxed max-w-xl">
                 A dedicated group of professionals who truly care about finding
                 your perfect property. We bring passion, expertise, and genuine
                 heart to every relationship.
@@ -134,7 +134,7 @@ const OurTeam = () => {
         </section>
 
         {/* ─── Team Grid ─── */}
-        <section className="bg-white px-6 md:px-12 lg:px-20 xl:px-28 py-32">
+        <section className="bg-[#f4f1e9] px-6 md:px-12 lg:px-20 xl:px-28 py-20 md:py-24">
           <div className="container mx-auto">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
               {team.map((member, i) => (

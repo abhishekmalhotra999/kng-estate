@@ -169,7 +169,7 @@ const WhyUs = () => {
   return (
     <section
       ref={container}
-      className="bg-[#FCFBF8] text-gray-900 overflow-hidden relative"
+      className="bg-[#f8f5ee] text-gray-900 overflow-hidden relative"
     >
       {/* Top border accent */}
       <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#c9a96e]/40 to-transparent" />
@@ -194,11 +194,11 @@ const WhyUs = () => {
             <h2 className="text-5xl md:text-6xl lg:text-7xl font-heading font-medium leading-[0.95] mb-10">
               {splitWords("The Standard")}
               <br />
-              {splitWords("others", "text-gray-600 italic font-light")}
-              {splitWords("follow.", "text-gray-600 italic font-light")}
+              {splitWords("others", "text-gray-700 italic font-light")}
+              {splitWords("follow.", "text-gray-700 italic font-light")}
             </h2>
 
-            <p className="why-subtext font-body text-lg max-w-xs leading-relaxed font-light">
+            <p className="why-subtext font-body text-lg max-w-xs leading-relaxed font-normal text-gray-700">
               In a market full of noise, we offer something rare — clarity,
               conviction, and results that speak for themselves.
             </p>
@@ -211,22 +211,22 @@ const WhyUs = () => {
             {features.map((feature, idx) => (
               <div
                 key={idx}
-                className="why-feature group relative py-12 border-b border-black/[0.05] last:border-b-0 cursor-default"
+                className="why-feature group relative py-12 border-b border-[#d9cfbd] last:border-b-0 cursor-default bg-white/85 px-4 md:px-6"
               >
                 {/* Hover sweep line */}
                 <div className="feature-line absolute bottom-0 left-0 right-0 h-[2px] bg-[#c9a96e]" />
 
                 <div className="flex items-start gap-6 md:gap-10">
                   {/* Number */}
-                  <span className="feature-number font-heading text-5xl md:text-6xl font-light text-[#c9a96e]/60 group-hover:text-[#c9a96e]/40 transition-colors duration-700 leading-none mt-1 shrink-0 select-none">
+                  <span className="feature-number font-heading text-5xl md:text-6xl font-light text-[#b8924f] group-hover:text-[#a88445] transition-colors duration-500 leading-none mt-1 shrink-0 select-none">
                     {feature.number}
                   </span>
 
                   <div>
-                    <h3 className="text-xl md:text-2xl lg:text-3xl font-heading font-medium mb-4 group-hover:text-[#c9a96e] transition-colors duration-500">
+                    <h3 className="text-xl md:text-2xl lg:text-3xl font-heading font-medium mb-4 group-hover:text-[#a88445] transition-colors duration-500">
                       {feature.title}
                     </h3>
-                    <p className="text-gray-600 font-light leading-relaxed text-sm md:text-base max-w-lg group-hover:text-gray-600 transition-colors duration-500">
+                    <p className="text-gray-700 font-normal leading-relaxed text-sm md:text-base max-w-lg transition-colors duration-500">
                       {feature.description}
                     </p>
                   </div>

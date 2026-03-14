@@ -173,7 +173,7 @@ const Contact = () => {
   );
 
   return (
-    <div ref={container} className="min-h-screen bg-[#FCFBF8] text-gray-900">
+    <div ref={container} className="min-h-screen bg-[#f8f5ee] text-gray-900">
       <Header />
       <main>
         {/* ─── Hero ─── */}
@@ -214,9 +214,9 @@ const Contact = () => {
 
                 <div className="ct-line w-16 h-[2px] bg-[#c9a96e] mb-8" />
 
-                <p className="ct-desc text-lg text-gray-600 font-light leading-relaxed max-w-xl">
+                <p className="ct-desc text-lg text-gray-700 font-normal leading-relaxed max-w-xl">
                   Speak directly with our advisory team for residential,
-                  commercial, or agricultural opportunities. Every inquiry is
+                  rentals, commercial, or agricultural opportunities. Every inquiry is
                   treated with discretion and receives a personal response within 24 hours.
                 </p>
 
@@ -224,7 +224,7 @@ const Contact = () => {
                   {contactEssentials.map((card) => (
                     <div
                       key={card.label}
-                      className="ct-essential-card relative p-5 border border-black/[0.06] bg-white/80"
+                      className="ct-essential-card relative p-5 border border-[#d9cfbd] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.04)]"
                     >
                       <div className="flex items-center justify-between mb-4">
                         <div className="w-9 h-9 flex items-center justify-center border border-[#c9a96e]/24 text-[#c9a96e]">
@@ -233,14 +233,14 @@ const Contact = () => {
                         {card.href && <ArrowUpRight size={13} className="text-gray-500" />}
                       </div>
 
-                      <span className="text-[9px] uppercase tracking-[0.25em] text-gray-600 mb-2 block">
+                      <span className="text-[9px] uppercase tracking-[0.25em] text-gray-700 mb-2 block">
                         {card.label}
                       </span>
-                      <span className="font-heading text-[15px] font-medium text-gray-900 block mb-1 leading-tight">
+                      <span className="font-heading text-base font-medium text-gray-900 block mb-1 leading-tight">
                         {card.value}
                       </span>
                       {card.secondary && (
-                        <span className="text-xs text-gray-600 font-light block">
+                        <span className="text-xs text-gray-700 font-light block">
                           {card.secondary}
                         </span>
                       )}
@@ -250,14 +250,14 @@ const Contact = () => {
                   ))}
                 </div>
 
-                <div className="ct-soft-reveal mt-8 inline-flex items-center gap-3 border border-black/[0.08] bg-white/80 px-4 py-3 text-sm text-gray-700">
+                <div className="ct-soft-reveal mt-8 inline-flex items-center gap-3 border border-[#d9cfbd] bg-white px-4 py-3 text-sm text-gray-800 shadow-[0_8px_22px_rgba(0,0,0,0.04)]">
                   <ShieldCheck size={16} className="text-[#c9a96e]" />
                   All conversations are private and handled by senior advisors.
                 </div>
               </div>
 
               <div className="lg:col-span-5 w-full">
-                <div className="ct-form-container relative p-8 md:p-10 border border-black/[0.08] bg-white/90 backdrop-blur-sm shadow-[0_28px_70px_rgba(0,0,0,0.08)]">
+                <div className="ct-form-container relative p-8 md:p-10 border border-[#d6ccb9] bg-white backdrop-blur-sm shadow-[0_28px_70px_rgba(0,0,0,0.1)]">
                   <div className="absolute top-0 left-0 w-16 h-[1px] bg-[#c9a96e]/60" />
                   <div className="absolute top-0 left-0 h-16 w-[1px] bg-[#c9a96e]/60" />
 
@@ -268,7 +268,7 @@ const Contact = () => {
                     <h2 className="text-2xl md:text-3xl font-heading font-medium mb-2">
                       Private Inquiry
                     </h2>
-                    <p className="text-sm text-gray-600 font-light">
+                    <p className="text-sm text-gray-700 font-normal">
                       Share your requirements and our team will reach out with a tailored response.
                     </p>
                   </div>
@@ -280,16 +280,16 @@ const Contact = () => {
         </section>
 
         {/* ─── Journey + Location ─── */}
-        <section className="ct-lower bg-white px-6 md:px-12 lg:px-20 xl:px-28 py-20 md:py-24">
+        <section className="ct-lower bg-[#f4f1e9] px-6 md:px-12 lg:px-20 xl:px-28 py-20 md:py-24">
           <div className="container mx-auto max-w-7xl">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-10">
-              <div className="ct-map ct-soft-reveal lg:col-span-7 p-8 md:p-10 border border-black/[0.06] bg-black/[0.015]">
+              <div className="ct-map ct-soft-reveal lg:col-span-7 p-8 md:p-10 border border-[#d9cfbd] bg-white shadow-[0_12px_30px_rgba(0,0,0,0.05)]">
                 <div className="flex items-center gap-4 mb-6">
                   <div className="w-10 h-10 flex items-center justify-center border border-[#c9a96e]/20 text-[#c9a96e]/80">
                     <MapPin size={18} strokeWidth={1.2} />
                   </div>
                   <div>
-                    <span className="text-[9px] uppercase tracking-[0.25em] text-gray-600 block">
+                    <span className="text-[9px] uppercase tracking-[0.25em] text-gray-700 block">
                       Head Office
                     </span>
                     <span className="font-heading font-medium text-gray-900 block">
@@ -298,7 +298,7 @@ const Contact = () => {
                   </div>
                 </div>
 
-                <p className="text-sm text-gray-600 font-light leading-relaxed mb-6 max-w-md">
+                <p className="text-sm text-gray-700 leading-relaxed mb-6 max-w-md">
                   B-9, Ansals Sampark-1, SCO-194-195
                   <br />
                   City Centre, Sector-5, Panchkula — 134109
@@ -320,7 +320,7 @@ const Contact = () => {
                   href="https://wa.me/919056465106"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="ct-soft-reveal group flex items-center gap-5 p-6 md:p-7 bg-[#25D366]/10 border border-[#25D366]/20 hover:bg-[#25D366]/15 hover:border-[#25D366]/45 transition-all duration-500"
+                  className="ct-soft-reveal group flex items-center gap-5 p-6 md:p-7 bg-[#eaf9ef] border border-[#25D366]/25 hover:bg-[#ddf6e6] hover:border-[#25D366]/45 transition-all duration-500 shadow-[0_8px_24px_rgba(0,0,0,0.04)]"
                 >
                   <div className="w-11 h-11 flex items-center justify-center bg-[#25D366] text-gray-900 rounded-full shrink-0">
                     <MessageCircle size={20} />
@@ -339,7 +339,7 @@ const Contact = () => {
                   />
                 </a>
 
-                <div className="ct-soft-reveal border border-black/[0.06] bg-white p-6 md:p-7">
+                <div className="ct-soft-reveal border border-[#d9cfbd] bg-white p-6 md:p-7 shadow-[0_8px_24px_rgba(0,0,0,0.04)]">
                   <span className="text-[10px] uppercase tracking-[0.3em] text-[#8f7442] block mb-4">
                     Consultation Journey
                   </span>
@@ -353,7 +353,7 @@ const Contact = () => {
                           <h3 className="font-heading text-base text-gray-900 mb-1">
                             {item.title}
                           </h3>
-                          <p className="text-sm text-gray-600 font-light leading-relaxed">
+                          <p className="text-sm text-gray-700 leading-relaxed">
                             {item.detail}
                           </p>
                         </div>

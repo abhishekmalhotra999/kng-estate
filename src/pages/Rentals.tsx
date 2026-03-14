@@ -3,63 +3,62 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ServiceHero from "@/components/shared/ServiceHero";
 import ContactSection from "@/components/home/ContactSection";
-import commercialImg from "@/assets/commercial.jpg";
-import { Building2, BarChart3, Briefcase, Globe, ShieldCheck, LineChart } from "lucide-react";
+import rentalsImg from "@/assets/hero-home.jpg";
+import { Home, Key, FileText, TrendingUp, Shield, Users } from "lucide-react";
 import gsap from "@/lib/gsap-config";
 import { useGSAP } from "@gsap/react";
 
 const services = [
   {
-    icon: Building2,
+    icon: Home,
     number: "01",
-    title: "Office & Retail Spaces",
+    title: "Curated Rental Listings",
     description:
-      "From prime retail locations to modern office parks, we match businesses with spaces that accelerate growth.",
+      "Handpicked residential, commercial, and agricultural rental opportunities aligned with your goals and budget.",
   },
   {
-    icon: BarChart3,
+    icon: Key,
     number: "02",
-    title: "Investment Analysis",
+    title: "Tenant and Occupant Matching",
     description:
-      "Detailed ROI projections, cap rate analysis, and market comparables for every commercial opportunity.",
+      "We screen and match applicants thoughtfully to protect your property standards and long-term returns.",
   },
   {
-    icon: Briefcase,
+    icon: FileText,
     number: "03",
-    title: "Lease Negotiation",
+    title: "Lease Structuring and Documentation",
     description:
-      "We negotiate favorable terms that protect your interests and maximize your operational efficiency.",
+      "Professionally drafted terms with clear protections, timelines, and obligations for all parties.",
   },
   {
-    icon: Globe,
+    icon: TrendingUp,
     number: "04",
-    title: "Market Intelligence",
+    title: "Rental Pricing Strategy",
     description:
-      "Stay ahead with our deep understanding of Tricity's commercial growth corridors and emerging hotspots.",
+      "Data-backed rent positioning that balances premium value, occupancy, and market competitiveness.",
   },
   {
-    icon: ShieldCheck,
+    icon: Shield,
     number: "05",
-    title: "Due Diligence",
+    title: "Compliance and Risk Guidance",
     description:
-      "Comprehensive property assessments, zoning verification, and legal compliance checks before you commit.",
+      "Support on legal checks, policy adherence, and practical safeguards before lease finalization.",
   },
   {
-    icon: LineChart,
+    icon: Users,
     number: "06",
-    title: "Portfolio Management",
+    title: "Renewal and Portfolio Advisory",
     description:
-      "Ongoing advisory for investors managing multiple commercial assets across the Tricity region.",
+      "Ongoing support for renewals, transitions, and scaling your rental portfolio with confidence.",
   },
 ];
 
-const Commercial = () => {
+const Rentals = () => {
   const contentRef = useRef<HTMLElement>(null);
 
   useGSAP(
     () => {
-      // Text color reveal
-      const words = gsap.utils.toArray(".com-reveal-word") as HTMLElement[];
+      const words = gsap.utils.toArray(".ren-reveal-word") as HTMLElement[];
       words.forEach((word) => {
         gsap.fromTo(
           word,
@@ -77,7 +76,7 @@ const Commercial = () => {
         );
       });
 
-      const goldWords = gsap.utils.toArray(".com-reveal-gold") as HTMLElement[];
+      const goldWords = gsap.utils.toArray(".ren-reveal-gold") as HTMLElement[];
       goldWords.forEach((word) => {
         gsap.fromTo(
           word,
@@ -95,8 +94,7 @@ const Commercial = () => {
         );
       });
 
-      // Service cards
-      const cards = gsap.utils.toArray(".com-card") as HTMLElement[];
+      const cards = gsap.utils.toArray(".ren-card") as HTMLElement[];
       cards.forEach((card) => {
         gsap.fromTo(
           card,
@@ -123,7 +121,7 @@ const Commercial = () => {
     text.split(" ").map((word, i) => (
       <span
         key={i}
-        className={`${isGold ? "com-reveal-gold italic" : "com-reveal-word"} inline-block mr-[0.28em]`}
+        className={`${isGold ? "ren-reveal-gold italic" : "ren-reveal-word"} inline-block mr-[0.28em]`}
       >
         {word}
       </span>
@@ -134,35 +132,41 @@ const Commercial = () => {
       <Header />
       <main>
         <ServiceHero
-          title="Commercial Real Estate"
-          subtitle="Invest in Your Future"
-          description="From office spaces to retail units, we help businesses and investors find the perfect commercial property to grow and thrive."
-          image={commercialImg}
+          title="Rental Properties"
+          subtitle="Lease With Confidence"
+          description="We handle rentals of all types across Tricity, including residential, commercial, and agricultural properties with complete end-to-end support."
+          image={rentalsImg}
         />
 
-        {/* Manifesto */}
         <section
           ref={contentRef}
-          className="bg-[#f8f5ee] text-gray-900 py-24 md:py-36 px-6 md:px-12 lg:px-20 xl:px-28"
+          className="bg-[#f8f5ee] py-24 md:py-36 px-6 md:px-12 lg:px-20 xl:px-28"
         >
           <div className="container mx-auto">
             <div className="max-w-4xl mb-20 md:mb-24">
               <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.15]">
-                {renderWords("Your business deserves a space that")}
+                {renderWords("Exceptional rentals are not found by chance.")}
                 <br className="hidden md:block" />
-                {renderWords("matches your", true)}{" "}
-                {renderWords("ambition.", true)}
+                {renderWords("They are", true)} {renderWords("curated,", true)}
                 <br className="hidden md:block" />
-                {renderWords("We find the address that fuels growth.")}
+                {renderWords("negotiated, and managed")}
+                <br className="hidden md:block" />
+                {renderWords("for long-term peace of mind.", true)}
               </h2>
+
+              <p className="mt-10 text-base md:text-lg text-gray-700 font-normal leading-relaxed max-w-3xl">
+                Looking to rent in Tricity? From family homes and premium apartments to office spaces,
+                retail units, and agricultural land, our team manages everything for you. Just get in
+                touch, share your requirement, and we will handle the search, negotiation, paperwork,
+                and handover from start to finish.
+              </p>
             </div>
 
-            {/* Services Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {services.map((item) => (
                 <div
                   key={item.title}
-                  className="com-card group relative p-8 md:p-10 border border-[#d9cfbd] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_34px_rgba(0,0,0,0.08)] hover:border-[#c9a96e]/50 transition-all duration-500"
+                  className="ren-card group relative p-8 md:p-10 border border-[#d9cfbd] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_34px_rgba(0,0,0,0.08)] hover:border-[#c9a96e]/50 transition-all duration-500"
                 >
                   <div className="absolute top-0 right-0 w-10 h-[1px] bg-gradient-to-l from-[#c9a96e]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="absolute top-0 right-0 h-10 w-[1px] bg-gradient-to-b from-[#c9a96e]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -196,4 +200,4 @@ const Commercial = () => {
   );
 };
 
-export default Commercial;
+export default Rentals;

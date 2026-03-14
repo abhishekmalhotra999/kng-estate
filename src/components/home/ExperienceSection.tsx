@@ -131,7 +131,7 @@ const ExperienceSection = () => {
   return (
     <section
       ref={container}
-      className="relative bg-[#FCFBF8] text-gray-900 overflow-hidden"
+      className="relative bg-[#f8f5ee] text-gray-900 overflow-hidden"
     >
       {/* Subtle ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#c9a96e]/[0.02] blur-[200px] rounded-full pointer-events-none" />
@@ -158,7 +158,7 @@ const ExperienceSection = () => {
             {renderRevealText("luxury real estate across the Tricity.")}
           </h2>
 
-          <p className="text-lg md:text-xl text-gray-600 font-light leading-relaxed max-w-2xl">
+          <p className="text-lg md:text-xl text-gray-700 font-normal leading-relaxed max-w-2xl">
             {renderRevealText(
               "Connecting visionaries with their dream properties in Chandigarh, Mohali, and Panchkula — with absolute discretion and unmatched expertise."
             )}
@@ -191,7 +191,7 @@ const ExperienceSection = () => {
                     </span>
                   )}
                 </span>
-                <span className="stat-label block text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-gray-500 mt-2">
+                <span className="stat-label block text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-gray-700 mt-2">
                   {stat.label}
                 </span>
               </div>
@@ -207,12 +207,12 @@ const ExperienceSection = () => {
             ].map((city) => (
               <div
                 key={city.label}
-                className="city-pill group cursor-pointer px-6 py-3 border border-black/[0.08] hover:border-[#c9a96e]/40 hover:bg-[#c9a96e]/5 transition-all duration-500"
+                className="city-pill group cursor-pointer px-6 py-3 border border-[#d8ceba] bg-white/85 hover:border-[#c9a96e]/45 hover:bg-[#fffaf0] shadow-[0_6px_18px_rgba(0,0,0,0.04)] transition-all duration-500"
               >
-                <span className="block text-xs uppercase tracking-[0.15em] font-medium text-gray-900/70 group-hover:text-gray-900 transition-colors">
+                <span className="block text-xs uppercase tracking-[0.15em] font-medium text-gray-900/90 group-hover:text-gray-900 transition-colors">
                   {city.label}
                 </span>
-                <span className="block text-[9px] uppercase tracking-widest text-gray-500 mt-0.5">
+                <span className="block text-[9px] uppercase tracking-widest text-gray-700 mt-0.5">
                   {city.sub}
                 </span>
               </div>

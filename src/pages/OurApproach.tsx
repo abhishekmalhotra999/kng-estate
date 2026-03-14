@@ -48,28 +48,28 @@ const FAQItem = ({
 }) => {
   return (
     <div
-      className={`faq-item border-b border-black/[0.05] transition-all duration-500 ${isOpen ? "bg-black/[0.02]" : ""}`}
+      className={`faq-item border mb-3 transition-all duration-500 ${isOpen ? "border-[#ceb787] bg-white shadow-[0_12px_28px_rgba(0,0,0,0.05)]" : "border-[#ded4c4] bg-[#fbf9f4] hover:bg-white"}`}
     >
       <button
         onClick={onToggle}
-        className="w-full flex items-center gap-5 md:gap-8 py-7 md:py-9 px-1 text-left group"
+        className="w-full flex items-center gap-4 md:gap-7 py-6 md:py-8 px-5 md:px-8 text-left group"
       >
-        <span className="font-heading text-2xl md:text-3xl font-light text-[#c9a96e]/20 group-hover:text-[#c9a96e]/40 transition-colors duration-500 leading-none shrink-0 select-none">
+        <span className="font-heading text-2xl md:text-3xl font-light text-[#b8924f]/65 group-hover:text-[#a88445] transition-colors duration-500 leading-none shrink-0 select-none">
           {number}
         </span>
-        <span className="flex-1 font-heading font-medium text-lg md:text-xl text-gray-900 group-hover:text-[#c9a96e] transition-colors duration-500">
+        <span className="flex-1 font-heading font-medium text-lg md:text-[1.42rem] text-gray-900 group-hover:text-[#a88445] transition-colors duration-500 leading-snug pr-2">
           {q}
         </span>
-        <span className="shrink-0 w-8 h-8 md:w-10 md:h-10 flex items-center justify-center border border-black/5 text-gray-600 group-hover:border-[#c9a96e]/30 group-hover:text-[#c9a96e] transition-all duration-500">
+        <span className="shrink-0 w-8 h-8 md:w-10 md:h-10 flex items-center justify-center border border-[#d8ceba] text-gray-700 bg-[#fdfbf7] group-hover:border-[#c9a96e]/50 group-hover:text-[#a88445] transition-all duration-500">
           {isOpen ? <Minus size={16} /> : <Plus size={16} />}
         </span>
       </button>
       <div
         className={`overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
       >
-        <div className="pl-12 md:pl-[4.5rem] pr-16 pb-8">
+        <div className="pl-14 md:pl-[5.1rem] pr-10 md:pr-16 pb-7 md:pb-8">
           <div className="w-8 h-[1px] bg-[#c9a96e]/30 mb-4" />
-          <p className="text-gray-600 leading-[1.8] font-light text-sm md:text-base">
+          <p className="text-gray-700 leading-[1.9] text-[15px] md:text-base">
             {a}
           </p>
         </div>
@@ -154,11 +154,11 @@ const OurApproach = () => {
   );
 
   return (
-    <div ref={container} className="min-h-screen bg-[#FCFBF8] text-gray-900">
+    <div ref={container} className="min-h-screen bg-[#f8f5ee] text-gray-900">
       <Header />
       <main>
         {/* ─── Hero Area ─── */}
-        <section className="relative pt-36 md:pt-44 pb-20 px-6 md:px-12 lg:px-20 xl:px-28 overflow-hidden">
+        <section className="relative pt-32 md:pt-40 pb-14 md:pb-16 px-6 md:px-12 lg:px-20 xl:px-28 overflow-hidden">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[#c9a96e]/[0.03] blur-[150px] rounded-full pointer-events-none" />
 
           <div className="container mx-auto">
@@ -188,7 +188,7 @@ const OurApproach = () => {
                   {["to", "Real", "Estate"].map((word, i) => (
                     <span
                       key={i}
-                      className="approach-title-word inline-block mr-[0.25em] text-gray-600"
+                      className="approach-title-word inline-block mr-[0.25em] text-gray-700"
                     >
                       {word}
                     </span>
@@ -198,7 +198,7 @@ const OurApproach = () => {
 
               <div className="lg:pb-4">
                 <div className="approach-line w-16 h-[2px] bg-[#c9a96e] mb-6" />
-                <p className="approach-desc text-lg text-gray-600 font-light leading-relaxed max-w-md">
+                <p className="approach-desc text-lg text-gray-700 font-normal leading-relaxed max-w-lg">
                   Transparency, communication, and client empowerment drive
                   every decision we make. Here are the questions our clients
                   ask most.
@@ -209,8 +209,14 @@ const OurApproach = () => {
         </section>
 
         {/* ─── FAQ Section ─── */}
-        <section className="bg-white px-6 md:px-12 lg:px-20 xl:px-28 py-32">
+        <section className="bg-[#f4f1e9] px-6 md:px-12 lg:px-20 xl:px-28 py-16 md:py-20">
           <div className="container mx-auto max-w-4xl">
+            <div className="mb-7 md:mb-9">
+              <span className="inline-flex items-center gap-3 text-[10px] font-semibold tracking-[0.33em] uppercase text-[#8f7442]">
+                <span className="block w-7 h-[1px] bg-[#c9a96e]/50" />
+                Frequently Asked Questions
+              </span>
+            </div>
             <div>
               {faqs.map((faq, i) => (
                 <FAQItem

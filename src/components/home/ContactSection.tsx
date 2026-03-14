@@ -69,7 +69,7 @@ const ContactSection = () => {
     <section
       ref={container}
       id="contact-section"
-      className="relative bg-[#FCFBF8] text-gray-900 overflow-hidden"
+      className="relative bg-[#f8f5ee] text-gray-900 overflow-hidden"
     >
       {/* ─── Ambient glow ─── */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#c9a96e]/[0.04] blur-[160px] rounded-full pointer-events-none" />
@@ -97,7 +97,7 @@ const ContactSection = () => {
             </h2>
           </div>
 
-          <p className="contact-fade font-body text-gray-600 text-sm md:text-[15px] max-w-sm leading-[1.8] tracking-wide">
+          <p className="contact-fade font-body text-gray-700 text-sm md:text-[15px] max-w-sm leading-[1.8] tracking-wide">
             From first inquiry to final handshake — we are with you. Experience
             the KNG difference.
           </p>
@@ -112,7 +112,7 @@ const ContactSection = () => {
               {/* Phone card */}
               <a
                 href="tel:+919056465106"
-                className="group relative p-6 border border-black/[0.05] bg-black/[0.02] hover:bg-black/[0.03] hover:border-[#c9a96e]/20 transition-all duration-500"
+                className="group relative p-6 border border-[#d9cfbd] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.04)] hover:shadow-[0_14px_30px_rgba(0,0,0,0.07)] hover:border-[#c9a96e]/30 transition-all duration-500"
               >
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-9 h-9 flex items-center justify-center border border-[#c9a96e]/30 text-[#c9a96e]">
@@ -123,19 +123,19 @@ const ContactSection = () => {
                     className="ml-auto text-gray-500 group-hover:text-[#c9a96e] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all duration-300"
                   />
                 </div>
-                <span className="block text-[9px] uppercase tracking-[0.25em] text-gray-500 mb-1.5">
+                <span className="block text-[9px] uppercase tracking-[0.25em] text-gray-700 mb-1.5">
                   Call Us
                 </span>
                 <p className="font-heading text-base text-gray-900 leading-tight">
                   +91 90564 65106
                 </p>
-                <p className="text-xs text-gray-600 mt-1">+1 236-258-5106</p>
+                <p className="text-xs text-gray-700 mt-1">+1 236-258-5106</p>
               </a>
 
               {/* Email card */}
               <a
                 href="mailto:kngestate@gmail.com"
-                className="group relative p-6 border border-black/[0.05] bg-black/[0.02] hover:bg-black/[0.03] hover:border-[#c9a96e]/20 transition-all duration-500"
+                className="group relative p-6 border border-[#d9cfbd] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.04)] hover:shadow-[0_14px_30px_rgba(0,0,0,0.07)] hover:border-[#c9a96e]/30 transition-all duration-500"
               >
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-9 h-9 flex items-center justify-center border border-[#c9a96e]/30 text-[#c9a96e]">
@@ -146,7 +146,7 @@ const ContactSection = () => {
                     className="ml-auto text-gray-500 group-hover:text-[#c9a96e] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all duration-300"
                   />
                 </div>
-                <span className="block text-[9px] uppercase tracking-[0.25em] text-gray-500 mb-1.5">
+                <span className="block text-[9px] uppercase tracking-[0.25em] text-gray-700 mb-1.5">
                   Email
                 </span>
                 <p className="font-heading text-base text-gray-900 leading-tight">
@@ -167,7 +167,7 @@ const ContactSection = () => {
                 <span className="block text-xs font-semibold text-[#25D366] tracking-wide uppercase">
                   WhatsApp
                 </span>
-                <span className="block text-[11px] text-gray-600 mt-0.5">
+                <span className="block text-[11px] text-gray-700 mt-0.5">
                   Get an instant reply
                 </span>
               </div>
@@ -178,16 +178,16 @@ const ContactSection = () => {
             </button>
 
             {/* Office address */}
-            <div className="contact-fade p-6 border border-black/[0.05] bg-black/[0.02]">
+            <div className="contact-fade p-6 border border-[#d9cfbd] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.04)]">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-9 h-9 flex items-center justify-center border border-[#c9a96e]/30 text-[#c9a96e]">
                   <MapPin size={15} strokeWidth={1.5} />
                 </div>
-                <span className="text-[9px] uppercase tracking-[0.25em] text-gray-500">
+                <span className="text-[9px] uppercase tracking-[0.25em] text-gray-700">
                   Head Office
                 </span>
               </div>
-              <p className="text-sm text-gray-900/60 font-light leading-relaxed mb-5">
+              <p className="text-sm text-gray-700 leading-relaxed mb-5">
                 B-9, Ansals Sampark-1, SCO-194-195
                 <br />
                 City Centre, Sector-5, Panchkula — 134109
@@ -208,7 +208,7 @@ const ContactSection = () => {
 
           {/* ─── Right: Contact Form ─── */}
           <div className="lg:col-span-7 contact-form-reveal">
-            <div className="relative p-8 md:p-12 lg:p-14 bg-gradient-to-br from-black/[0.02] to-transparent border border-black/[0.05]">
+            <div className="relative p-8 md:p-12 lg:p-14 bg-white border border-[#d9cfbd] shadow-[0_14px_34px_rgba(0,0,0,0.05)]">
               {/* Corner accents */}
               <div className="absolute top-0 left-0 w-16 h-[1px] bg-gradient-to-r from-[#c9a96e]/50 to-transparent" />
               <div className="absolute top-0 left-0 h-16 w-[1px] bg-gradient-to-b from-[#c9a96e]/50 to-transparent" />
@@ -220,7 +220,7 @@ const ContactSection = () => {
                 <h3 className="text-2xl md:text-3xl font-heading font-light text-gray-900 mb-2">
                   Private Inquiry
                 </h3>
-                <p className="text-gray-600 text-sm font-light">
+                <p className="text-gray-700 text-sm font-normal">
                   Every message receives a response within 24 hours.
                 </p>
               </div>

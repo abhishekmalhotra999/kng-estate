@@ -109,7 +109,7 @@ const ValueSection = () => {
   return (
     <section
       ref={container}
-      className="relative bg-white text-gray-900 overflow-hidden"
+      className="relative bg-[#f4f1e9] text-gray-900 overflow-hidden"
     >
       {/* Top border */}
       <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#c9a96e]/30 to-transparent" />
@@ -133,7 +133,7 @@ const ValueSection = () => {
               </span>{" "}
               We Do
             </h2>
-            <p className="val-headline text-gray-600 text-sm max-w-xs leading-relaxed font-light">
+            <p className="val-headline text-gray-700 text-sm max-w-xs leading-relaxed font-normal">
               Scroll horizontally to explore the principles that shape our
               commitment to you.
             </p>
@@ -148,14 +148,14 @@ const ValueSection = () => {
           {values.map((item, i) => (
             <div
               key={item.title}
-              className="group relative flex-shrink-0 w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[35vw] xl:w-[28vw] p-8 md:p-10 border border-black/[0.05] bg-black/[0.02] hover:bg-black/[0.03] hover:border-[#c9a96e]/20 transition-all duration-700"
+              className="group relative flex-shrink-0 w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[35vw] xl:w-[28vw] p-8 md:p-10 border border-[#d9cfbd] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_34px_rgba(0,0,0,0.08)] hover:border-[#c9a96e]/45 transition-all duration-500"
             >
               {/* Corner accent */}
               <div className="absolute top-0 right-0 w-12 h-[1px] bg-gradient-to-l from-[#c9a96e]/40 to-transparent" />
               <div className="absolute top-0 right-0 h-12 w-[1px] bg-gradient-to-b from-[#c9a96e]/40 to-transparent" />
 
               {/* Number */}
-              <span className="block font-heading text-6xl md:text-7xl font-light text-[#c9a96e]/60 group-hover:text-[#c9a96e]/60 transition-colors duration-700 mb-6 select-none leading-none">
+              <span className="block font-heading text-6xl md:text-7xl font-light text-[#b8924f] group-hover:text-[#a88445] transition-colors duration-500 mb-6 select-none leading-none">
                 {item.accent}
               </span>
 
@@ -165,10 +165,10 @@ const ValueSection = () => {
               </div>
 
               {/* Content */}
-              <h3 className="text-xl md:text-2xl font-heading font-medium mb-4 text-gray-900 group-hover:text-[#c9a96e] transition-colors duration-500 leading-snug">
+              <h3 className="text-xl md:text-2xl font-heading font-medium mb-4 text-gray-900 group-hover:text-[#a88445] transition-colors duration-500 leading-snug">
                 {item.title}
               </h3>
-              <p className="text-sm text-gray-600 leading-relaxed font-light group-hover:text-gray-600 transition-colors duration-500">
+              <p className="text-[15px] text-gray-700 leading-[1.75] font-normal transition-colors duration-500">
                 {item.description}
               </p>
 

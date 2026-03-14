@@ -157,7 +157,7 @@ const AboutTeaser = () => {
     ));
 
   return (
-    <section ref={container} className="bg-white overflow-hidden relative">
+    <section ref={container} className="bg-[#f8f5ee] overflow-hidden relative">
       <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[90vh]">
         {/* ─── Image Side: Scroll-driven clip-path reveal ─── */}
         <div className="relative h-[60vw] lg:h-auto overflow-hidden order-2 lg:order-1">
@@ -191,7 +191,7 @@ const AboutTeaser = () => {
         </div>
 
         {/* ─── Content Side: Scroll-revealed text ─── */}
-        <div className="flex flex-col justify-center px-10 lg:px-16 xl:px-24 py-24 bg-white order-1 lg:order-2">
+        <div className="flex flex-col justify-center px-10 lg:px-16 xl:px-24 py-24 bg-[#fdfbf7] order-1 lg:order-2">
           <span className="inline-flex items-center gap-3 text-[10px] font-semibold tracking-[0.35em] uppercase text-[#c9a96e] mb-10">
             <span className="block w-10 h-[1px] bg-[#c9a96e]/40" />
             Our Philosophy
@@ -206,7 +206,7 @@ const AboutTeaser = () => {
             {renderTaglineWords("Share.", true)}
           </h2>
 
-          <p className="about-desc text-lg text-gray-500 leading-relaxed mb-12 font-light max-w-lg">
+          <p className="about-desc text-lg text-gray-700 leading-relaxed mb-12 font-normal max-w-lg">
             At KNG Estate, we are more than agents — we are lifelong partners in
             your real estate journey. Our team brings deep local knowledge,
             genuine passion, and unwavering commitment to every client, every
@@ -214,13 +214,13 @@ const AboutTeaser = () => {
           </p>
 
           {/* Trust signals */}
-          <div className="about-trust-grid grid grid-cols-2 gap-8 border-t border-gray-100 pt-10 mb-12">
+          <div className="about-trust-grid grid grid-cols-2 gap-8 border-t border-[#dfd6c8] pt-10 mb-12">
             <div className="about-trust-item">
               <span className="text-4xl font-heading font-light text-gray-900 block">
                 500
                 <span className="text-[#c9a96e]">+</span>
               </span>
-              <span className="text-[10px] text-gray-500 uppercase tracking-[0.2em] mt-1 block">
+              <span className="text-[10px] text-gray-700 uppercase tracking-[0.2em] mt-1 block">
                 Families Served
               </span>
             </div>
@@ -228,7 +228,7 @@ const AboutTeaser = () => {
               <span className="text-4xl font-heading font-light text-gray-900 block">
                 3
               </span>
-              <span className="text-[10px] text-gray-500 uppercase tracking-[0.2em] mt-1 block">
+              <span className="text-[10px] text-gray-700 uppercase tracking-[0.2em] mt-1 block">
                 Cities Covered
               </span>
             </div>

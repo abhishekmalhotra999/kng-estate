@@ -9,6 +9,10 @@ interface ServiceHeroProps {
   subtitle: string;
   description: string;
   image?: string;
+  primaryCtaLabel?: string;
+  primaryCtaTo?: string;
+  secondaryCtaLabel?: string;
+  secondaryCtaTo?: string;
 }
 
 const ServiceHero = ({
@@ -16,6 +20,10 @@ const ServiceHero = ({
   subtitle,
   description,
   image = "/placeholder.svg",
+  primaryCtaLabel = "Start Your Project",
+  primaryCtaTo = "/contact",
+  secondaryCtaLabel = "Contact Us",
+  secondaryCtaTo = "/contact",
 }: ServiceHeroProps) => {
   const container = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
@@ -154,20 +162,20 @@ const ServiceHero = ({
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
-              to="/contact"
+              to={primaryCtaTo}
               className="sh-cta group inline-flex items-center justify-center gap-3 px-10 py-5 bg-[#c9a96e] text-[#141108] text-xs font-bold tracking-[0.2em] uppercase hover:bg-white transition-colors duration-500"
             >
-              Start Your Project
+              {primaryCtaLabel}
               <ArrowRight
                 size={14}
                 className="group-hover:translate-x-1 transition-transform"
               />
             </Link>
             <Link
-              to="/contact"
+              to={secondaryCtaTo}
               className="sh-cta inline-flex items-center justify-center gap-3 px-10 py-5 border border-black/10 text-gray-900 text-xs font-bold tracking-[0.2em] uppercase hover:bg-white/10 transition-all duration-500"
             >
-              Contact Us
+              {secondaryCtaLabel}
             </Link>
           </div>
         </div>

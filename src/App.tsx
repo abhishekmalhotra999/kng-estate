@@ -9,6 +9,7 @@ import Residential from "./pages/Residential";
 import Commercial from "./pages/Commercial";
 import Agricultural from "./pages/Agricultural";
 import Rentals from "./pages/Rentals";
+import SellProperty from "@/pages/SellProperty";
 import OurTeam from "./pages/OurTeam";
 import OurApproach from "./pages/OurApproach";
 import Contact from "./pages/Contact";
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/" element={<Home />} />
           <Route path="/residential" element={<Residential />} />
           <Route path="/rentals" element={<Rentals />} />
+          <Route path="/sell-property" element={<SellProperty />} />
           <Route path="/commercial" element={<Commercial />} />
           <Route path="/agricultural" element={<Agricultural />} />
           <Route path="/team" element={<OurTeam />} />

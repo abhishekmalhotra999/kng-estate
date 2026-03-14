@@ -5,6 +5,7 @@ import ExperienceSection from "@/components/home/ExperienceSection";
 import ValueSection from "@/components/home/ValueSection";
 import WhyUs from "@/components/home/WhyUs";
 import AboutTeaser from "@/components/home/AboutTeaser";
+import SellPropertyPromo from "@/components/home/SellPropertyPromo";
 import ContactSection from "@/components/home/ContactSection";
 
 const Home = () => {
@@ -17,6 +18,7 @@ const Home = () => {
         <ValueSection />
         <WhyUs />
         <AboutTeaser />
+        <SellPropertyPromo />
         <ContactSection />
       </main>
 

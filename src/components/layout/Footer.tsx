@@ -119,6 +119,7 @@ const Footer = () => {
               {[
                 { label: "Residential", path: "/residential" },
                 { label: "Rentals", path: "/rentals" },
+                { label: "Sell with KNG", path: "/sell-property" },
                 { label: "Commercial", path: "/commercial" },
                 { label: "Agricultural", path: "/agricultural" },
               ].map((item) => (

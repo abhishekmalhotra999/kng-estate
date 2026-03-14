@@ -23,6 +23,7 @@ const navItems = [
       { label: "Our Approach", path: "/approach" },
     ],
   },
+  { label: "Sell with KNG", path: "/sell-property" },
   { label: "Contact Us", path: "/contact" },
 ];
 

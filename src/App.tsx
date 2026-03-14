@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -22,33 +22,53 @@ const ChatBubble = lazy(() => import("./components/shared/ChatBubble"));
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <SmoothScroll />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/residential" element={<Residential />} />
-          <Route path="/rentals" element={<Rentals />} />
-          <Route path="/sell-property" element={<SellProperty />} />
-          <Route path="/commercial" element={<Commercial />} />
-          <Route path="/agricultural" element={<Agricultural />} />
-          <Route path="/team" element={<OurTeam />} />
-          <Route path="/approach" element={<OurApproach />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        <Suspense fallback={null}>
-          <CookieBanner />
-          <ChatBubble />
-        </Suspense>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  useEffect(() => {
+    const verifyNodeApi = async () => {
+      try {
+        const response = await fetch("/api/health");
+        if (!response.ok) return;
+
+        const data = await response.json();
+        if (data?.ok) {
+          window.alert("Node API is working");
+        }
+      } catch (_error) {
+        // Silent fail when API is not running.
+      }
+    };
+
+    verifyNodeApi();
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <SmoothScroll />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/residential" element={<Residential />} />
+            <Route path="/rentals" element={<Rentals />} />
+            <Route path="/sell-property" element={<SellProperty />} />
+            <Route path="/commercial" element={<Commercial />} />
+            <Route path="/agricultural" element={<Agricultural />} />
+            <Route path="/team" element={<OurTeam />} />
+            <Route path="/approach" element={<OurApproach />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <Suspense fallback={null}>
+            <CookieBanner />
+            <ChatBubble />
+          </Suspense>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;

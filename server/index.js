@@ -20,6 +20,8 @@ const SMTP_USER = process.env.SMTP_USER;
 const SMTP_PASS = process.env.SMTP_PASS;
 const LEAD_RECEIVER = process.env.LEAD_RECEIVER || "abhishekmalhotra999@gmail.com";
 const SMTP_CONFIGURED = Boolean(SMTP_USER && SMTP_PASS);
+const EMAIL_LOGO_PATH = path.resolve(__dirname, "../src/assets/kng-logo.webp");
+const EMAIL_LOGO_CID = "kng-estate-logo";
 const MAX_UPLOAD_FILES = 20;
 const MAX_UPLOAD_SIZE_BYTES = 8 * 1024 * 1024;
 const ACCEPTED_UPLOAD_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
@@ -42,6 +44,14 @@ const upload = multer({
     cb(null, true);
   },
 });
+
+const EMAIL_LOGO_ATTACHMENT = fs.existsSync(EMAIL_LOGO_PATH)
+  ? {
+      filename: "kng-logo.webp",
+      path: EMAIL_LOGO_PATH,
+      cid: EMAIL_LOGO_CID,
+    }
+  : null;
 
 const escapeHtml = (value = "") =>
   String(value)
@@ -68,6 +78,11 @@ const baseEmailShell = (contentHtml) => `
     <table width="100%" cellspacing="0" cellpadding="0" style="max-width:640px;margin:0 auto;background:#ffffff;border:1px solid #e7dbc5;">
       <tr>
         <td style="padding:28px 30px 22px;border-bottom:1px solid #efe5d3;">
+          ${
+            EMAIL_LOGO_ATTACHMENT
+              ? `<img src="cid:${EMAIL_LOGO_CID}" alt="KNG Estate" width="132" style="display:block;height:auto;margin-bottom:14px;" />`
+              : ""
+          }
           <div style="font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:#9a7a44;margin-bottom:8px;">KNG Estate</div>
           <div style="font-size:25px;line-height:1.2;color:#1e160a;">Private Advisory Desk</div>
         </td>
@@ -149,7 +164,16 @@ const sendEmail = async (mailOptions) => {
   if (!transporter) {
     throw new Error("SMTP is not configured. Set SMTP_USER and SMTP_PASS.");
   }
-  return transporter.sendMail(mailOptions);
+
+  const existingAttachments = Array.isArray(mailOptions.attachments) ? mailOptions.attachments : [];
+  const attachments = EMAIL_LOGO_ATTACHMENT
+    ? [EMAIL_LOGO_ATTACHMENT, ...existingAttachments]
+    : existingAttachments;
+
+  return transporter.sendMail({
+    ...mailOptions,
+    attachments,
+  });
 };
 
 const isValidEmail = (email = "") => /^\S+@\S+\.\S+$/.test(email);

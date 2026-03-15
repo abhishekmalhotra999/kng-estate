@@ -9,6 +9,7 @@ type ContactFormProps = {
 };
 
 const ContactForm = ({ showLabels = false }: ContactFormProps) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -53,19 +54,39 @@ const ContactForm = ({ showLabels = false }: ContactFormProps) => {
     { scope: formRef, dependencies: [prefersReducedMotion] }
   );
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Thank you! We'll be in touch soon.");
-    console.log(formData);
-    setFormData({
-      firstName: "",
-      lastName: "",
-      phone: "",
-      email: "",
-      interest: "",
-      city: "",
-      message: "",
-    });
+
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+      if (!response.ok || !result?.ok) {
+        throw new Error(result?.error || "Could not submit contact request.");
+      }
+
+      toast.success("Thank you! We have received your message.");
+      setFormData({
+        firstName: "",
+        lastName: "",
+        phone: "",
+        email: "",
+        interest: "",
+        city: "",
+        message: "",
+      });
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const inputClass =
@@ -180,9 +201,10 @@ const ContactForm = ({ showLabels = false }: ContactFormProps) => {
       </div>
       <button
         type="submit"
+        disabled={isSubmitting}
         className="mt-6 w-full group relative flex items-center justify-center gap-3 px-8 py-4 bg-[#c9a96e] text-[#141108] text-xs font-bold uppercase tracking-[0.18em] border border-[#b8924f] hover:bg-[#d2b57d] transition-all duration-500 active:scale-[0.99] shadow-[0_10px_24px_rgba(201,169,110,0.22)]"
       >
-        <span className="relative z-10">Send Message</span>
+        <span className="relative z-10">{isSubmitting ? "Sending..." : "Send Message"}</span>
         <Send
           size={14}
           className="relative z-10 transition-transform group-hover:translate-x-1"

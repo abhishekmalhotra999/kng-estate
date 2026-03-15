@@ -35,6 +35,7 @@ const INITIAL_FORM_STATE: FormDataState = {
 };
 
 const SellPropertyForm = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<FormDataState>(INITIAL_FORM_STATE);
   const [images, setImages] = useState<File[]>([]);
   const [errors, setErrors] = useState<FieldErrors>({});
@@ -169,7 +170,7 @@ const SellPropertyForm = () => {
     setImages((prev) => prev.filter((_, index) => index !== indexToRemove));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const nextErrors = validateForm();
@@ -179,25 +180,43 @@ const SellPropertyForm = () => {
       return;
     }
 
-    const payload = {
-      ...formData,
-      images: images.map((file) => ({
-        name: file.name,
-        type: file.type,
-        sizeMB: Number((file.size / (1024 * 1024)).toFixed(2)),
-      })),
-      submittedAt: new Date().toISOString(),
-      source: "sell-property-page",
-    };
+    const payload = new FormData();
+    payload.append("ownerName", formData.ownerName);
+    payload.append("phone", formData.phone);
+    payload.append("email", formData.email);
+    payload.append("propertyType", formData.propertyType);
+    payload.append("city", formData.city);
+    payload.append("expectedPrice", formData.expectedPrice);
+    payload.append("propertySize", formData.propertySize);
+    payload.append("preferredContactTime", formData.preferredContactTime);
+    payload.append("message", formData.message);
+    payload.append("submittedAt", new Date().toISOString());
+    payload.append("source", "sell-property-page");
+    images.forEach((file) => payload.append("images", file));
 
-    console.log("Sell property lead:", payload);
-    toast.success("Property submitted. Our advisory team will contact you shortly.");
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("/api/sell-property", {
+        method: "POST",
+          body: payload,
+      });
 
-    setFormData(INITIAL_FORM_STATE);
-    setImages([]);
-    setErrors({});
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+      const result = await response.json();
+      if (!response.ok || !result?.ok) {
+        throw new Error(result?.error || "Could not submit property details.");
+      }
+
+      toast.success("Property submitted. Our advisory team will contact you shortly.");
+      setFormData(INITIAL_FORM_STATE);
+      setImages([]);
+      setErrors({});
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -409,9 +428,10 @@ const SellPropertyForm = () => {
 
       <button
         type="submit"
+        disabled={isSubmitting}
         className="mt-6 w-full group inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#c9a96e] text-[#1f180d] text-xs font-bold tracking-[0.18em] uppercase border border-[#b8924f] hover:bg-[#d2b57d] transition-all duration-500 shadow-[0_10px_24px_rgba(201,169,110,0.22)]"
       >
-        Submit Property
+        {isSubmitting ? "Submitting..." : "Submit Property"}
         <Send size={14} className="transition-transform group-hover:translate-x-1" />
       </button>
     </form>

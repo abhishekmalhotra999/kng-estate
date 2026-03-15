@@ -204,7 +204,7 @@ const Hero = () => {
         });
       }
     },
-    { scope: containerRef, dependencies: [isMobile, prefersReducedMotion, activeSlide] }
+    { scope: containerRef, dependencies: [isMobile, prefersReducedMotion] }
   );
 
   if (isMobile) {
@@ -226,7 +226,6 @@ const Hero = () => {
                 alt={`Luxury Residence ${index + 1}`}
                 className="absolute inset-0 h-full w-full object-cover"
                 loading={index === 0 ? "eager" : "lazy"}
-                fetchPriority={index === 0 ? "high" : "auto"}
                 decoding="async"
                 sizes="100vw"
               />
@@ -429,7 +428,6 @@ const Hero = () => {
                 alt={`Luxury Residence ${index + 1}`}
                 className="absolute inset-0 w-full h-full object-cover"
                 loading={index === 0 ? "eager" : "lazy"}
-                fetchPriority={index === 0 ? "high" : "auto"}
                 decoding="async"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />

@@ -147,7 +147,7 @@ const Commercial = () => {
         >
           <div className="container mx-auto">
             <div className="max-w-4xl mb-20 md:mb-24">
-              <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.15]">
+              <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.15] text-gray-900/95">
                 {renderWords("Your business deserves a space that")}
                 <br className="hidden md:block" />
                 {renderWords("matches your", true)}{" "}
@@ -167,7 +167,7 @@ const Commercial = () => {
                   <div className="absolute top-0 right-0 w-10 h-[1px] bg-gradient-to-l from-[#c9a96e]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="absolute top-0 right-0 h-10 w-[1px] bg-gradient-to-b from-[#c9a96e]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                  <span className="block font-heading text-5xl font-light text-[#b8924f] group-hover:text-[#a88445] transition-colors duration-500 mb-5 select-none leading-none">
+                  <span className="block font-heading text-5xl font-light text-[#b8924f]/90 group-hover:text-[#a88445] transition-colors duration-500 mb-5 select-none leading-none">
                     {item.number}
                   </span>
 
@@ -175,10 +175,10 @@ const Commercial = () => {
                     <item.icon size={20} strokeWidth={1.2} />
                   </div>
 
-                  <h3 className="text-[1.35rem] font-heading font-medium mb-3 text-gray-900 leading-tight group-hover:text-[#a88445] transition-colors duration-500">
+                  <h3 className="text-[1.35rem] font-heading font-medium mb-3 text-gray-900/92 leading-tight group-hover:text-[#a88445] transition-colors duration-500">
                     {item.title}
                   </h3>
-                  <p className="text-[15px] text-gray-700 leading-[1.75] font-normal transition-colors duration-500">
+                  <p className="text-[15px] text-gray-700/80 leading-[1.75] font-normal transition-colors duration-500">
                     {item.description}
                   </p>
 

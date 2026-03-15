@@ -55,18 +55,18 @@ const SellPropertyPromo = () => {
         <div className="sell-promo-reveal border border-[#dccdaf] bg-white/90 p-8 md:p-12 lg:p-14 shadow-[0_18px_38px_rgba(0,0,0,0.05)]">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             <div className="lg:col-span-7">
-              <span className="sell-promo-reveal inline-flex items-center gap-3 text-[10px] font-semibold tracking-[0.35em] uppercase text-[#8f7442] mb-5">
+              <span className="sell-promo-reveal inline-flex items-center gap-3 text-[10px] font-semibold tracking-[0.35em] uppercase text-[#8f7442]/85 mb-5">
                 <span className="block w-8 h-[1px] bg-[#c9a96e]/60" />
                 Seller Advisory
               </span>
 
-              <h2 className="sell-promo-reveal text-4xl md:text-5xl lg:text-6xl font-heading font-medium leading-[1.05] text-gray-900">
+              <h2 className="sell-promo-reveal text-4xl md:text-5xl lg:text-6xl font-heading font-medium leading-[1.05] text-gray-900/95">
                 Ready to Sell?
                 <br />
                 <span className="italic font-light text-[#b8924f]">List with KNG</span>
               </h2>
 
-              <p className="sell-promo-reveal mt-6 text-gray-700 text-sm md:text-[15px] leading-relaxed max-w-2xl">
+              <p className="sell-promo-reveal mt-6 text-gray-700/80 text-sm md:text-[15px] leading-relaxed max-w-2xl">
                 Share your property details and images in one step. Our team will review your listing,
                 align valuation, and connect with a tailored sales strategy.
               </p>
@@ -95,14 +95,14 @@ const SellPropertyPromo = () => {
                   <div className="h-9 w-9 flex items-center justify-center bg-[#f1e4cd] text-[#8f7442]">
                     <Camera size={16} />
                   </div>
-                  <span className="text-[10px] uppercase tracking-[0.25em] text-[#8f7442] font-semibold">
+                  <span className="text-[10px] uppercase tracking-[0.25em] text-[#8f7442]/75 font-semibold">
                     What You Submit
                   </span>
                 </div>
 
                 <ul className="space-y-3">
                   {points.map((point) => (
-                    <li key={point} className="flex items-start gap-2.5 text-sm text-gray-700 leading-relaxed">
+                    <li key={point} className="flex items-start gap-2.5 text-sm text-gray-700/80 leading-relaxed">
                       <CheckCircle2 size={15} className="mt-0.5 shrink-0 text-[#b8924f]" />
                       <span>{point}</span>
                     </li>

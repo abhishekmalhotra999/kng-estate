@@ -241,13 +241,13 @@ const Hero = () => {
           style={{ paddingTop: "var(--kng-header-safe-offset, 6.5rem)" }}
         >
           <div className="rounded-sm bg-black/22 backdrop-blur-[2px] px-3 py-3 border border-white/10">
-            <span className="mhero-badge inline-flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase font-semibold text-[#f3d9a7]">
+            <span className="mhero-badge inline-flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase font-semibold text-[#f3d9a7]/90">
               <MapPin className="w-3.5 h-3.5" />
               Tricity Luxury Desk
             </span>
 
             <h1
-              className="mt-5 font-heading text-[#f8f3e9] leading-[1.02]"
+              className="mt-5 font-heading text-[#f8f3e9]/[0.97] leading-[1.02]"
               style={{ textShadow: "0 2px 16px rgba(0,0,0,0.48)" }}
             >
               <span className="mhero-title-word block text-[2.35rem] font-medium">Signature</span>
@@ -256,7 +256,7 @@ const Hero = () => {
             </h1>
 
             <p
-              className="mhero-copy mt-5 text-[13px] leading-[1.75] text-[#f3eadb] max-w-[94%]"
+              className="mhero-copy mt-5 text-[13px] leading-[1.75] text-[#efe0c6]/85 max-w-[94%]"
               style={{ textShadow: "0 1px 10px rgba(0,0,0,0.42)" }}
             >
               Curated residences for discerning buyers across Chandigarh, Mohali, and Panchkula.
@@ -271,8 +271,8 @@ const Hero = () => {
                   key={stat.label}
                   className="mhero-stat border border-white/20 bg-black/25 backdrop-blur-sm rounded-sm px-3 py-3"
                 >
-                  <span className="block text-[#f8ecd8] font-heading text-lg leading-none">{stat.value}</span>
-                  <span className="block text-[9px] uppercase tracking-[0.18em] text-[#d7c6a4] mt-1.5">
+                  <span className="block text-[#f8ecd8]/95 font-heading text-lg leading-none">{stat.value}</span>
+                  <span className="block text-[9px] uppercase tracking-[0.18em] text-[#d7c6a4]/80 mt-1.5">
                     {stat.label}
                   </span>
                 </div>
@@ -316,7 +316,7 @@ const Hero = () => {
                   </button>
                 ))}
               </div>
-              <span className="text-[10px] uppercase tracking-[0.24em] text-[#e9dcc2]">
+              <span className="text-[10px] uppercase tracking-[0.24em] text-[#e9dcc2]/80">
                 {String(activeSlide + 1).padStart(2, "0")} / {String(heroImages.length).padStart(2, "0")}
               </span>
             </div>
@@ -353,14 +353,14 @@ const Hero = () => {
           <div className="hero-accent-line w-16 h-[2px] mb-8" style={{ backgroundImage: "linear-gradient(to right, var(--kng-gold), #e8c87e)" }} />
 
           {/* Eyebrow */}
-          <span className="hero-eyebrow inline-flex items-center gap-2 kng-gold-text uppercase tracking-[0.35em] text-[10px] md:text-xs font-body font-medium mb-6">
+          <span className="hero-eyebrow inline-flex items-center gap-2 kng-gold-text uppercase tracking-[0.35em] text-[10px] md:text-xs font-body font-medium mb-6 opacity-90">
             <MapPin className="w-3 h-3" />
             Surrey &middot; Greater Vancouver
           </span>
 
           {/* Headline */}
           <h1
-            className="font-heading text-gray-900 leading-[1.05] mb-8"
+            className="font-heading text-gray-900/95 leading-[1.05] mb-8"
             style={{ perspective: "800px" }}
           >
             <span className="hero-headline-word block text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] font-medium">
@@ -375,7 +375,7 @@ const Hero = () => {
           </h1>
 
           {/* Subtext */}
-          <p className="hero-subtext font-body text-gray-600 text-sm md:text-[15px] max-w-md leading-[1.8] tracking-wide mb-10">
+          <p className="hero-subtext font-body text-gray-700/80 text-sm md:text-[15px] max-w-md leading-[1.8] tracking-wide mb-10">
             We curate extraordinary residences for discerning individuals —
             where architectural vision meets an unparalleled standard of living.
           </p>
@@ -403,10 +403,10 @@ const Hero = () => {
           <div className="hidden md:flex items-center gap-12 mt-16 pt-8 border-t border-black/[0.05]">
             {stats.map((stat, i) => (
               <div key={i} className="hero-stat">
-                <span className="block font-heading text-2xl lg:text-3xl text-gray-900 font-medium">
+                <span className="block font-heading text-2xl lg:text-3xl text-gray-900/90 font-medium">
                   {stat.value}
                 </span>
-                <span className="block font-body text-[10px] lg:text-[11px] uppercase tracking-[0.2em] text-gray-600 mt-1">
+                <span className="block font-body text-[10px] lg:text-[11px] uppercase tracking-[0.2em] text-gray-600/80 mt-1">
                   {stat.label}
                 </span>
               </div>
@@ -439,7 +439,7 @@ const Hero = () => {
 
           {/* Slide counter */}
           <div className="absolute bottom-8 right-8 z-20 flex items-center gap-4">
-            <span className="font-body text-xs tracking-[0.2em] text-gray-600">
+            <span className="font-body text-xs tracking-[0.2em] text-gray-700/85">
               {String(activeSlide + 1).padStart(2, "0")}
             </span>
             <div className="w-12 h-[1px] bg-white/10 relative overflow-hidden">
@@ -451,7 +451,7 @@ const Hero = () => {
                 }}
               />
             </div>
-            <span className="font-body text-xs tracking-[0.2em] text-gray-500">
+            <span className="font-body text-xs tracking-[0.2em] text-gray-500/80">
               {String(heroImages.length).padStart(2, "0")}
             </span>
           </div>
@@ -485,10 +485,10 @@ const Hero = () => {
 
       {/* ─── Scroll Indicator ─── */}
       <div className="hero-scroll-cue absolute bottom-6 left-1/2 -translate-x-1/2 lg:left-14 lg:translate-x-0 z-20 flex flex-col items-center gap-2">
-        <span className="font-body text-[9px] uppercase tracking-[0.3em] text-gray-600">
+        <span className="font-body text-[9px] uppercase tracking-[0.3em] text-gray-600/75">
           Scroll
         </span>
-        <ChevronDown className="scroll-chevron w-4 h-4 text-gray-500" />
+        <ChevronDown className="scroll-chevron w-4 h-4 text-gray-500/70" />
       </div>
 
       {/* ─── Side label (desktop) ─── */}

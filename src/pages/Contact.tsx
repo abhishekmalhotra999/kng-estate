@@ -187,13 +187,13 @@ const Contact = () => {
           <div className="container mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-16 items-start max-w-7xl">
               <div className="lg:col-span-7 max-w-3xl pt-2">
-                <span className="ct-eyebrow inline-flex items-center gap-3 text-[10px] font-semibold tracking-[0.35em] uppercase text-[#c9a96e] mb-6">
+                <span className="ct-eyebrow inline-flex items-center gap-3 text-[10px] font-semibold tracking-[0.35em] uppercase text-[#c9a96e]/85 mb-6">
                   <span className="block w-8 h-[1px] bg-[#c9a96e]/50" />
                   Contact Concierge
                 </span>
 
                 <h1
-                  className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] font-heading font-medium leading-[1.03] mb-8"
+                  className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] font-heading font-medium leading-[1.03] mb-8 text-gray-900/95"
                   style={{ perspective: "800px" }}
                 >
                   {["Let's"].map((w, i) => (
@@ -206,7 +206,7 @@ const Contact = () => {
                   </span>
                   <br />
                   {["a", "Conversation"].map((w, i) => (
-                    <span key={i} className="ct-title-word inline-block mr-[0.25em] text-gray-600">
+                    <span key={i} className="ct-title-word inline-block mr-[0.25em] text-gray-600/80">
                       {w}
                     </span>
                   ))}
@@ -214,7 +214,7 @@ const Contact = () => {
 
                 <div className="ct-line w-16 h-[2px] bg-[#c9a96e] mb-8" />
 
-                <p className="ct-desc text-lg text-gray-700 font-normal leading-relaxed max-w-xl">
+                <p className="ct-desc text-lg text-gray-700/80 font-normal leading-relaxed max-w-xl">
                   Speak directly with our advisory team for residential,
                   rentals, commercial, or agricultural opportunities. Every inquiry is
                   treated with discretion and receives a personal response within 24 hours.
@@ -231,14 +231,14 @@ const Contact = () => {
                           {card.href && <ArrowUpRight size={13} className="text-gray-500" />}
                         </div>
 
-                        <span className="text-[9px] uppercase tracking-[0.25em] text-gray-700 mb-2 block">
+                        <span className="text-[9px] uppercase tracking-[0.25em] text-gray-700/70 mb-2 block">
                           {card.label}
                         </span>
-                        <span className="font-heading text-base font-medium text-gray-900 block mb-1 leading-tight">
+                        <span className="font-heading text-base font-medium text-gray-900/92 block mb-1 leading-tight">
                           {card.value}
                         </span>
                         {card.secondary && (
-                          <span className="text-xs text-gray-700 font-light block">
+                          <span className="text-xs text-gray-700/75 font-light block">
                             {card.secondary}
                           </span>
                         )}
@@ -266,7 +266,7 @@ const Contact = () => {
                   })}
                 </div>
 
-                <div className="ct-soft-reveal mt-8 inline-flex items-center gap-3 border border-[#d9cfbd] bg-white px-4 py-3 text-sm text-gray-800 shadow-[0_8px_22px_rgba(0,0,0,0.04)]">
+                <div className="ct-soft-reveal mt-8 inline-flex items-center gap-3 border border-[#d9cfbd] bg-white px-4 py-3 text-sm text-gray-800/80 shadow-[0_8px_22px_rgba(0,0,0,0.04)]">
                   <ShieldCheck size={16} className="text-[#c9a96e]" />
                   All conversations are private and handled by senior advisors.
                 </div>
@@ -278,13 +278,13 @@ const Contact = () => {
                   <div className="absolute top-0 left-0 h-16 w-[1px] bg-[#c9a96e]/60" />
 
                   <div className="mb-8">
-                    <span className="inline-flex px-3 py-1 border border-[#c9a96e]/30 text-[10px] tracking-[0.25em] uppercase text-[#8f7442] mb-4">
+                    <span className="inline-flex px-3 py-1 border border-[#c9a96e]/30 text-[10px] tracking-[0.25em] uppercase text-[#8f7442]/80 mb-4">
                       Priority Desk
                     </span>
-                    <h2 className="text-2xl md:text-3xl font-heading font-medium mb-2">
+                    <h2 className="text-2xl md:text-3xl font-heading font-medium mb-2 text-gray-900/95">
                       Private Inquiry
                     </h2>
-                    <p className="text-sm text-gray-700 font-normal">
+                    <p className="text-sm text-gray-700/80 font-normal">
                       Share your requirements and our team will reach out with a tailored response.
                     </p>
                   </div>
@@ -305,16 +305,16 @@ const Contact = () => {
                     <MapPin size={18} strokeWidth={1.2} />
                   </div>
                   <div>
-                    <span className="text-[9px] uppercase tracking-[0.25em] text-gray-700 block">
+                    <span className="text-[9px] uppercase tracking-[0.25em] text-gray-700/70 block">
                       Head Office
                     </span>
-                    <span className="font-heading font-medium text-gray-900 block">
+                    <span className="font-heading font-medium text-gray-900/92 block">
                       Panchkula
                     </span>
                   </div>
                 </div>
 
-                <p className="text-sm text-gray-700 leading-relaxed mb-6 max-w-md">
+                <p className="text-sm text-gray-700/80 leading-relaxed mb-6 max-w-md">
                   B-9, Ansals Sampark-1, SCO-194-195
                   <br />
                   City Centre, Sector-5, Panchkula — 134109
@@ -342,10 +342,10 @@ const Contact = () => {
                     <MessageCircle size={20} />
                   </div>
                   <div className="flex-1">
-                    <span className="text-[10px] uppercase tracking-[0.28em] text-[#25D366]/65 block mb-1">
+                    <span className="text-[10px] uppercase tracking-[0.28em] text-[#25D366]/55 block mb-1">
                       Instant Connect
                     </span>
-                    <span className="font-heading text-lg font-medium text-gray-900">
+                    <span className="font-heading text-lg font-medium text-gray-900/92">
                       Message us on WhatsApp
                     </span>
                   </div>
@@ -356,7 +356,7 @@ const Contact = () => {
                 </a>
 
                 <div className="ct-soft-reveal border border-[#d9cfbd] bg-white p-6 md:p-7 shadow-[0_8px_24px_rgba(0,0,0,0.04)]">
-                  <span className="text-[10px] uppercase tracking-[0.3em] text-[#8f7442] block mb-4">
+                  <span className="text-[10px] uppercase tracking-[0.3em] text-[#8f7442]/80 block mb-4">
                     Consultation Journey
                   </span>
                   <div className="space-y-4">
@@ -366,10 +366,10 @@ const Contact = () => {
                           {item.step}
                         </span>
                         <div>
-                          <h3 className="font-heading text-base text-gray-900 mb-1">
+                          <h3 className="font-heading text-base text-gray-900/92 mb-1">
                             {item.title}
                           </h3>
-                          <p className="text-sm text-gray-700 leading-relaxed">
+                          <p className="text-sm text-gray-700/80 leading-relaxed">
                             {item.detail}
                           </p>
                         </div>

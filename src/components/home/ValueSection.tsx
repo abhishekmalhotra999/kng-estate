@@ -120,12 +120,12 @@ const ValueSection = () => {
           ref={headlineRef}
           className="px-8 md:px-16 lg:px-20 xl:px-28 pt-20 pb-12"
         >
-          <span className="val-eyebrow inline-flex items-center gap-2 text-[10px] font-semibold tracking-[0.35em] uppercase text-[#c9a96e] mb-5">
+          <span className="val-eyebrow inline-flex items-center gap-2 text-[10px] font-semibold tracking-[0.35em] uppercase text-[#c9a96e]/85 mb-5">
             <span className="block w-8 h-[1px] bg-[#c9a96e]/50" />
             Our Values
           </span>
           <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6">
-            <h2 className="val-headline text-4xl sm:text-5xl md:text-6xl font-heading font-medium leading-[1.05]">
+            <h2 className="val-headline text-4xl sm:text-5xl md:text-6xl font-heading font-medium leading-[1.05] text-gray-900/95">
               What Drives
               <br />
               <span className="italic font-light text-[#c9a96e]">
@@ -133,7 +133,7 @@ const ValueSection = () => {
               </span>{" "}
               We Do
             </h2>
-            <p className="val-headline text-gray-700 text-sm max-w-xs leading-relaxed font-normal">
+            <p className="val-headline text-gray-700/80 text-sm max-w-xs leading-relaxed font-normal">
               Scroll horizontally to explore the principles that shape our
               commitment to you.
             </p>
@@ -155,7 +155,7 @@ const ValueSection = () => {
               <div className="absolute top-0 right-0 h-12 w-[1px] bg-gradient-to-b from-[#c9a96e]/40 to-transparent" />
 
               {/* Number */}
-              <span className="block font-heading text-6xl md:text-7xl font-light text-[#b8924f] group-hover:text-[#a88445] transition-colors duration-500 mb-6 select-none leading-none">
+              <span className="block font-heading text-6xl md:text-7xl font-light text-[#b8924f]/90 group-hover:text-[#a88445] transition-colors duration-500 mb-6 select-none leading-none">
                 {item.accent}
               </span>
 
@@ -165,10 +165,10 @@ const ValueSection = () => {
               </div>
 
               {/* Content */}
-              <h3 className="text-xl md:text-2xl font-heading font-medium mb-4 text-gray-900 group-hover:text-[#a88445] transition-colors duration-500 leading-snug">
+              <h3 className="text-xl md:text-2xl font-heading font-medium mb-4 text-gray-900/92 group-hover:text-[#a88445] transition-colors duration-500 leading-snug">
                 {item.title}
               </h3>
-              <p className="text-[15px] text-gray-700 leading-[1.75] font-normal transition-colors duration-500">
+              <p className="text-[15px] text-gray-700/80 leading-[1.75] font-normal transition-colors duration-500">
                 {item.description}
               </p>
 

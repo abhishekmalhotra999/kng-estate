@@ -72,18 +72,18 @@ const SellProperty = () => {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-16 items-start">
               <div className="lg:col-span-4 sell-page-reveal space-y-6 lg:sticky lg:top-28">
                 <div>
-                  <span className="inline-flex items-center gap-3 text-[10px] font-semibold tracking-[0.35em] uppercase text-[#8f7442] mb-4">
+                  <span className="inline-flex items-center gap-3 text-[10px] font-semibold tracking-[0.35em] uppercase text-[#8f7442]/80 mb-4">
                     <span className="block w-8 h-[1px] bg-[#c9a96e]/60" />
                     Why Sellers Choose KNG
                   </span>
-                  <h2 className="text-3xl md:text-4xl font-heading font-medium leading-tight text-gray-900">
+                  <h2 className="text-3xl md:text-4xl font-heading font-medium leading-tight text-gray-900/95">
                     Precision,
                     <span className="italic font-light text-[#b8924f]"> Positioning, </span>
                     Performance
                   </h2>
                 </div>
 
-                <p className="text-sm md:text-[15px] text-gray-700 leading-relaxed">
+                <p className="text-sm md:text-[15px] text-gray-700/80 leading-relaxed">
                   We combine market intelligence with execution discipline so your property is presented to the
                   right buyers at the right value.
                 </p>
@@ -91,7 +91,7 @@ const SellProperty = () => {
                 <div className="border border-[#ddd1bc] bg-white p-5 space-y-4">
                   <div className="flex items-start gap-3">
                     <ShieldCheck size={17} className="text-[#b8924f] mt-0.5 shrink-0" />
-                    <p className="text-sm text-gray-700 leading-relaxed">
+                    <p className="text-sm text-gray-700/80 leading-relaxed">
                       Your information stays private and is only reviewed by our advisory desk.
                     </p>
                   </div>
@@ -99,7 +99,7 @@ const SellProperty = () => {
                   <div className="pt-3 border-t border-[#ece2d1]">
                     <a
                       href="tel:+919056465106"
-                      className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.16em] font-semibold text-[#8f7442] hover:text-[#a88445] transition-colors"
+                      className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.16em] font-semibold text-[#8f7442]/85 hover:text-[#a88445] transition-colors"
                     >
                       Urgent Listing Assistance
                       <ArrowUpRight size={12} />
@@ -109,7 +109,7 @@ const SellProperty = () => {
 
                 <ul className="space-y-3">
                   {processSteps.map((step) => (
-                    <li key={step} className="flex items-start gap-2.5 text-sm text-gray-700 leading-relaxed">
+                    <li key={step} className="flex items-start gap-2.5 text-sm text-gray-700/80 leading-relaxed">
                       <CheckCircle2 size={15} className="mt-0.5 shrink-0 text-[#b8924f]" />
                       <span>{step}</span>
                     </li>
@@ -123,10 +123,10 @@ const SellProperty = () => {
                   <div className="absolute top-0 left-0 h-16 w-[1px] bg-gradient-to-b from-[#c9a96e]/60 to-transparent" />
 
                   <div className="mb-8">
-                    <h3 className="text-2xl md:text-3xl font-heading font-light text-gray-900 mb-2">
+                    <h3 className="text-2xl md:text-3xl font-heading font-light text-gray-900/95 mb-2">
                       Seller Submission
                     </h3>
-                    <p className="text-sm text-gray-700 leading-relaxed">
+                    <p className="text-sm text-gray-700/80 leading-relaxed">
                       Complete this form once and we will call you back to align valuation, timeline, and launch plan.
                     </p>
                   </div>

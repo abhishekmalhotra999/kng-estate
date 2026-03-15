@@ -83,11 +83,11 @@ const ContactSection = () => {
         {/* Section header */}
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-20">
           <div>
-            <span className="contact-fade inline-flex items-center gap-2 text-[10px] font-semibold tracking-[0.35em] uppercase text-[#c9a96e] mb-5">
+            <span className="contact-fade inline-flex items-center gap-2 text-[10px] font-semibold tracking-[0.35em] uppercase text-[#c9a96e]/85 mb-5">
               <span className="block w-8 h-[1px] bg-[#c9a96e]/50" />
               Contact
             </span>
-            <h2 className="contact-fade text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-medium leading-[1] text-gray-900">
+            <h2 className="contact-fade text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-medium leading-[1] text-gray-900/95">
               Start Your
               <br />
               <span className="italic font-light text-[#c9a96e]">
@@ -97,7 +97,7 @@ const ContactSection = () => {
             </h2>
           </div>
 
-          <p className="contact-fade font-body text-gray-700 text-sm md:text-[15px] max-w-sm leading-[1.8] tracking-wide">
+          <p className="contact-fade font-body text-gray-700/80 text-sm md:text-[15px] max-w-sm leading-[1.8] tracking-wide">
             From first inquiry to final handshake — we are with you. Experience
             the KNG difference.
           </p>
@@ -123,13 +123,13 @@ const ContactSection = () => {
                     className="ml-auto text-gray-500 group-hover:text-[#c9a96e] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all duration-300"
                   />
                 </div>
-                <span className="block text-[9px] uppercase tracking-[0.25em] text-gray-700 mb-1.5">
+                <span className="block text-[9px] uppercase tracking-[0.25em] text-gray-700/70 mb-1.5">
                   Call Us
                 </span>
-                <p className="font-heading text-base text-gray-900 leading-tight">
+                <p className="font-heading text-base text-gray-900/92 leading-tight">
                   +91 90564 65106
                 </p>
-                <p className="text-xs text-gray-700 mt-1">+1 236-258-5106</p>
+                <p className="text-xs text-gray-700/80 mt-1">+1 236-258-5106</p>
               </a>
 
               {/* Email card */}
@@ -146,10 +146,10 @@ const ContactSection = () => {
                     className="ml-auto text-gray-500 group-hover:text-[#c9a96e] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all duration-300"
                   />
                 </div>
-                <span className="block text-[9px] uppercase tracking-[0.25em] text-gray-700 mb-1.5">
+                <span className="block text-[9px] uppercase tracking-[0.25em] text-gray-700/70 mb-1.5">
                   Email
                 </span>
-                <p className="font-heading text-base text-gray-900 leading-tight">
+                <p className="font-heading text-base text-gray-900/92 leading-tight">
                   kngestate@gmail.com
                 </p>
               </a>
@@ -167,7 +167,7 @@ const ContactSection = () => {
                 <span className="block text-xs font-semibold text-[#25D366] tracking-wide uppercase">
                   WhatsApp
                 </span>
-                <span className="block text-[11px] text-gray-700 mt-0.5">
+                <span className="block text-[11px] text-gray-700/75 mt-0.5">
                   Get an instant reply
                 </span>
               </div>
@@ -183,11 +183,11 @@ const ContactSection = () => {
                 <div className="w-9 h-9 flex items-center justify-center border border-[#c9a96e]/30 text-[#c9a96e]">
                   <MapPin size={15} strokeWidth={1.5} />
                 </div>
-                <span className="text-[9px] uppercase tracking-[0.25em] text-gray-700">
+                <span className="text-[9px] uppercase tracking-[0.25em] text-gray-700/70">
                   Head Office
                 </span>
               </div>
-              <p className="text-sm text-gray-700 leading-relaxed mb-5">
+              <p className="text-sm text-gray-700/80 leading-relaxed mb-5">
                 B-9, Ansals Sampark-1, SCO-194-195
                 <br />
                 City Centre, Sector-5, Panchkula — 134109
@@ -217,10 +217,10 @@ const ContactSection = () => {
 
               {/* Form header */}
               <div className="mb-10">
-                <h3 className="text-2xl md:text-3xl font-heading font-light text-gray-900 mb-2">
+                <h3 className="text-2xl md:text-3xl font-heading font-light text-gray-900/95 mb-2">
                   Private Inquiry
                 </h3>
-                <p className="text-gray-700 text-sm font-normal">
+                <p className="text-gray-700/75 text-sm font-normal">
                   Every message receives a response within 24 hours.
                 </p>
               </div>

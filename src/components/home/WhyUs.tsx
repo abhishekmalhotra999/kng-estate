@@ -187,18 +187,18 @@ const WhyUs = () => {
               />
             </div>
 
-            <span className="why-eyebrow block text-[10px] font-semibold tracking-[0.35em] uppercase text-[#c9a96e] mb-8">
+            <span className="why-eyebrow block text-[10px] font-semibold tracking-[0.35em] uppercase text-[#c9a96e]/85 mb-8">
               Why KNG Estate
             </span>
 
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-heading font-medium leading-[0.95] mb-10">
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-heading font-medium leading-[0.95] mb-10 text-gray-900/95">
               {splitWords("The Standard")}
               <br />
-              {splitWords("others", "text-gray-700 italic font-light")}
-              {splitWords("follow.", "text-gray-700 italic font-light")}
+              {splitWords("others", "text-gray-700/70 italic font-light")}
+              {splitWords("follow.", "text-gray-700/70 italic font-light")}
             </h2>
 
-            <p className="why-subtext font-body text-lg max-w-xs leading-relaxed font-normal text-gray-700">
+            <p className="why-subtext font-body text-lg max-w-xs leading-relaxed font-normal text-gray-700/80">
               In a market full of noise, we offer something rare — clarity,
               conviction, and results that speak for themselves.
             </p>
@@ -218,15 +218,15 @@ const WhyUs = () => {
 
                 <div className="flex items-start gap-6 md:gap-10">
                   {/* Number */}
-                  <span className="feature-number font-heading text-5xl md:text-6xl font-light text-[#b8924f] group-hover:text-[#a88445] transition-colors duration-500 leading-none mt-1 shrink-0 select-none">
+                  <span className="feature-number font-heading text-5xl md:text-6xl font-light text-[#b8924f]/90 group-hover:text-[#a88445] transition-colors duration-500 leading-none mt-1 shrink-0 select-none">
                     {feature.number}
                   </span>
 
                   <div>
-                    <h3 className="text-xl md:text-2xl lg:text-3xl font-heading font-medium mb-4 group-hover:text-[#a88445] transition-colors duration-500">
+                    <h3 className="text-xl md:text-2xl lg:text-3xl font-heading font-medium mb-4 text-gray-900/92 group-hover:text-[#a88445] transition-colors duration-500">
                       {feature.title}
                     </h3>
-                    <p className="text-gray-700 font-normal leading-relaxed text-sm md:text-base max-w-lg transition-colors duration-500">
+                    <p className="text-gray-700/80 font-normal leading-relaxed text-sm md:text-base max-w-lg transition-colors duration-500">
                       {feature.description}
                     </p>
                   </div>

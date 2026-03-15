@@ -139,7 +139,7 @@ const ExperienceSection = () => {
       <div className="container mx-auto px-6 md:px-12 lg:px-20 xl:px-28 py-32 md:py-44">
         {/* Badge */}
         <div className="exp-badge mb-16">
-          <span className="inline-flex items-center gap-3 px-5 py-2 border border-[#c9a96e]/20 text-[10px] font-semibold tracking-[0.35em] uppercase text-[#c9a96e]">
+          <span className="inline-flex items-center gap-3 px-5 py-2 border border-[#c9a96e]/20 text-[10px] font-semibold tracking-[0.35em] uppercase text-[#c9a96e]/85">
             <span className="w-2 h-2 rounded-full bg-[#c9a96e]/40" />
             Established 2004
           </span>
@@ -148,7 +148,7 @@ const ExperienceSection = () => {
         {/* ─── Scroll-revealed manifesto text ─── */}
         <div className="max-w-5xl mb-24">
           <h2
-            className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] font-medium leading-[1.1] mb-10"
+            className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] font-medium leading-[1.1] mb-10 text-gray-900/95"
             style={{ lineHeight: 1.15 }}
           >
             {renderRevealText("For over two decades we have been")}
@@ -158,7 +158,7 @@ const ExperienceSection = () => {
             {renderRevealText("luxury real estate across the Tricity.")}
           </h2>
 
-          <p className="text-lg md:text-xl text-gray-700 font-normal leading-relaxed max-w-2xl">
+          <p className="text-lg md:text-xl text-gray-700/80 font-normal leading-relaxed max-w-2xl">
             {renderRevealText(
               "Connecting visionaries with their dream properties in Chandigarh, Mohali, and Panchkula — with absolute discretion and unmatched expertise."
             )}
@@ -180,7 +180,7 @@ const ExperienceSection = () => {
               <div key={i}>
                 <span className="flex items-baseline gap-1">
                   <span
-                    className="stat-number font-heading text-3xl md:text-4xl lg:text-5xl font-light text-gray-900"
+                    className="stat-number font-heading text-3xl md:text-4xl lg:text-5xl font-light text-gray-900/92"
                     data-target={stat.target}
                   >
                     0
@@ -191,7 +191,7 @@ const ExperienceSection = () => {
                     </span>
                   )}
                 </span>
-                <span className="stat-label block text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-gray-700 mt-2">
+                <span className="stat-label block text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-gray-700/70 mt-2">
                   {stat.label}
                 </span>
               </div>
@@ -209,10 +209,10 @@ const ExperienceSection = () => {
                 key={city.label}
                 className="city-pill group cursor-pointer px-6 py-3 border border-[#d8ceba] bg-white/85 hover:border-[#c9a96e]/45 hover:bg-[#fffaf0] shadow-[0_6px_18px_rgba(0,0,0,0.04)] transition-all duration-500"
               >
-                <span className="block text-xs uppercase tracking-[0.15em] font-medium text-gray-900/90 group-hover:text-gray-900 transition-colors">
+                <span className="block text-xs uppercase tracking-[0.15em] font-medium text-gray-900/85 group-hover:text-gray-900 transition-colors">
                   {city.label}
                 </span>
-                <span className="block text-[9px] uppercase tracking-widest text-gray-700 mt-0.5">
+                <span className="block text-[9px] uppercase tracking-widest text-gray-700/70 mt-0.5">
                   {city.sub}
                 </span>
               </div>

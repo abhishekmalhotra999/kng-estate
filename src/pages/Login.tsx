@@ -37,8 +37,8 @@ const Login = () => {
             <div className="h-16 w-16 rounded-full bg-gray-50 flex items-center justify-center mx-auto mb-6 text-black border border-gray-200">
               <User size={28} strokeWidth={1.5} />
             </div>
-            <h1 className="text-3xl font-heading font-medium mb-2">Welcome Back</h1>
-            <p className="text-sm text-muted-foreground font-light">Sign in to your KNG Estate account</p>
+            <h1 className="text-3xl font-heading font-medium mb-2 text-gray-900/95">Welcome Back</h1>
+            <p className="text-sm text-muted-foreground/80 font-light">Sign in to your KNG Estate account</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">

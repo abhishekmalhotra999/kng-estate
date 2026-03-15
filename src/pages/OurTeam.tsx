@@ -91,13 +91,13 @@ const OurTeam = () => {
 
           <div className="container mx-auto">
             <div className="max-w-3xl">
-              <span className="team-eyebrow inline-flex items-center gap-3 text-[10px] font-semibold tracking-[0.35em] uppercase text-[#c9a96e] mb-6">
+              <span className="team-eyebrow inline-flex items-center gap-3 text-[10px] font-semibold tracking-[0.35em] uppercase text-[#c9a96e]/85 mb-6">
                 <span className="block w-8 h-[1px] bg-[#c9a96e]/50" />
                 The People Behind KNG
               </span>
 
               <h1
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-medium leading-[1.05] mb-8"
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-medium leading-[1.05] mb-8 text-gray-900/95"
                 style={{ perspective: "800px" }}
               >
                 {["Meet", "the", "Team"].map((word, i) => (
@@ -112,7 +112,7 @@ const OurTeam = () => {
                 {["Behind", "Your"].map((word, i) => (
                   <span
                     key={i}
-                    className="team-title-word inline-block mr-[0.25em] text-gray-700"
+                    className="team-title-word inline-block mr-[0.25em] text-gray-700/80"
                   >
                     {word}
                   </span>
@@ -124,7 +124,7 @@ const OurTeam = () => {
 
               <div className="team-line w-16 h-[2px] bg-[#c9a96e] mb-8" />
 
-              <p className="team-desc text-lg text-gray-700 font-normal leading-relaxed max-w-xl">
+              <p className="team-desc text-lg text-gray-700/80 font-normal leading-relaxed max-w-xl">
                 A dedicated group of professionals who truly care about finding
                 your perfect property. We bring passion, expertise, and genuine
                 heart to every relationship.

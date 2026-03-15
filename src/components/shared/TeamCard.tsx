@@ -84,14 +84,14 @@ const TeamCard = ({ name, role, bio, image, index, delay = 0 }: TeamCardProps) =
       <div className="p-6">
         <div className="flex items-center gap-3 mb-2">
           <div className="w-6 h-[1px] bg-[#c9a96e]/40" />
-          <span className="text-[9px] uppercase tracking-[0.25em] text-[#8f7442]">
+          <span className="text-[9px] uppercase tracking-[0.25em] text-[#8f7442]/80">
             {role}
           </span>
         </div>
-        <h3 className="text-[1.4rem] font-heading font-medium text-gray-900 mb-3 group-hover:text-[#a88445] transition-colors duration-500 leading-tight">
+        <h3 className="text-[1.4rem] font-heading font-medium text-gray-900/92 mb-3 group-hover:text-[#a88445] transition-colors duration-500 leading-tight">
           {name}
         </h3>
-        <p className="text-[15px] text-gray-700 leading-[1.75] font-normal">
+        <p className="text-[15px] text-gray-700/80 leading-[1.75] font-normal">
           {bio}
         </p>
       </div>

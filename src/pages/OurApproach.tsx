@@ -54,10 +54,10 @@ const FAQItem = ({
         onClick={onToggle}
         className="w-full flex items-center gap-4 md:gap-7 py-6 md:py-8 px-5 md:px-8 text-left group"
       >
-        <span className="font-heading text-2xl md:text-3xl font-light text-[#b8924f]/65 group-hover:text-[#a88445] transition-colors duration-500 leading-none shrink-0 select-none">
+        <span className="font-heading text-2xl md:text-3xl font-light text-[#b8924f]/55 group-hover:text-[#a88445] transition-colors duration-500 leading-none shrink-0 select-none">
           {number}
         </span>
-        <span className="flex-1 font-heading font-medium text-lg md:text-[1.42rem] text-gray-900 group-hover:text-[#a88445] transition-colors duration-500 leading-snug pr-2">
+        <span className="flex-1 font-heading font-medium text-lg md:text-[1.42rem] text-gray-900/92 group-hover:text-[#a88445] transition-colors duration-500 leading-snug pr-2">
           {q}
         </span>
         <span className="shrink-0 w-8 h-8 md:w-10 md:h-10 flex items-center justify-center border border-[#d8ceba] text-gray-700 bg-[#fdfbf7] group-hover:border-[#c9a96e]/50 group-hover:text-[#a88445] transition-all duration-500">
@@ -69,7 +69,7 @@ const FAQItem = ({
       >
         <div className="pl-14 md:pl-[5.1rem] pr-10 md:pr-16 pb-7 md:pb-8">
           <div className="w-8 h-[1px] bg-[#c9a96e]/30 mb-4" />
-          <p className="text-gray-700 leading-[1.9] text-[15px] md:text-base">
+          <p className="text-gray-700/80 leading-[1.9] text-[15px] md:text-base">
             {a}
           </p>
         </div>
@@ -164,13 +164,13 @@ const OurApproach = () => {
           <div className="container mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-end">
               <div>
-                <span className="approach-eyebrow inline-flex items-center gap-3 text-[10px] font-semibold tracking-[0.35em] uppercase text-[#c9a96e] mb-6">
+                <span className="approach-eyebrow inline-flex items-center gap-3 text-[10px] font-semibold tracking-[0.35em] uppercase text-[#c9a96e]/85 mb-6">
                   <span className="block w-8 h-[1px] bg-[#c9a96e]/50" />
                   Our Philosophy
                 </span>
 
                 <h1
-                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-medium leading-[1.05] mb-8"
+                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-medium leading-[1.05] mb-8 text-gray-900/95"
                   style={{ perspective: "800px" }}
                 >
                   {["Our"].map((word, i) => (
@@ -188,7 +188,7 @@ const OurApproach = () => {
                   {["to", "Real", "Estate"].map((word, i) => (
                     <span
                       key={i}
-                      className="approach-title-word inline-block mr-[0.25em] text-gray-700"
+                      className="approach-title-word inline-block mr-[0.25em] text-gray-700/80"
                     >
                       {word}
                     </span>
@@ -198,7 +198,7 @@ const OurApproach = () => {
 
               <div className="lg:pb-4">
                 <div className="approach-line w-16 h-[2px] bg-[#c9a96e] mb-6" />
-                <p className="approach-desc text-lg text-gray-700 font-normal leading-relaxed max-w-lg">
+                <p className="approach-desc text-lg text-gray-700/80 font-normal leading-relaxed max-w-lg">
                   Transparency, communication, and client empowerment drive
                   every decision we make. Here are the questions our clients
                   ask most.
@@ -212,7 +212,7 @@ const OurApproach = () => {
         <section className="bg-[#f4f1e9] px-6 md:px-12 lg:px-20 xl:px-28 py-16 md:py-20">
           <div className="container mx-auto max-w-4xl">
             <div className="mb-7 md:mb-9">
-              <span className="inline-flex items-center gap-3 text-[10px] font-semibold tracking-[0.33em] uppercase text-[#8f7442]">
+              <span className="inline-flex items-center gap-3 text-[10px] font-semibold tracking-[0.33em] uppercase text-[#8f7442]/80">
                 <span className="block w-7 h-[1px] bg-[#c9a96e]/50" />
                 Frequently Asked Questions
               </span>

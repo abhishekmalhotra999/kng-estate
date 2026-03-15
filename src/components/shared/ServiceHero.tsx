@@ -148,14 +148,14 @@ const ServiceHero = ({
       <div className="relative z-10 container mx-auto px-6 md:px-12 lg:px-20 xl:px-28 pb-20 pt-40">
         <div className="max-w-3xl">
           {/* Eyebrow */}
-          <span className="sh-eyebrow inline-flex items-center gap-3 text-[10px] font-semibold tracking-[0.35em] uppercase text-[#c9a96e] mb-6">
+          <span className="sh-eyebrow inline-flex items-center gap-3 text-[10px] font-semibold tracking-[0.35em] uppercase text-[#c9a96e]/85 mb-6">
             <span className="block w-8 h-[1px] bg-[#c9a96e]/50" />
             {subtitle}
           </span>
 
           {/* Title — word by word */}
           <h1
-            className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-heading font-medium text-gray-900 mb-8 leading-[1]"
+            className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-heading font-medium text-gray-900/95 mb-8 leading-[1]"
             style={{ perspective: "800px" }}
           >
             {titleWords.map((word, i) => (
@@ -172,7 +172,7 @@ const ServiceHero = ({
           <div className="sh-line w-20 h-[2px] bg-[#c9a96e] mb-8" />
 
           {/* Description */}
-          <p className="sh-desc text-lg md:text-xl text-gray-900/60 leading-relaxed mb-10 max-w-xl font-light">
+          <p className="sh-desc text-lg md:text-xl text-gray-700/80 leading-relaxed mb-10 max-w-xl font-light">
             {description}
           </p>
 
